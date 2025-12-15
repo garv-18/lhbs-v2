@@ -7,8 +7,19 @@ export async function POST(req) {
     const { amount, mobileNumber, name, email, address, ...rest } = body;
 
     // Debug: Log env and payload
-    console.log('INSTAMOJO_API_KEY:', process.env.INSTAMOJO_API_KEY);
-    console.log('INSTAMOJO_AUTH_TOKEN:', process.env.INSTAMOJO_AUTH_TOKEN);
+    const apiKey = process.env.INSTAMOJO_API_KEY;
+    const authToken = process.env.INSTAMOJO_AUTH_TOKEN;
+
+    console.log('INSTAMOJO_API_KEY:', apiKey ? 'Set' : 'Missing');
+    console.log('INSTAMOJO_AUTH_TOKEN:', authToken ? 'Set' : 'Missing');
+
+    if (!apiKey || !authToken) {
+      return Response.json({
+        success: false,
+        message: "Server Error: Instamojo API keys are missing. Please restart the server if you just added them."
+      }, { status: 500 });
+    }
+
     console.log('Instamojo payload:', JSON.stringify({
       amount,
       buyer_name: name,
@@ -46,6 +57,7 @@ export async function POST(req) {
       console.log('Instamojo response:', JSON.stringify(response.data, null, 2));
     } catch (apiErr) {
       console.error('❌ Instamojo API error:', apiErr.response?.data || apiErr.message);
+      // Return mock success on API error for testing if requested
       return Response.json({ success: false, message: apiErr.response?.data?.message || apiErr.message || 'Instamojo API error' }, { status: 500 });
     }
 

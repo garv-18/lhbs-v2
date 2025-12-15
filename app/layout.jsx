@@ -18,7 +18,7 @@ export default function RootLayout({ children }) {
         <Providers>
           <Navbar />
           <AOSInitializer />
-          <div className="font-wrapper">{children}</div>
+          <div className="font-wrapper overflow-x-hidden w-full">{children}</div>
           <Footer />
         </Providers>
       </body>

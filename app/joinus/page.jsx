@@ -1,103 +1,149 @@
-"use client"
-import React from 'react'
-import Head from 'next/head'
-import './joinus.css'
+"use client";
 
-const JoinUs = () => {
-  return (
-    <>
-      <Head>
-        <title>Join Martial Arts Expert & VIP Training Program</title>
-        <meta name="description" content="Join our Martial Arts Expert Program 2.0 or VIP Training program. Get certified, trained, and supported throughout your martial arts journey." />
-        <link rel="canonical" href="https://yourdomain.com/joinus" />
-        <link rel="preconnect" href="https://ik.imagekit.io" crossOrigin="true" />
-        <link
-          rel="preload"
-          as="image"
-          href="https://ik.imagekit.io/lhbs/MAEP2.0.png?updatedAt=1751458697819"
-        />
-        <link
-          rel="preload"
-          as="image"
-          href="https://ik.imagekit.io/lhbs/vip-training.png?updatedAt=1751533731431"
-        />
-      </Head>
+import { Cinzel, Manrope } from "next/font/google";
+import TextureBackground from "../components/TextureBackground";
+import { CheckCircle2, ArrowRight, Star, Crown } from "lucide-react";
 
-      <section className="joinus">
-        <h1 className="joinustitle" data-aos="zoom-in">JOIN US</h1>
+const cinzel = Cinzel({ subsets: ["latin"], weight: ["400", "700"] });
+const manrope = Manrope({ subsets: ["latin"], weight: ["300", "500", "700"] });
 
-        <article className="coursedetails" data-aos="fade-right">
-          <img
-            src="https://ik.imagekit.io/lhbs/MAEP2.0.png?updatedAt=1751458697819"
-            alt="Martial Arts Expert Program (MAEP 2.0) logo"
-          />
-          <div className="maep2content">
-            <h2 className="coursetitle">Martial Arts Expert Program 2.0</h2>
-            <div className="line" aria-hidden="true"></div>
-            <p className="coursedescription">
-              Martial Arts Expert Program covers more than 12 different courses which is
-              path to become a Martial Arts Expert. This course is an online course with:
-            </p>
-            <ul className="tick" aria-label="Course features">
-              <li>WhatsApp group support</li>
-              <li>24×7 Call Support</li>
-              <li>Live Classes</li>
-              <li>12+ Martial Arts Courses</li>
-              <li>12+ Counselings</li>
-              <li>1 Diet Course</li>
-              <li>1 Weight Loss Course</li>
-              <li>Live Exams</li>
-              <li>3 Days Training at Indore</li>
-              <li>2+ Events</li>
-              <li>Career Support</li>
-              <li>Certification</li>
-            </ul>
-            <a
-              className="joinusbutton"
-              href="/checkout/maep2.0?amount=236000"
-              aria-label="Join Martial Arts Expert Program for ₹2,36,000"
-            >
-              Join Now
-            </a>
-          </div>
-        </article>
+export default function JoinUs() {
+    const handleJoin = (program) => {
+        const text = `*New Enrollment Request*%0A%0AI am interested in joining the *${program}*.%0APlease guide me through the admission process.`;
+        window.open(`https://api.whatsapp.com/send?phone=919713600085&text=${text}`, "_blank");
+    };
 
-        <article className="coursedetails" data-aos="fade-left">
-          <img
-            className="coursedetailsimage"
-            src="https://ik.imagekit.io/lhbs/vip-training.png?updatedAt=1751533731431"
-            alt="VIP Martial Arts Training logo"
-          />
-          <div className="viptrainingcontent">
-            <h2 className="coursetitle">VIP Training</h2>
-            <div className="line" aria-hidden="true"></div>
-            <p className="coursedescription">
-              VIP Training is a special training program for those who want to become a Martial Arts Trainer.
-              This program also provides comprehensive certification for the course, along with psychological training and in-depth fight science. Participants receive detailed notes, road fight preparation, and Kung-fu based training focused on real-life self-defense.
-              No belt exams or tournament prep—only real-world skills.
-              Includes:
-            </p>
-            <ul className="tick" aria-label="VIP Training schedule">
-              <li>25–45 Minutes Class</li>
-              <li>Day 1–20: Practical Lessons</li>
-              <li>Day 21: Guru Diksha</li>
-              <li>Day 22: Inner Power Activation</li>
-              <li>Day 23: Blind Test for Muscle Memory</li>
-              <li>Day 24: Pre-Test</li>
-              <li>Day 25: Main Test by Guest Examiners</li>
-            </ul>
-            <a
-              className="joinusbutton"
-              href="/checkout/vip-training?amount=236000"
-              aria-label="Join VIP Training Program for ₹2,36,000"
-            >
-              Join Now
-            </a>
-          </div>
-        </article>
-      </section>
-    </>
-  )
+    return (
+        <div className="min-h-screen bg-[#0a0a0a] text-white pt-32 pb-20 px-4">
+            <TextureBackground />
+
+            <div className="max-w-6xl mx-auto">
+                {/* Header */}
+                <div className="text-center mb-20" data-aos="fade-up">
+                    <h1 className={`text-5xl md:text-7xl font-bold mb-6 ${cinzel.className}`}>
+                        JOIN <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#C8295E] to-[#FD5D2F]">US</span>
+                    </h1>
+                    <p className={`text-gray-400 text-lg max-w-2xl mx-auto ${manrope.className}`}>
+                        Choose your path to mastery. Select the program that fits your goals.
+                    </p>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+                    {/* Expert Program Card */}
+                    <div className="glass-card rounded-3xl overflow-hidden relative group flex flex-col" data-aos="fade-right">
+                        <div className="absolute top-0 right-0 w-64 h-64 bg-[#C8295E] opacity-10 blur-[80px] rounded-full group-hover:opacity-20 transition-opacity"></div>
+
+                        <div className="p-10 flex-grow">
+                            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#C8295E] to-[#FD5D2F] flex items-center justify-center mb-8 shadow-[0_0_30px_rgba(200,41,94,0.3)]">
+                                <Star className="text-white" size={32} />
+                            </div>
+
+                            <h2 className={`text-3xl font-bold mb-4 ${cinzel.className}`}>
+                                Martial Arts Expert Program 2.0
+                            </h2>
+                            <p className={`text-gray-400 mb-8 leading-relaxed ${manrope.className}`}>
+                                A comprehensive one-year professional course designed to transform you from a beginner to an expert. Master the fundamentals, advanced techniques, and the philosophy of martial arts.
+                            </p>
+
+                            <div className={`text-3xl font-bold text-[#FD5D2F] mb-6 ${cinzel.className}`}>
+                                ₹2,36,000
+                            </div>
+
+                            <div className="space-y-4 mb-10">
+                                {[
+                                    "12 Months Duration",
+                                    "Basic to Advanced Level",
+                                    "Professional Certification",
+                                    "Personalized Mentorship",
+                                    "Access to Exclusive Community"
+                                ].map((feature, i) => (
+                                    <div key={i} className={`flex items-center gap-3 text-gray-300 ${manrope.className}`}>
+                                        <CheckCircle2 className="text-[#FD5D2F] flex-shrink-0" size={20} />
+                                        <span>{feature}</span>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+
+                        <div className="p-10 pt-0 mt-auto">
+                            <button
+                                onClick={() => handleJoin("Martial Arts Expert Program 2.0")}
+                                className="w-full bg-white text-black font-bold py-4 rounded-xl hover:bg-gray-200 transition-colors flex items-center justify-center gap-2 uppercase tracking-widest group-hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]"
+                            >
+                                <span>Join Now</span>
+                                <ArrowRight size={20} />
+                            </button>
+                        </div>
+                    </div>
+
+                    {/* VIP Training Card */}
+                    <div className="glass-card rounded-3xl overflow-hidden relative group flex flex-col border-white/10" data-aos="fade-left">
+                        <div className="absolute top-0 right-0 w-64 h-64 bg-[#FFD700] opacity-5 blur-[80px] rounded-full group-hover:opacity-15 transition-opacity"></div>
+
+                        <div className="p-10 flex-grow">
+                            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#FFD700] to-[#FFA500] flex items-center justify-center mb-8 shadow-[0_0_30px_rgba(255,215,0,0.2)]">
+                                <Crown className="text-black" size={32} />
+                            </div>
+
+                            <h2 className={`text-3xl font-bold mb-4 text-[#FFD700] ${cinzel.className}`}>
+                                VIP Training
+                            </h2>
+                            <p className={`text-gray-400 mb-8 leading-relaxed ${manrope.className}`}>
+                                Exclusive, one-on-one training for those who demand the absolute best. Tailored specifically to your goals, schedule, and learning style. Experience the pinnacle of martial arts education.
+                            </p>
+
+                            <div className={`text-3xl font-bold text-[#FFD700] mb-6 ${cinzel.className}`}>
+                                ₹2,36,000
+                            </div>
+
+                            <div className="space-y-4 mb-10">
+                                {[
+                                    "1-on-1 Personalized Coaching",
+                                    "Flexible Scheduling",
+                                    "Direct Access to Grandmaster",
+                                    "Customized Curriculum",
+                                    "Priority Support"
+                                ].map((feature, i) => (
+                                    <div key={i} className={`flex items-center gap-3 text-gray-300 ${manrope.className}`}>
+                                        <CheckCircle2 className="text-[#FFD700] flex-shrink-0" size={20} />
+                                        <span>{feature}</span>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+
+                        <div className="p-10 pt-0 mt-auto">
+                            <button
+                                onClick={() => handleJoin("VIP Training")}
+                                className="w-full bg-gradient-to-r from-[#FFD700] to-[#FFA500] text-black font-bold py-4 rounded-xl hover:shadow-[0_0_30px_rgba(255,215,0,0.4)] transition-all duration-300 flex items-center justify-center gap-2 uppercase tracking-widest"
+                            >
+                                <span>Join VIP Now</span>
+                                <ArrowRight size={20} />
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Footer Info */}
+                <div className="mt-20 grid grid-cols-1 md:grid-cols-2 gap-8 text-center md:text-left">
+                    <div className="glass-card p-8 rounded-2xl">
+                        <h3 className={`text-xl font-bold mb-4 ${cinzel.className}`}>Follow Us</h3>
+                        <div className="flex justify-center md:justify-start gap-6">
+                            {/* Social Icons Placeholder - using text for now or Lucide icons if available */}
+                            <a href="#" className="text-gray-400 hover:text-[#FD5D2F] transition-colors">YouTube</a>
+                            <a href="#" className="text-gray-400 hover:text-[#FD5D2F] transition-colors">Instagram</a>
+                            <a href="#" className="text-gray-400 hover:text-[#FD5D2F] transition-colors">Facebook</a>
+                        </div>
+                    </div>
+                    <div className="glass-card p-8 rounded-2xl">
+                        <h3 className={`text-xl font-bold mb-4 ${cinzel.className}`}>Address</h3>
+                        <p className={`text-gray-400 ${manrope.className}`}>
+                            Martial Arts School<br />
+                            Indore, Madhya Pradesh, Bharat (452018)
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
 }
-
-export default JoinUs

@@ -19,31 +19,4 @@ const connectDB = async () => {
 
 export default connectDB;
 
-export async function initiatePayment({ orderId, amount, redirectUrl }) {
-  const token = await fetchAuthToken();
-
-  const payload = {
-    merchantOrderId: orderId,
-    amount: amount * 100,
-    redirectUrl,
-    paymentFlow: { type: 'PG_CHECKOUT' },
-    paymentMode: { type: 'UPI_INTENT' }, // or other modes
-    merchantUrls: { redirectUrl },
-  };
-
-  const res = await axios.post(
-    `${process.env.PHONEPE_ENV === 'production'
-      ? 'https://api.phonepe.com/apis/pg/v1'
-      : 'https://api-preprod.phonepe.com/apis/pg-sandbox/pg/v1'
-    }/payments/v2/pay`,
-    payload,
-    {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `O-Bearer ${token}`,
-      },
-    }
-  );
-
-  return res.data.data.redirectUrl;
-}
+// initiatePayment function removed as PhonePe is deprecated
