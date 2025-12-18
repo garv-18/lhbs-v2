@@ -46,17 +46,14 @@ function PaymentSuccessContent() {
           <h3 className={`text-white font-bold mb-2 ${cinzel.className}`}>Have Questions?</h3>
           <div className="flex flex-col md:flex-row gap-4 md:gap-8">
             <div className="flex items-center gap-3 text-gray-400">
-              <div className="bg-[#FD5D2F]/20 p-2 rounded-full text-[#FD5D2F]">
-                <Mail size={18} />
+              <div className="bg-[#25D366]/20 p-2 rounded-full text-[#25D366]">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 21l1.65-3.8a9 9 0 1 1 3.4 2.9L3 21" /></svg>
               </div>
-              <span className={manrope.className}>Livehealthybesafe@gmail.com</span>
+              <a href="https://wa.me/919713600085?text=Hi%2C%20I%20have%20successfully%20paid%20for%20the%20course.%20Please%20guide%20me%20further." target="_blank" rel="noopener noreferrer" className={`hover:text-white transition-colors ${manrope.className}`}>
+                Chat on WhatsApp (+91-9713600085)
+              </a>
             </div>
-            <div className="flex items-center gap-3 text-gray-400">
-              <div className="bg-[#FD5D2F]/20 p-2 rounded-full text-[#FD5D2F]">
-                <Phone size={18} />
-              </div>
-              <span className={manrope.className}>+91-9713600085</span>
-            </div>
+
           </div>
         </div>
 

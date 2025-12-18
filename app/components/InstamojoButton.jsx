@@ -64,7 +64,7 @@ export default function InstamojoButton({ amount, courseSlug, className }) {
                 className={className}
                 onClick={() => setShowModal(true)}
             >
-                Pay ₹{amount} with Instamojo
+                Pay ₹{amount}
             </button>
         );
     }

@@ -3,7 +3,8 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Cinzel, Manrope } from "next/font/google";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Search } from "lucide-react";
+import SearchOverlay from "./SearchOverlay";
 
 const cinzel = Cinzel({ subsets: ["latin"], weight: ["500", "700"] });
 const manrope = Manrope({ subsets: ["latin"], weight: ["400", "500"] });
@@ -11,6 +12,7 @@ const manrope = Manrope({ subsets: ["latin"], weight: ["400", "500"] });
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -28,62 +30,83 @@ export default function Navbar() {
   ];
 
   return (
-    <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b ${isScrolled
-        ? "bg-black/60 backdrop-blur-md border-white/10 py-4"
-        : "bg-transparent border-transparent py-6"
-        }`}
-    >
-      <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
-        {/* Logo */}
-        <Link href="/" className="relative z-50 group">
-          <img
-            src="/lhbs-logo.png"
-            alt="LHBS Logo"
-            className="h-9 md:h-12 w-auto object-contain transition-all duration-300"
-          />
-        </Link>
+    <>
+      <SearchOverlay isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
 
-        {/* Desktop Links */}
-        <div className={`hidden lg:flex gap-8 items-center ${manrope.className}`}>
-          {navLinks.map((link) => (
-            <Link
-              key={link.name}
-              href={link.href}
-              className="text-white/80 hover:text-white transition-colors text-sm uppercase tracking-widest hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]"
+      <nav
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b ${isScrolled && !isMobileMenuOpen
+          ? "bg-black/60 backdrop-blur-md border-white/10 py-4"
+          : "bg-transparent border-transparent py-6"
+          }`}
+      >
+        <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
+          {/* Logo */}
+          <Link href="/" className="relative z-50 group">
+            <img
+              src="/lhbs-logo.png"
+              alt="LHBS Logo"
+              className="h-9 md:h-12 w-auto object-contain transition-all duration-300"
+            />
+          </Link>
+
+          {/* Desktop Links */}
+          <div className={`hidden lg:flex gap-8 items-center ${manrope.className}`}>
+            {navLinks.map((link) => (
+              <Link
+                key={link.name}
+                href={link.href}
+                className="text-white/80 hover:text-white transition-colors text-sm uppercase tracking-widest hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]"
+              >
+                {link.name}
+              </Link>
+            ))}
+
+            {/* Desktop Search Trigger */}
+            <button
+              onClick={() => setIsSearchOpen(true)}
+              className="text-white/80 hover:text-[#FD5D2F] transition-colors p-2"
             >
-              {link.name}
-            </Link>
-          ))}
-        </div>
+              <Search size={20} />
+            </button>
+          </div>
 
-        {/* Mobile Menu Button */}
-        <button
-          className="lg:hidden text-white z-[100] relative"
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-        >
-          {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
-        </button>
-
-        {/* Mobile Menu Overlay */}
-        <div
-          className={`fixed inset-0 bg-black/95 backdrop-blur-xl flex flex-col items-center justify-center gap-8 transition-all duration-500 lg:hidden ${isMobileMenuOpen
-            ? "translate-y-0 opacity-100 visible"
-            : "-translate-y-full opacity-0 invisible"
-            }`}
-        >
-          {navLinks.map((link) => (
-            <Link
-              key={link.name}
-              href={link.href}
-              className={`text-3xl text-white font-light ${cinzel.className}`}
-              onClick={() => setIsMobileMenuOpen(false)}
+          {/* Mobile Controls */}
+          <div className="lg:hidden flex items-center gap-4 z-[60] relative">
+            <button
+              onClick={() => setIsSearchOpen(true)}
+              className="text-white hover:text-[#FD5D2F] transition-colors"
             >
-              {link.name}
-            </Link>
-          ))}
+              <Search size={24} />
+            </button>
+
+            <button
+              className="text-white hover:scale-110 transition-transform"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            >
+              {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
+            </button>
+          </div>
+
+          {/* Mobile Menu Overlay */}
+          <div
+            className={`fixed inset-0 bg-black/95 backdrop-blur-xl flex flex-col items-center justify-center gap-8 transition-all duration-500 lg:hidden ${isMobileMenuOpen
+              ? "translate-y-0 opacity-100 visible"
+              : "-translate-y-full opacity-0 invisible"
+              }`}
+          >
+            {navLinks.map((link) => (
+              <Link
+                key={link.name}
+                href={link.href}
+                className={`text-3xl text-white font-light ${cinzel.className}`}
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                {link.name}
+              </Link>
+            ))}
+          </div>
         </div>
-      </div>
-    </nav>
+      </nav>
+    </>
   );
 }

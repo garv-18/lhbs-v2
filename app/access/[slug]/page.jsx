@@ -1,4 +1,7 @@
 import { getServerSession } from "next-auth";
+import { authOptions } from "../../../lib/authOptions";
+import connectToDatabase from "../../utils/db";
+import Payment from "../../models/Payment";
 
 
 export default async function AccessPage({ params, searchParams }) {
