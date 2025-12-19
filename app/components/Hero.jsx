@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import Image from 'next/image';
+
 import { ArrowRight } from 'lucide-react';
 import { Cinzel, Manrope } from 'next/font/google';
 
@@ -12,13 +12,18 @@ export default function Hero() {
             {/* Cinematic Background */}
             <div className="absolute inset-0 z-0">
                 <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-[#0a0a0a] z-10"></div>
-                <Image
-                    src="https://images.unsplash.com/photo-1555597673-b21d5c935865?q=80&w=2072&auto=format&fit=crop"
-                    alt="Martial Arts Master"
-                    fill
-                    className="object-cover animate-slow-pan opacity-60"
-                    priority
-                />
+                <video
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    preload="auto"
+                    fetchPriority="high"
+                    poster="https://images.unsplash.com/photo-1555597673-b21d5c935865?q=80&w=2072&auto=format&fit=crop"
+                    className="absolute inset-0 w-full h-full object-cover opacity-60"
+                >
+                    <source src="https://ik.imagekit.io/lhbs/Video%20Project.mp4?tr=f-auto" type="video/mp4" />
+                </video>
             </div>
 
             {/* Content */}
