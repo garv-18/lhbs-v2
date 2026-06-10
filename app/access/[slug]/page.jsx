@@ -1,21 +1,25 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "../../../lib/authOptions";
-import connectToDatabase from "../../utils/db";
-import Payment from "../../models/Payment";
-
+import { getPayload } from 'payload';
+import configPromise from '../../../payload.config';
 
 export default async function AccessPage({ params, searchParams }) {
   const session = await getServerSession(authOptions);
   if (!session) return <div>Please sign in to access this course.</div>;
 
-  await connectToDatabase();
-  const payment = await Payment.findOne({
-    email: session.user.email,
-    slug: params.slug,
-    paid: true,
+  const payload = await getPayload({ config: configPromise });
+  const payment = await payload.find({
+    collection: 'payments',
+    where: {
+      and: [
+        { userEmail: { equals: session.user.email } },
+        { courseSlug: { equals: params.slug } },
+        { paid: { equals: true } },
+      ],
+    },
   });
 
-  if (!payment) return <div>You have not purchased this course.</div>;
+  if (!payment.docs.length) return <div>You have not purchased this course.</div>;
 
   return (
     <div style={{ maxWidth: 600, margin: "2rem auto", padding: "2rem", background: "#f9f9f9", borderRadius: "8px", textAlign: "center" }}>

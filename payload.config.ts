@@ -1,0 +1,103 @@
+import { buildConfig } from 'payload';
+import { postgresAdapter } from '@payloadcms/db-postgres';
+import { lexicalEditor } from '@payloadcms/richtext-lexical';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { Media } from './app/collections/Media';
+
+const filename = fileURLToPath(import.meta.url);
+const dirname = path.dirname(filename);
+
+export default buildConfig({
+  admin: {
+    user: 'users',
+    importMap: {
+      baseDir: path.resolve(dirname),
+    },
+  },
+  collections: [
+    Media,
+    {
+      slug: 'users',
+      auth: true,
+      admin: {
+        useAsTitle: 'email',
+      },
+      fields: [
+        // Email added by default
+      ],
+    },
+    {
+      slug: 'coursenames',
+      admin: {
+        useAsTitle: 'title',
+      },
+      fields: [
+        {
+          name: 'slug',
+          type: 'text',
+          required: true,
+          unique: true,
+        },
+        {
+          name: 'title',
+          type: 'text',
+        },
+        {
+          name: 'description',
+          type: 'textarea',
+        },
+        {
+          name: 'price',
+          type: 'number',
+        },
+        {
+          name: 'image',
+          type: 'upload',
+          relationTo: 'media' as any,
+        },
+      ],
+    },
+    {
+      slug: 'orders',
+      admin: {
+        useAsTitle: 'name',
+      },
+      fields: [
+        { name: 'name', type: 'text' },
+        { name: 'email', type: 'text' },
+        { name: 'phone', type: 'text' },
+        { name: 'course', type: 'text' },
+        { name: 'amount', type: 'number' },
+        { name: 'transactionId', type: 'text' },
+        { 
+          name: 'status', 
+          type: 'select', 
+          defaultValue: 'PENDING',
+          options: ['PENDING', 'SUCCESS', 'FAILED']
+        },
+      ],
+    },
+    {
+      slug: 'payments',
+      admin: {
+        useAsTitle: 'userEmail',
+      },
+      fields: [
+        { name: 'userEmail', type: 'text' },
+        { name: 'courseSlug', type: 'text' },
+        { name: 'razorpay_order_id', type: 'text' },
+        { name: 'razorpay_payment_id', type: 'text' },
+        { name: 'razorpay_signature', type: 'text' },
+        { name: 'paid', type: 'checkbox' },
+      ],
+    }
+  ],
+  editor: lexicalEditor({}),
+  secret: process.env.PAYLOAD_SECRET || 'secret-key',
+  db: postgresAdapter({
+    pool: {
+      connectionString: process.env.DATABASE_URI,
+    },
+  }),
+});

@@ -11,6 +11,8 @@ export const metadata = {
   description: "Learn Martial Arts from the best. Expert training in Muay Thai, Kung-fu, Krav Maga, and more.",
 };
 
+export const revalidate = 3600; // Cache home page for 1 hour
+
 export default function Home() {
   return (
     <>

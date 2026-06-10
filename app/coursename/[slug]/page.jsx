@@ -38,6 +38,9 @@ export async function generateMetadata({ params }) {
   };
 }
 
+export const revalidate = 60; // ISR cache revalidation
+export const dynamicParams = true;
+
 export default async function CoursePage({ params }) {
   // Await params for Next.js 15 compatibility
   const { slug } = await params;
@@ -54,8 +57,30 @@ export default async function CoursePage({ params }) {
     </div>
   );
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Course",
+    "name": course.title,
+    "description": course.description,
+    "provider": {
+      "@type": "Organization",
+      "name": "LHBS",
+      "sameAs": "https://masterpramod.com/lhbs"
+    },
+    "offers": {
+      "@type": "Offer",
+      "price": course.price,
+      "priceCurrency": "INR",
+      "category": "Paid"
+    }
+  };
+
   return (
     <div className="min-h-screen bg-[#0a0a0a] text-white selection:bg-[#FD5D2F] selection:text-white">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <TextureBackground />
 
       {/* Hero Section */}
@@ -158,7 +183,7 @@ export default async function CoursePage({ params }) {
               />
 
               <p className="text-center text-xs text-gray-500 mt-4">
-                30-Day Money-Back Guarantee • Secure Payment
+                25-Day Money-Back Guarantee • Secure Payment
               </p>
             </div>
           </div>
