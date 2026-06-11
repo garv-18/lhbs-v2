@@ -19,7 +19,13 @@ const serverFunction = async function (args: any) {
 }
 
 const Layout = ({ children }: Args) => (
-  <RootLayout config={configPromise} importMap={importMap} serverFunction={serverFunction}>{children}</RootLayout>
+  <html lang="en">
+    <body>
+      <RootLayout config={configPromise} importMap={importMap} serverFunction={serverFunction}>
+        {children}
+      </RootLayout>
+    </body>
+  </html>
 );
 
 export default Layout;
