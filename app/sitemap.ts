@@ -1,4 +1,4 @@
-import { masterCourses, regularCourses } from './utils/courseData';
+import { masterCourses, regularCourses } from './(frontend)/utils/courseData';
 
 export default function sitemap() {
   const baseUrl = 'https://masterpramod.com';

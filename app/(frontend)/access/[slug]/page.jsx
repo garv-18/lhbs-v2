@@ -1,7 +1,7 @@
 import { getServerSession } from "next-auth";
-import { authOptions } from "../../../lib/authOptions";
+import { authOptions } from "../../../../lib/authOptions";
 import { getPayload } from 'payload';
-import configPromise from '../../../payload.config';
+import configPromise from '../../../../payload.config';
 
 export default async function AccessPage({ params, searchParams }) {
   const session = await getServerSession(authOptions);
