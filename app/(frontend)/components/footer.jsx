@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from 'next/image';
 import { Cinzel, Manrope } from "next/font/google";
 import { Youtube, Instagram, Facebook, MessageCircle, MapPin, Mail, Phone } from 'lucide-react';
 
@@ -15,9 +16,11 @@ const Footer = () => {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-16">
                     {/* Brand Section */}
                     <div className="flex flex-col items-center md:items-start text-center md:text-left">
-                        <img
+                        <Image
                             src="/lhbs-logo.png"
                             alt="LHBS Logo"
+                            width={316}
+                            height={54}
                             className="h-16 w-auto mb-6"
                         />
                         <p className={`text-gray-600 max-w-sm ${manrope.className}`}>

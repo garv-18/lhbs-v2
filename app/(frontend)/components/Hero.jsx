@@ -17,7 +17,7 @@ export default function Hero() {
                     muted
                     playsInline
                     preload="auto"
-                    poster="https://images.unsplash.com/photo-1555597673-b21d5c935865?q=80&w=2072&auto=format&fit=crop"
+                    poster="https://images.unsplash.com/photo-1555597673-b21d5c935865?q=40&w=1280&auto=format&fit=crop"
                     className="absolute inset-0 w-full h-full object-cover"
                 >
                     <source src="https://ik.imagekit.io/lhbs/Video%20Project.mp4?tr=f-auto" type="video/mp4" />

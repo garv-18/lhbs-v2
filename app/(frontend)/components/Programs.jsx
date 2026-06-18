@@ -1,6 +1,7 @@
 import { Cinzel, Manrope } from "next/font/google";
 import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 
 const cinzel = Cinzel({ subsets: ["latin"], weight: ["400", "700"] });
 const manrope = Manrope({ subsets: ["latin"], weight: ["300", "500"] });
@@ -58,10 +59,11 @@ export default function Programs() {
                         {/* Image Background with Overlay */}
                         <div className="absolute inset-0 z-0">
                             <div className={`absolute inset-0 bg-gradient-to-b from-black/5 via-black/60 to-black/90 z-10 opacity-80 group-hover:opacity-60 transition-opacity duration-500`}></div>
-                            <img
+                            <Image
                                 src={program.image}
                                 alt={program.title}
-                                className="w-full h-full object-cover transition-all duration-700 transform group-hover:scale-105"
+                                fill
+                                className="object-cover transition-all duration-700 transform group-hover:scale-105"
                             />
                         </div>
 

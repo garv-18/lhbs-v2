@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Menu, X, Search } from "lucide-react";
 import SearchOverlay from "./SearchOverlay";
@@ -44,9 +45,12 @@ export default function Navbar() {
         <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
           {/* Logo */}
           <Link href="/" className="relative z-50 flex items-center gap-2">
-            <img
+            <Image
               src="/lhbs-logo.png"
               alt="LHBS Logo"
+              width={316}
+              height={54}
+              priority={true}
               className="h-9 md:h-11 w-auto object-contain transition-all duration-300"
             />
           </Link>
