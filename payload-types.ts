@@ -227,6 +227,12 @@ export interface Coursename {
     | null;
   price?: number | null;
   image?: (number | null) | Media;
+  gallery?:
+    | {
+        image?: (number | null) | Media;
+        id?: string | null;
+      }[]
+    | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -424,6 +430,12 @@ export interface CoursenamesSelect<T extends boolean = true> {
       };
   price?: T;
   image?: T;
+  gallery?:
+    | T
+    | {
+        image?: T;
+        id?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
 }
