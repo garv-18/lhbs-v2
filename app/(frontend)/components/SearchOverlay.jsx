@@ -68,14 +68,14 @@ export default function SearchOverlay({ isOpen, onClose }) {
             >
                 {/* Search Input */}
                 <div className="relative border-b border-gray-100">
-                    <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={22} />
+                    <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
                     <input
                         ref={inputRef}
                         type="text"
                         value={query}
                         onChange={handleSearch}
                         placeholder="Search for courses..."
-                        className="w-full bg-transparent py-4 pl-12 pr-4 text-text placeholder:text-gray-400 text-lg focus:outline-none"
+                        className="w-full bg-transparent py-3 pl-11 pr-4 text-text placeholder:text-gray-400 text-base focus:outline-none"
                     />
                 </div>
 
@@ -89,7 +89,7 @@ export default function SearchOverlay({ isOpen, onClose }) {
                         <div className="flex flex-col">
                             {results.map((course) => (
                                 <Link
-                                    href={`/coursename/${course.slug}`}
+                                    href={`/courses/${course.category?.slug || 'master-program'}/${course.slug}`}
                                     key={course.slug}
                                     onClick={onClose}
                                     className="p-4 flex gap-4 hover:bg-gray-100 border-b border-gray-100 last:border-none transition-colors group"

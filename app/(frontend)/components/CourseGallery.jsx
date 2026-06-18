@@ -133,7 +133,7 @@ export default function CourseGallery({ photos }) {
                   alt={`Photo ${currentIndex + 1}`}
                   fill
                   className="object-contain"
-                  quality={100}
+                  priority={true}
                 />
                 
                 {/* Arrows */}
