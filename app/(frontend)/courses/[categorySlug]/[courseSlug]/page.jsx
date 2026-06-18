@@ -139,13 +139,9 @@ export default async function CoursePage({ params }) {
               </div>
             </div>
 
-            {/* Mobile Buy Button Below About */}
+            {/* Mobile Pricing Card Below About */}
             <div className="lg:hidden mt-8">
-              <InstamojoButton
-                amount={course.price}
-                courseSlug={courseSlug}
-                className="w-full py-4 rounded-xl bg-primary text-white font-bold text-base hover:bg-primary-hover shadow-md transition-all duration-300"
-              />
+              <CourseSidebarClient course={course} courseSlug={courseSlug} />
             </div>
 
             <div className="border-t border-gray-100 pt-10">
@@ -177,8 +173,8 @@ export default async function CoursePage({ params }) {
             </div>
           </div>
 
-          {/* Right Column: Pricing Sidebar & Mobile Bottom Bar */}
-          <div className="lg:col-span-1">
+          {/* Right Column: Pricing Sidebar (Desktop Only) */}
+          <div className="hidden lg:block lg:col-span-1">
             <CourseSidebarClient course={course} courseSlug={courseSlug} />
           </div>
 

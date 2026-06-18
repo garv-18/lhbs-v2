@@ -64,7 +64,7 @@ export default function InstamojoButton({ amount, courseSlug, className }) {
                 className={className}
                 onClick={() => setShowModal(true)}
             >
-                Pay ₹{amount}
+                Buy Now
             </button>
         );
     }
@@ -147,7 +147,7 @@ export default function InstamojoButton({ amount, courseSlug, className }) {
                             {loading ? (
                                 <>Processing...</>
                             ) : (
-                                <>Pay ₹{amount}</>
+                                <>Buy Now</>
                             )}
                         </button>
                         <p className="text-center text-xs text-gray-500 mt-3">
