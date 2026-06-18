@@ -3,13 +3,12 @@
 import { useRef } from "react";
 import { Cinzel, Manrope } from "next/font/google";
 import { ChevronLeft, ChevronRight, Zap, CheckCircle2 } from "lucide-react";
-import { masterCourses } from "../utils/courseData";
 import Link from "next/link";
 
 const cinzel = Cinzel({ subsets: ["latin"], weight: ["400", "700"] });
 const manrope = Manrope({ subsets: ["latin"], weight: ["300", "500", "700"] });
 
-export default function MasterProgram() {
+export default function MasterProgram({ masterCourses = [] }) {
     const scrollRef = useRef(null);
 
     const scroll = (direction) => {
@@ -83,7 +82,7 @@ export default function MasterProgram() {
                             </div>
 
                             <img
-                                src={course.image}
+                                src={course.image?.url || course.image}
                                 alt={course.title}
                                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 relative z-0"
                             />

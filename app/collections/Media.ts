@@ -32,7 +32,7 @@ export const Media: CollectionConfig = {
   hooks: {
     beforeOperation: [
       async ({ args, operation }) => {
-        if (operation === 'create' && args.req.file) {
+        if ((operation === 'create' || operation === 'update') && args.req.file) {
           const file = args.req.file;
           
           try {
@@ -57,7 +57,7 @@ export const Media: CollectionConfig = {
     ],
     beforeChange: [
       ({ data, req, operation }) => {
-        if (operation === 'create' && req.context?.payloadUploadResponse) {
+        if ((operation === 'create' || operation === 'update') && req.context?.payloadUploadResponse) {
           const uploadRes = req.context.payloadUploadResponse as any;
           
           return {
@@ -67,6 +67,17 @@ export const Media: CollectionConfig = {
           };
         }
         return data;
+      },
+    ],
+    afterChange: [
+      async ({ doc, previousDoc, operation }) => {
+        if (operation === 'update' && previousDoc?.imagekitFileId && doc.imagekitFileId !== previousDoc.imagekitFileId) {
+          try {
+            await imagekit.files.delete(previousDoc.imagekitFileId);
+          } catch (error) {
+            console.error('Failed to delete old image from ImageKit:', error);
+          }
+        }
       },
     ],
     afterDelete: [

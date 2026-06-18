@@ -4,11 +4,12 @@ import { useRef } from "react";
 import { Cinzel, Manrope } from "next/font/google";
 import { ChevronLeft, ChevronRight, Zap } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 
 const cinzel = Cinzel({ subsets: ["latin"], weight: ["400", "700"] });
 const manrope = Manrope({ subsets: ["latin"], weight: ["300", "500", "700"] });
 
-export default function RegularProgram({ regularCourses = [] }) {
+export default function CategoryCarousel({ category, courses = [] }) {
     const scrollRef = useRef(null);
 
     const scroll = (direction) => {
@@ -23,21 +24,23 @@ export default function RegularProgram({ regularCourses = [] }) {
         }
     };
 
+    if (courses.length === 0) return null;
+
     return (
-        <div className="py-20 relative bg-black/20">
+        <div className="py-20 relative">
             <div className="max-w-7xl mx-auto px-4 mb-12 flex flex-col md:flex-row items-end justify-between gap-6">
                 <div>
                     <span className={`block text-[#FD5D2F] text-sm font-bold tracking-[0.2em] uppercase mb-2 ${manrope.className}`}>
-                        Our Core
+                        Exclusive Collection
                     </span>
                     <h2 className={`text-4xl md:text-5xl font-bold text-white leading-tight ${cinzel.className}`}>
-                        Martial Arts <span className="text-white">Program</span>
+                        {category.title.split(' ')[0]} <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#C8295E] to-[#FD5D2F]">{category.title.split(' ').slice(1).join(' ')}</span>
                     </h2>
                 </div>
 
                 {/* Desktop Buttons */}
                 <div className="hidden md:flex gap-4">
-                    <Link href="/courses/programs">
+                    <Link href={`/courses/${category.slug}`}>
                         <button className="px-6 py-3 rounded-full border border-white/10 bg-white/5 hover:bg-[#FD5D2F] hover:border-[#FD5D2F] text-white transition-all duration-300 text-sm font-bold uppercase tracking-wider">
                             View All
                         </button>
@@ -66,22 +69,25 @@ export default function RegularProgram({ regularCourses = [] }) {
                 className="flex overflow-x-auto gap-4 md:gap-6 px-4 md:px-8 lg:px-[calc((100vw-1280px)/2)] pb-12 snap-x snap-mandatory hide-scrollbar"
                 style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
             >
-                {regularCourses.map((course, index) => (
+                {courses.map((course, index) => (
                     <div
-                        key={index}
+                        key={course.slug || index}
                         className="min-w-[85vw] md:min-w-[340px] snap-center bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl overflow-hidden hover:border-[#FD5D2F]/50 transition-all duration-500 group relative flex flex-col"
                     >
                         {/* Image Area */}
                         <div className="h-64 relative overflow-hidden bg-black/50">
-                            {/* Gradient Overlay */}
                             <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-transparent to-transparent z-10"></div>
-
-                            {/* Placeholder Icon/Image if real image fails/is placeholder */}
                             <div className="absolute inset-0 flex items-center justify-center text-white/10 group-hover:text-[#FD5D2F]/20 transition-colors">
                                 <Zap size={64} strokeWidth={1} />
                             </div>
-
-                            <img src={course.image?.url || course.image} alt={course.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 relative z-0" />
+                            {(course.image?.url || course.image) && (
+                                <Image
+                                    src={course.image?.url || course.image}
+                                    alt={course.title}
+                                    fill
+                                    className="object-cover group-hover:scale-110 transition-transform duration-700 relative z-0"
+                                />
+                            )}
                         </div>
 
                         {/* Content Area */}
@@ -93,7 +99,6 @@ export default function RegularProgram({ regularCourses = [] }) {
                                 <h3 className={`text-2xl font-bold text-white mb-4 ${cinzel.className}`}>
                                     {course.title}
                                 </h3>
-
                                 <p className={`text-gray-400 text-sm leading-relaxed mb-6 line-clamp-3 ${manrope.className}`}>
                                     {course.description}
                                 </p>
@@ -108,7 +113,6 @@ export default function RegularProgram({ regularCourses = [] }) {
                     </div>
                 ))}
 
-                {/* Padding for end of scroll */}
                 <div className="min-w-[20px] md:min-w-[calc((100vw-1280px)/2)] shrink-0"></div>
             </div>
 
@@ -121,7 +125,7 @@ export default function RegularProgram({ regularCourses = [] }) {
                     <ChevronLeft size={24} />
                 </button>
 
-                <Link href="/courses/programs" className="flex-1">
+                <Link href={`/courses/${category.slug}`} className="flex-1">
                     <button className="w-full py-3 rounded-full border border-white/10 bg-white/5 hover:bg-[#FD5D2F] hover:border-[#FD5D2F] text-white transition-all duration-300 text-sm font-bold uppercase tracking-wider">
                         View All
                     </button>

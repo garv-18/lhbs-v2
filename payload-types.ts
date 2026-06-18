@@ -67,6 +67,8 @@ export interface Config {
   };
   blocks: {};
   collections: {
+    media: Media;
+    categories: Category;
     users: User;
     coursenames: Coursename;
     orders: Order;
@@ -78,6 +80,8 @@ export interface Config {
   };
   collectionsJoins: {};
   collectionsSelect: {
+    media: MediaSelect<false> | MediaSelect<true>;
+    categories: CategoriesSelect<false> | CategoriesSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     coursenames: CoursenamesSelect<false> | CoursenamesSelect<true>;
     orders: OrdersSelect<false> | OrdersSelect<true>;
@@ -123,6 +127,45 @@ export interface UserAuthOperations {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "media".
+ */
+export interface Media {
+  id: number;
+  alt?: string | null;
+  imagekitFileId?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "categories".
+ */
+export interface Category {
+  id: number;
+  title: string;
+  /**
+   * e.g. master-program, kids-program
+   */
+  slug: string;
+  targetPage: '/courses' | '/products';
+  /**
+   * Lower number means it appears higher up on the page (e.g. 1 appears before 2).
+   */
+  rank: number;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users".
  */
 export interface User {
@@ -154,8 +197,35 @@ export interface Coursename {
   id: number;
   slug: string;
   title?: string | null;
+  slogan?: string | null;
+  category?: (number | null) | Category;
+  /**
+   * Legacy plaintext description. Will be replaced by Rich Text.
+   */
   description?: string | null;
+  descriptionRichText?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  features?:
+    | {
+        feature?: string | null;
+        id?: string | null;
+      }[]
+    | null;
   price?: number | null;
+  image?: (number | null) | Media;
   updatedAt: string;
   createdAt: string;
 }
@@ -214,6 +284,14 @@ export interface PayloadKv {
 export interface PayloadLockedDocument {
   id: number;
   document?:
+    | ({
+        relationTo: 'media';
+        value: number | Media;
+      } | null)
+    | ({
+        relationTo: 'categories';
+        value: number | Category;
+      } | null)
     | ({
         relationTo: 'users';
         value: number | User;
@@ -274,6 +352,37 @@ export interface PayloadMigration {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "media_select".
+ */
+export interface MediaSelect<T extends boolean = true> {
+  alt?: T;
+  imagekitFileId?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  url?: T;
+  thumbnailURL?: T;
+  filename?: T;
+  mimeType?: T;
+  filesize?: T;
+  width?: T;
+  height?: T;
+  focalX?: T;
+  focalY?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "categories_select".
+ */
+export interface CategoriesSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  targetPage?: T;
+  rank?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users_select".
  */
 export interface UsersSelect<T extends boolean = true> {
@@ -301,8 +410,18 @@ export interface UsersSelect<T extends boolean = true> {
 export interface CoursenamesSelect<T extends boolean = true> {
   slug?: T;
   title?: T;
+  slogan?: T;
+  category?: T;
   description?: T;
+  descriptionRichText?: T;
+  features?:
+    | T
+    | {
+        feature?: T;
+        id?: T;
+      };
   price?: T;
+  image?: T;
   updatedAt?: T;
   createdAt?: T;
 }

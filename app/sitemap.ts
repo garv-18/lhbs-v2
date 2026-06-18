@@ -1,6 +1,7 @@
-import { masterCourses, regularCourses } from './(frontend)/utils/courseData';
+import { getPayload } from 'payload';
+import configPromise from '../payload.config';
 
-export default function sitemap() {
+export default async function sitemap() {
   const baseUrl = 'https://masterpramod.com';
 
   // Base routes
@@ -20,7 +21,15 @@ export default function sitemap() {
   }));
 
   // Course dynamic routes
-  const allCourses = [...regularCourses, ...masterCourses];
+  const payload = await getPayload({ config: configPromise });
+  const data = await payload.find({
+    collection: 'coursenames',
+    limit: 100,
+    depth: 0, // No need to fetch related media
+    select: { slug: true }
+  });
+  const allCourses = data.docs;
+  
   const courseRoutes = allCourses.map((course) => ({
     url: `${baseUrl}/coursename/${course.slug}`,
     lastModified: new Date(),

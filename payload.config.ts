@@ -4,6 +4,7 @@ import { lexicalEditor } from '@payloadcms/richtext-lexical';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { Media } from './app/collections/Media';
+import { Categories } from './app/collections/Categories';
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -17,6 +18,7 @@ export default buildConfig({
   },
   collections: [
     Media,
+    Categories,
     {
       slug: 'users',
       auth: true,
@@ -29,6 +31,9 @@ export default buildConfig({
     },
     {
       slug: 'coursenames',
+      access: {
+        read: () => true,
+      },
       admin: {
         useAsTitle: 'title',
       },
@@ -44,8 +49,35 @@ export default buildConfig({
           type: 'text',
         },
         {
+          name: 'slogan',
+          type: 'text',
+        },
+        {
+          name: 'category',
+          type: 'relationship',
+          relationTo: 'categories',
+          hasMany: false,
+        },
+        {
           name: 'description',
           type: 'textarea',
+          admin: {
+            description: 'Legacy plaintext description. Will be replaced by Rich Text.'
+          }
+        },
+        {
+          name: 'descriptionRichText',
+          type: 'richText',
+        },
+        {
+          name: 'features',
+          type: 'array',
+          fields: [
+            {
+              name: 'feature',
+              type: 'text',
+            }
+          ]
         },
         {
           name: 'price',
@@ -99,5 +131,6 @@ export default buildConfig({
     pool: {
       connectionString: process.env.DATABASE_URI,
     },
+    push: false,
   }),
 });

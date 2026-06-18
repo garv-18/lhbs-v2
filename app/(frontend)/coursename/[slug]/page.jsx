@@ -2,16 +2,24 @@ import { Cinzel, Manrope } from "next/font/google";
 import TextureBackground from "../../components/TextureBackground";
 import InstamojoButton from "../../components/InstamojoButton";
 import { CheckCircle2, Shield, Zap, Award } from "lucide-react";
-import { masterCourses, regularCourses } from "../../utils/courseData";
 import Image from "next/image";
+import { getPayload } from 'payload';
+import configPromise from '../../../../payload.config';
+import { RichText } from '@payloadcms/richtext-lexical/react';
 
 const cinzel = Cinzel({ subsets: ["latin"], weight: ["400", "700"] });
 const manrope = Manrope({ subsets: ["latin"], weight: ["300", "500", "700"] });
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
-  const allCourses = [...regularCourses, ...masterCourses];
-  const course = allCourses.find(c => c.slug === slug);
+  const payload = await getPayload({ config: configPromise });
+  const data = await payload.find({
+    collection: 'coursenames',
+    where: { slug: { equals: slug } },
+    depth: 1
+  });
+  
+  const course = data.docs[0];
 
   if (!course) {
     return {
@@ -28,7 +36,7 @@ export async function generateMetadata({ params }) {
       description: course.description,
       images: [
         {
-          url: course.image,
+          url: course.image?.url || course.image,
           width: 1200,
           height: 630,
           alt: course.title,
@@ -45,11 +53,14 @@ export default async function CoursePage({ params }) {
   // Await params for Next.js 15 compatibility
   const { slug } = await params;
 
-  // Combine both course lists to search
-  const allCourses = [...regularCourses, ...masterCourses];
-
-  // Find course by slug
-  const course = allCourses.find(c => c.slug === slug);
+  const payload = await getPayload({ config: configPromise });
+  const data = await payload.find({
+    collection: 'coursenames',
+    where: { slug: { equals: slug } },
+    depth: 1
+  });
+  
+  const course = data.docs[0];
 
   if (!course) return (
     <div className="min-h-screen bg-[#0a0a0a] flex items-center justify-center text-white">
@@ -87,7 +98,7 @@ export default async function CoursePage({ params }) {
       <div className="relative h-[60vh] w-full overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/60 to-[#0a0a0a] z-10"></div>
         <Image
-          src={course.image}
+          src={course.image?.url || course.image}
           alt={course.title}
           fill
           className="object-cover object-center transform scale-105"
@@ -97,7 +108,7 @@ export default async function CoursePage({ params }) {
         <div className="absolute bottom-0 left-0 w-full p-8 md:p-16 z-20">
           <div className="max-w-7xl mx-auto">
             <span className={`inline-block px-4 py-1 mb-4 rounded-full bg-[#FD5D2F]/20 border border-[#FD5D2F]/30 text-[#FD5D2F] text-sm font-bold tracking-widest uppercase ${manrope.className}`}>
-              Premium Course
+              {course.courseType === 'master' ? 'Premium Course' : 'Fundamentals Course'}
             </span>
             <h1 className={`text-5xl md:text-7xl font-bold mb-4 text-white ${cinzel.className}`}>
               {course.title}
@@ -112,21 +123,25 @@ export default async function CoursePage({ params }) {
 
           {/* Left Column: Description & Features */}
           <div className="lg:col-span-2 space-y-12">
-            <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-3xl p-8 md:p-10">
-              <h2 className={`text-3xl font-bold mb-6 text-white ${cinzel.className}`}>About This Course</h2>
-              <p className={`text-gray-300 text-lg leading-relaxed ${manrope.className}`}>
-                {course.description}
-              </p>
+            <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-3xl p-8 md:p-10 prose prose-invert max-w-none">
+              <h2 className={`text-3xl font-bold mb-6 text-white ${cinzel.className} not-prose`}>About This Course</h2>
+              <div className={`text-gray-300 text-lg leading-relaxed ${manrope.className}`}>
+                {course.descriptionRichText ? (
+                  <RichText data={course.descriptionRichText} />
+                ) : (
+                  <p>{course.description}</p>
+                )}
+              </div>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {course.features && course.features.map((feature, idx) => (
+              {course.features && course.features.length > 0 && course.features.map((featureObj, idx) => (
                 <div key={idx} className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 flex items-start gap-4 hover:bg-white/10 transition-colors">
                   <div className="bg-[#FD5D2F]/20 p-3 rounded-full text-[#FD5D2F]">
                     <CheckCircle2 size={24} />
                   </div>
                   <div>
-                    <h3 className={`text-lg font-bold text-white mb-1 ${manrope.className}`}>{feature}</h3>
+                    <h3 className={`text-lg font-bold text-white mb-1 ${manrope.className}`}>{featureObj.feature}</h3>
                     <p className="text-sm text-gray-400">Master this essential skill.</p>
                   </div>
                 </div>

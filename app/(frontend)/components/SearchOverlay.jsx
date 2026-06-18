@@ -1,10 +1,9 @@
 "use client";
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import { X, Search, ChevronRight } from 'lucide-react';
 import Fuse from 'fuse.js';
 import Link from 'next/link';
-import { masterCourses, regularCourses } from '../utils/courseData';
 import { Manrope, Cinzel } from 'next/font/google';
 
 const manrope = Manrope({ subsets: ["latin"], weight: ["300", "500", "700"] });
@@ -13,18 +12,26 @@ const cinzel = Cinzel({ subsets: ["latin"], weight: ["400", "700"] });
 export default function SearchOverlay({ isOpen, onClose }) {
     const [query, setQuery] = useState('');
     const [results, setResults] = useState([]);
+    const [allCourses, setAllCourses] = useState([]);
     const inputRef = useRef(null);
 
-    // Combine courses
-    const allCourses = [...regularCourses, ...masterCourses];
+    // Fetch courses when overlay is opened
+    useEffect(() => {
+        if (isOpen && allCourses.length === 0) {
+            fetch('/api/coursenames?limit=100&depth=1')
+                .then(res => res.json())
+                .then(data => setAllCourses(data.docs || []))
+                .catch(err => console.error("Error fetching courses", err));
+        }
+    }, [isOpen, allCourses.length]);
 
     // Configure Fuse.js
-    const fuse = new Fuse(allCourses, {
-        keys: ['title', 'description', 'slogan', 'features'],
+    const fuse = useMemo(() => new Fuse(allCourses, {
+        keys: ['title', 'description', 'slogan', 'features.feature'],
         threshold: 0.4, // Tolerance for typos
         distance: 100,
         includeScore: true
-    });
+    }), [allCourses]);
 
     useEffect(() => {
         if (isOpen) {
@@ -36,6 +43,11 @@ export default function SearchOverlay({ isOpen, onClose }) {
             setQuery('');
             setResults([]);
         }
+        
+        // Cleanup function to ensure scroll is restored on unmount
+        return () => {
+            document.body.style.overflow = 'unset';
+        };
     }, [isOpen]);
 
     const handleSearch = (e) => {
@@ -92,7 +104,7 @@ export default function SearchOverlay({ isOpen, onClose }) {
                                 className="bg-white/5 border border-white/10 rounded-xl p-4 flex gap-4 hover:bg-white/10 hover:border-[#FD5D2F]/30 hover:-translate-y-1 transition-all group"
                             >
                                 <div className="w-20 h-20 rounded-lg overflow-hidden shrink-0">
-                                    <img src={course.image} alt={course.title} className="w-full h-full object-cover" />
+                                    <img src={course.image?.url || course.image} alt={course.title} className="w-full h-full object-cover" />
                                 </div>
                                 <div className="flex flex-col justify-center flex-1 min-w-0">
                                     <h4 className={`text-white font-bold truncate group-hover:text-[#FD5D2F] transition-colors ${cinzel.className}`}>

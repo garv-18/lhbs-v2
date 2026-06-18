@@ -23,6 +23,7 @@
     "graphql": "^16.14.2",
     "instamojo-nodejs": "^0.0.5",
     "lucide-react": "^0.561.0",
+    "mongodb": "^7.3.0",
     "next": "^16.2.6",
     "next-auth": "^4.24.11",
     "payload": "^3.85.1",

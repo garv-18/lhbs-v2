@@ -1,9 +1,10 @@
 import { Cinzel, Manrope } from "next/font/google";
 import TextureBackground from "../components/TextureBackground";
-import MasterProgram from "../components/MasterProgram";
-import RegularProgram from "../components/RegularProgram";
-import { ArrowUpRight, CheckCircle2 } from "lucide-react";
+import GridCategory from "../components/GridCategory";
+import { CheckCircle2 } from "lucide-react";
 import "../globals.css";
+import { getPayload } from 'payload';
+import configPromise from '../../../payload.config';
 
 const cinzel = Cinzel({ subsets: ["latin"], weight: ["400", "700"] });
 const manrope = Manrope({ subsets: ["latin"], weight: ["300", "500"] });
@@ -16,9 +17,36 @@ const features = [
   "Certification Through Test"
 ];
 
-export default function Courses() {
+export default async function Courses() {
+  const payload = await getPayload({ config: configPromise });
+  
+  // Fetch categories
+  const categoriesRes = await payload.find({
+    collection: 'categories',
+    sort: 'rank',
+    limit: 100,
+  });
+  
+  const categories = categoriesRes.docs;
+  
+  // Fetch courses for each category
+  const categoriesWithCourses = await Promise.all(
+    categories.map(async (category) => {
+      const coursesRes = await payload.find({
+        collection: 'coursenames',
+        where: {
+          category: {
+            equals: category.id,
+          },
+        },
+        limit: 8, // limit to 8 for grid display
+      });
+      return { ...category, courses: coursesRes.docs };
+    })
+  );
+
   return (
-    <div className="min-h-screen bg-[#0a0a0a] text-white selection:bg-[#FD5D2F] selection:text-white">
+    <div className="min-h-screen bg-[#0a0a0a] text-white selection:bg-[#FD5D2F] selection:text-white pb-20">
       <TextureBackground />
 
       {/* Header Section */}
@@ -59,12 +87,16 @@ export default function Courses() {
         </div>
       </div>
 
-      {/* Master Program Carousel */}
-      <MasterProgram />
-
-      {/* Regular Program Carousel */}
-      <RegularProgram />
-
+      {/* Categories Grid */}
+      {categoriesWithCourses.map(category => (
+        category.courses.length > 0 && (
+          <GridCategory 
+            key={category.id} 
+            category={category} 
+            courses={category.courses} 
+          />
+        )
+      ))}
     </div>
   );
 }
