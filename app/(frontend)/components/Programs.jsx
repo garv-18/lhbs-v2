@@ -38,46 +38,46 @@ const programs = [
 export default function Programs() {
     return (
         <section id="programs" className="relative py-32 px-4 max-w-7xl mx-auto">
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-32 bg-gradient-to-b from-transparent via-white/20 to-transparent"></div>
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-32 bg-gradient-to-b from-transparent via-gray-300 to-transparent"></div>
 
             <h2
-                className={`text-4xl md:text-6xl text-center mb-20 text-white font-bold tracking-tight ${cinzel.className}`}
+                className={`text-4xl md:text-6xl text-center mb-20 text-text font-extrabold tracking-tight ${cinzel.className}`}
                 data-aos="fade-up"
             >
-                CHOOSE YOUR <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#C8295E] to-[#FD5D2F]">PATH</span>
+                CHOOSE YOUR <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-[#FF9F1C]">PATH</span>
             </h2>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 {programs.map((program, index) => (
                     <div
                         key={index}
-                        className="group relative glass-card rounded-2xl overflow-hidden transition-all duration-500 hover:-translate-y-2"
+                        className="group relative bg-white border border-gray-200 rounded-3xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-500 hover:-translate-y-2"
                         data-aos="fade-up"
                         data-aos-delay={index * 100}
                     >
                         {/* Image Background with Overlay */}
                         <div className="absolute inset-0 z-0">
-                            <div className={`absolute inset-0 bg-gradient-to-b from-black/20 via-black/80 to-black z-10 opacity-90 group-hover:opacity-70 transition-opacity duration-500`}></div>
+                            <div className={`absolute inset-0 bg-gradient-to-b from-black/5 via-black/60 to-black/90 z-10 opacity-80 group-hover:opacity-60 transition-opacity duration-500`}></div>
                             <img
                                 src={program.image}
                                 alt={program.title}
-                                className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 transform group-hover:scale-110"
+                                className="w-full h-full object-cover transition-all duration-700 transform group-hover:scale-105"
                             />
                         </div>
 
                         {/* Content */}
                         <div className="relative z-20 p-8 h-full flex flex-col justify-end min-h-[500px]">
-                            <div className={`w-12 h-1 mb-6 bg-gradient-to-r ${program.color}`}></div>
+                            <div className={`w-12 h-1.5 rounded-full mb-6 bg-gradient-to-r ${program.color}`}></div>
 
-                            <h3 className={`text-3xl font-bold text-white mb-2 ${cinzel.className}`}>
+                            <h3 className={`text-3xl font-extrabold text-white mb-2 ${cinzel.className} drop-shadow-md`}>
                                 {program.title}
                             </h3>
 
-                            <p className={`text-[#FD5D2F] text-sm tracking-widest uppercase mb-4 ${manrope.className}`}>
+                            <p className={`text-white/90 font-bold text-sm tracking-widest uppercase mb-4 ${manrope.className} drop-shadow`}>
                                 {program.duration}
                             </p>
 
-                            <p className={`text-gray-300 font-light leading-relaxed mb-8 opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-500 ${manrope.className}`}>
+                            <p className={`text-gray-200 font-medium leading-relaxed mb-8 opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-500 ${manrope.className}`}>
                                 {program.description}
                             </p>
 
@@ -86,17 +86,17 @@ export default function Programs() {
                                     href={program.whatsapp}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="flex items-center gap-2 text-white/80 hover:text-[#25D366] transition-all duration-300"
+                                    className="flex items-center gap-2 text-white/90 hover:text-[#25D366] transition-all duration-300 font-semibold"
                                 >
-                                    <span className="uppercase tracking-widest text-sm">Get Free PDF</span>
+                                    <span className="uppercase tracking-widest text-sm drop-shadow-md">Get Free PDF</span>
                                     <ArrowUpRight size={18} />
                                 </a>
 
                                 <Link
                                     href={program.link}
-                                    className="flex items-center gap-2 text-white/80 hover:text-white transition-all duration-300"
+                                    className="flex items-center gap-2 text-white/90 hover:text-primary transition-all duration-300 font-semibold"
                                 >
-                                    <span className="uppercase tracking-widest text-sm">View All Courses</span>
+                                    <span className="uppercase tracking-widest text-sm drop-shadow-md">View All Courses</span>
                                     <ArrowUpRight size={18} />
                                 </Link>
                             </div>

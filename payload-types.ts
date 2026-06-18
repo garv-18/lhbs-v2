@@ -133,6 +133,7 @@ export interface Media {
   id: number;
   alt?: string | null;
   imagekitFileId?: string | null;
+  imagekitUrl?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -357,6 +358,7 @@ export interface PayloadMigration {
 export interface MediaSelect<T extends boolean = true> {
   alt?: T;
   imagekitFileId?: T;
+  imagekitUrl?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;

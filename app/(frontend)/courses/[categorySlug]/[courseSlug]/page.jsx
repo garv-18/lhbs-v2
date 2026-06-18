@@ -1,21 +1,21 @@
 import { Cinzel, Manrope } from "next/font/google";
-import TextureBackground from "../../components/TextureBackground";
-import InstamojoButton from "../../components/InstamojoButton";
+import TextureBackground from "../../../components/TextureBackground";
+import InstamojoButton from "../../../components/InstamojoButton";
 import { CheckCircle2, Shield, Zap, Award } from "lucide-react";
 import Image from "next/image";
 import { getPayload } from 'payload';
-import configPromise from '../../../../payload.config';
+import configPromise from '../../../../../payload.config';
 import { RichText } from '@payloadcms/richtext-lexical/react';
 
 const cinzel = Cinzel({ subsets: ["latin"], weight: ["400", "700"] });
 const manrope = Manrope({ subsets: ["latin"], weight: ["300", "500", "700"] });
 
 export async function generateMetadata({ params }) {
-  const { slug } = await params;
+  const { courseSlug } = await params;
   const payload = await getPayload({ config: configPromise });
   const data = await payload.find({
     collection: 'coursenames',
-    where: { slug: { equals: slug } },
+    where: { slug: { equals: courseSlug } },
     depth: 1
   });
   
@@ -51,12 +51,12 @@ export const dynamicParams = true;
 
 export default async function CoursePage({ params }) {
   // Await params for Next.js 15 compatibility
-  const { slug } = await params;
+  const { courseSlug } = await params;
 
   const payload = await getPayload({ config: configPromise });
   const data = await payload.find({
     collection: 'coursenames',
-    where: { slug: { equals: slug } },
+    where: { slug: { equals: courseSlug } },
     depth: 1
   });
   
@@ -108,12 +108,10 @@ export default async function CoursePage({ params }) {
         </div>
 
         <div className="relative w-full h-[400px] md:h-[500px] rounded-3xl overflow-hidden shadow-md">
-            <Image
+            <img
                 src={course.image?.url || course.image}
                 alt={course.title}
-                fill
-                className="object-cover"
-                priority
+                className="object-cover w-full h-full"
             />
         </div>
       </div>
@@ -196,7 +194,7 @@ export default async function CoursePage({ params }) {
 
               <InstamojoButton
                 amount={course.price}
-                courseSlug={slug}
+                courseSlug={courseSlug}
                 className="w-full py-4 rounded-xl bg-primary text-white font-bold text-base hover:bg-primary-hover hover:shadow-lg transition-all duration-300"
               />
 

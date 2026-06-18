@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Menu, X, Search } from "lucide-react";
 import SearchOverlay from "./SearchOverlay";
 
@@ -9,6 +10,10 @@ export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const pathname = usePathname();
+
+  const isHome = pathname === "/";
+  const isSolidBg = isScrolled || !isHome;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -30,10 +35,11 @@ export default function Navbar() {
       <SearchOverlay isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
 
       <nav
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled
-          ? "bg-white/90 backdrop-blur-md border-b border-gray-100 shadow-sm py-3 text-gray-600"
-          : "bg-transparent border-transparent py-6 text-white"
-          }`}
+        id="navbar"
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isSolidBg
+          ? "bg-white/95 backdrop-blur-md border-b border-gray-200 shadow-sm text-text"
+          : "bg-transparent border-transparent text-white"
+          } py-3`}
       >
         <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
           {/* Logo */}
@@ -41,7 +47,7 @@ export default function Navbar() {
             <img
               src="/lhbs-logo.png"
               alt="LHBS Logo"
-              className={`h-9 md:h-12 w-auto object-contain transition-all duration-300 ${isScrolled ? 'filter invert brightness-0' : ''}`}
+              className="h-9 md:h-11 w-auto object-contain transition-all duration-300"
             />
           </Link>
 
@@ -51,7 +57,7 @@ export default function Navbar() {
               <Link
                 key={link.name}
                 href={link.href}
-                className={`transition-colors text-sm font-semibold uppercase tracking-widest ${isScrolled ? 'hover:text-primary' : 'hover:text-primary drop-shadow-md'}`}
+                className={`transition-colors text-sm font-semibold uppercase tracking-widest ${isSolidBg ? 'hover:text-primary text-gray-800' : 'hover:text-primary drop-shadow-md text-white'}`}
               >
                 {link.name}
               </Link>
@@ -60,7 +66,7 @@ export default function Navbar() {
             {/* Desktop Search Trigger */}
             <button
               onClick={() => setIsSearchOpen(true)}
-              className={`transition-colors p-2 ${isScrolled ? 'hover:text-primary' : 'hover:text-primary drop-shadow-md'}`}
+              className={`transition-colors p-2 ${isSolidBg ? 'hover:text-primary text-gray-800' : 'hover:text-primary drop-shadow-md text-white'}`}
             >
               <Search size={20} />
             </button>
@@ -70,13 +76,13 @@ export default function Navbar() {
           <div className="md:hidden flex items-center gap-4 z-[60] relative">
             <button
               onClick={() => setIsSearchOpen(true)}
-              className={`transition-colors ${isMobileMenuOpen || isScrolled ? 'text-gray-600 hover:text-primary' : 'text-white hover:text-primary'}`}
+              className={`transition-colors ${isMobileMenuOpen || isSolidBg ? 'text-gray-800 hover:text-primary' : 'text-white hover:text-primary'}`}
             >
               <Search size={22} />
             </button>
 
             <button
-              className={`transition-transform ${isMobileMenuOpen || isScrolled ? 'text-gray-600 hover:text-primary' : 'text-white hover:text-primary'}`}
+              className={`transition-transform ${isMobileMenuOpen || isSolidBg ? 'text-gray-800 hover:text-primary' : 'text-white hover:text-primary'}`}
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             >
               {isMobileMenuOpen ? <X size={26} /> : <Menu size={26} />}

@@ -5,9 +5,9 @@ const cinzel = Cinzel({ subsets: ["latin"], weight: ["400", "700"] });
 
 export default function AboutMaster() {
     return (
-        <section className="py-24 relative overflow-hidden bg-[#0a0a0a] text-white">
+        <section className="py-24 relative overflow-hidden bg-white text-text">
             {/* Ambient background effect */}
-            <div className="absolute top-0 right-0 w-1/2 h-1/2 bg-primary/10 blur-[120px] rounded-full pointer-events-none"></div>
+            <div className="absolute top-0 right-0 w-1/2 h-1/2 bg-primary/5 blur-[120px] rounded-full pointer-events-none"></div>
 
             <div className="max-w-7xl mx-auto px-4 grid lg:grid-cols-2 gap-16 items-center relative z-10">
                 {/* Left Content - Bio */}
@@ -16,20 +16,20 @@ export default function AboutMaster() {
                         <p className="text-primary text-sm font-bold tracking-[0.2em] uppercase mb-3 flex items-center gap-2">
                             <Youtube size={18} /> @pramodgoswami
                         </p>
-                        <h2 className={`text-4xl md:text-6xl font-extrabold text-white tracking-tight leading-tight mb-4 ${cinzel.className}`}>
+                        <h2 className={`text-4xl md:text-6xl font-extrabold text-text tracking-tight leading-tight mb-4 ${cinzel.className}`}>
                             Master Pramod <br />
                             <span className="text-primary">
                                 Goswami
                             </span>
                         </h2>
-                        <p className="text-gray-300 text-lg font-medium">
+                        <p className="text-gray-600 text-lg font-medium">
                             International Martial Arts Coach | Founder of LHBS
                         </p>
                     </div>
 
-                    <div className="text-gray-400 space-y-4 leading-relaxed text-lg">
+                    <div className="text-gray-600 space-y-4 leading-relaxed text-lg">
                         <p>
-                            <strong className="text-white">Train Like a Warrior. Live Like a Legend.</strong>
+                            <strong className="text-text">Train Like a Warrior. Live Like a Legend.</strong>
                         </p>
                         <p>
                             "Here, we don’t follow trends — we create them. From traditional to tactical, cinematic to real-world combat – this is where every warrior begins."
@@ -41,25 +41,25 @@ export default function AboutMaster() {
 
                     {/* Stats Grid */}
                     <div className="grid grid-cols-2 gap-4 pt-4">
-                        <div className="p-5 rounded-2xl bg-white/5 border border-white/10 hover:border-primary/50 transition-colors">
+                        <div className="p-5 rounded-2xl bg-gray-50 border border-gray-100 hover:border-primary/50 transition-colors shadow-sm">
                             <Youtube className="text-[#FF0000] mb-3" size={28} />
-                            <h4 className="text-white font-bold text-xl mb-1">YouTube</h4>
-                            <p className="text-sm text-gray-400">Join our massive digital dojo</p>
+                            <h4 className="text-text font-bold text-xl mb-1">YouTube</h4>
+                            <p className="text-sm text-gray-500">Join our massive digital dojo</p>
                         </div>
-                        <div className="p-5 rounded-2xl bg-white/5 border border-white/10 hover:border-primary/50 transition-colors">
+                        <div className="p-5 rounded-2xl bg-gray-50 border border-gray-100 hover:border-primary/50 transition-colors shadow-sm">
                             <Users className="text-primary mb-3" size={28} />
-                            <h4 className="text-white font-bold text-xl mb-1">1 Crore</h4>
-                            <p className="text-sm text-gray-400">Mission Target</p>
+                            <h4 className="text-text font-bold text-xl mb-1">1 Crore</h4>
+                            <p className="text-sm text-gray-500">Mission Target</p>
                         </div>
-                        <div className="p-5 rounded-2xl bg-white/5 border border-white/10 hover:border-primary/50 transition-colors">
+                        <div className="p-5 rounded-2xl bg-gray-50 border border-gray-100 hover:border-primary/50 transition-colors shadow-sm">
                             <Shield className="text-primary mb-3" size={28} />
-                            <h4 className="text-white font-bold text-xl mb-1">Real-world</h4>
-                            <p className="text-sm text-gray-400">Practical Self Defense</p>
+                            <h4 className="text-text font-bold text-xl mb-1">Real-world</h4>
+                            <p className="text-sm text-gray-500">Practical Self Defense</p>
                         </div>
-                        <div className="p-5 rounded-2xl bg-white/5 border border-white/10 hover:border-primary/50 transition-colors">
+                        <div className="p-5 rounded-2xl bg-gray-50 border border-gray-100 hover:border-primary/50 transition-colors shadow-sm">
                             <Trophy className="text-[#FFD700] mb-3" size={28} />
-                            <h4 className="text-white font-bold text-xl mb-1">Certified</h4>
-                            <p className="text-sm text-gray-400">International Coach</p>
+                            <h4 className="text-text font-bold text-xl mb-1">Certified</h4>
+                            <p className="text-sm text-gray-500">International Coach</p>
                         </div>
                     </div>
 

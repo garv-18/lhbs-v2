@@ -51,22 +51,22 @@ const INFINITE_REVIEWS = [...REVIEWS, ...REVIEWS];
 
 const ReviewCard = ({ review }) => (
     <div
-        className="shrink-0 w-[350px] md:w-[400px] bg-[#0f0f0f] border border-white/5 p-8 rounded-xl hover:border-white/10 transition-colors duration-300 flex flex-col justify-between gap-6 mx-4 group select-none min-h-[320px]"
+        className="shrink-0 w-[350px] md:w-[400px] bg-white border border-gray-200 p-8 rounded-xl hover:border-gray-300 transition-colors duration-300 flex flex-col justify-between gap-6 mx-4 group select-none min-h-[320px] shadow-sm hover:shadow-md"
     >
         <div className="relative">
-            <p className={`text-gray-300 leading-relaxed text-[15px] ${manrope.className}`}>
+            <p className="text-gray-600 leading-relaxed text-[15px]">
                 "{review.text}"
             </p>
         </div>
 
-        <div className="flex items-center gap-4 pt-4 border-t border-white/5 mt-2">
+        <div className="flex items-center gap-4 pt-4 border-t border-gray-100 mt-2">
             <div className="w-10 h-10 rounded-full overflow-hidden relative shrink-0">
-                <div className="w-full h-full bg-gradient-to-br from-[#333] to-[#111] flex items-center justify-center text-white/50 font-bold text-xs">
+                <div className="w-full h-full bg-gray-100 flex items-center justify-center text-gray-500 font-bold text-xs">
                     {review.initial}
                 </div>
             </div>
             <div>
-                <h4 className={`text-white font-bold tracking-wide text-sm ${cinzel.className}`}>
+                <h4 className={`text-text font-bold tracking-wide text-sm ${cinzel.className}`}>
                     {review.name}
                 </h4>
             </div>
@@ -76,30 +76,30 @@ const ReviewCard = ({ review }) => (
 
 export default function Testimonials() {
     return (
-        <section className="py-24 relative overflow-hidden bg-black">
+        <section className="py-24 relative overflow-hidden bg-gray-50">
             {/* Background Gradients - Subtle */}
             <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-                <div className="absolute top-1/2 left-0 -translate-y-1/2 w-[500px] h-[500px] bg-[#FD5D2F]/5 rounded-full blur-[120px] -z-10"></div>
-                <div className="absolute top-1/2 right-0 -translate-y-1/2 w-[500px] h-[500px] bg-[#C8295E]/5 rounded-full blur-[120px] -z-10"></div>
+                <div className="absolute top-1/2 left-0 -translate-y-1/2 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[120px] -z-10"></div>
+                <div className="absolute top-1/2 right-0 -translate-y-1/2 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[120px] -z-10"></div>
             </div>
 
             <div className="max-w-7xl mx-auto px-4 relative z-10 mb-20">
                 <div className="text-center" data-aos="fade-down">
-                    <div className="inline-block px-4 py-1.5 rounded-full border border-white/10 bg-white/5 mb-6 backdrop-blur-sm">
-                        <p className={`text-[#FD5D2F] text-xs tracking-[0.2em] uppercase ${manrope.className}`}>
+                    <div className="inline-block px-4 py-1.5 rounded-full border border-gray-200 bg-white mb-6 shadow-sm">
+                        <p className="text-primary text-xs font-bold tracking-[0.2em] uppercase">
                             Wall of Love
                         </p>
                     </div>
-                    <h2 className={`text-4xl md:text-5xl font-bold text-white tracking-tighter ${cinzel.className}`}>
-                        WHAT STUDENTS <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#C8295E] to-[#FD5D2F]">SAY</span>
+                    <h2 className={`text-4xl md:text-5xl font-extrabold text-text tracking-tighter ${cinzel.className}`}>
+                        WHAT STUDENTS <span className="text-primary">SAY</span>
                     </h2>
                 </div>
             </div>
 
             {/* Infinite Slider */}
             <div className="relative w-full flex overflow-hidden">
-                <div className="absolute left-0 top-0 bottom-0 w-20 md:w-40 z-20 bg-gradient-to-r from-black to-transparent pointer-events-none"></div>
-                <div className="absolute right-0 top-0 bottom-0 w-20 md:w-40 z-20 bg-gradient-to-l from-black to-transparent pointer-events-none"></div>
+                <div className="absolute left-0 top-0 bottom-0 w-20 md:w-40 z-20 bg-gradient-to-r from-gray-50 to-transparent pointer-events-none"></div>
+                <div className="absolute right-0 top-0 bottom-0 w-20 md:w-40 z-20 bg-gradient-to-l from-gray-50 to-transparent pointer-events-none"></div>
 
                 <motion.div
                     className="flex"

@@ -1,9 +1,15 @@
 "use client";
 
 import { useRef } from "react";
-import { ChevronLeft, ChevronRight, Zap } from "lucide-react";
+import { ChevronLeft, ChevronRight, Heart } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
+import { Cinzel, Manrope } from "next/font/google";
+
+import FavoriteButton from "./FavoriteButton";
+
+const cinzel = Cinzel({ subsets: ["latin"], weight: ["400", "700"] });
+const manrope = Manrope({ subsets: ["latin"], weight: ["300", "500", "700"] });
 
 export default function CategoryCarousel({ category, courses = [] }) {
     const scrollRef = useRef(null);
@@ -26,10 +32,10 @@ export default function CategoryCarousel({ category, courses = [] }) {
         <div className="py-20 relative bg-background border-b border-gray-100">
             <div className="max-w-7xl mx-auto px-4 mb-10 flex flex-col md:flex-row items-end justify-between gap-6">
                 <div>
-                    <h2 className="text-3xl md:text-4xl font-bold text-text leading-tight">
+                    <h2 className={`text-3xl md:text-4xl font-bold text-text leading-tight ${cinzel.className}`}>
                         {category.title}
                     </h2>
-                    <p className="text-gray-500 mt-2 text-sm">
+                    <p className={`text-gray-500 mt-2 text-sm ${manrope.className}`}>
                         Explore our top-rated {category.title.toLowerCase()}s
                     </p>
                 </div>
@@ -62,47 +68,50 @@ export default function CategoryCarousel({ category, courses = [] }) {
             {/* Carousel Container */}
             <div
                 ref={scrollRef}
-                className="flex overflow-x-auto gap-4 md:gap-6 px-4 md:px-8 lg:px-[calc((100vw-1280px)/2)] pb-12 snap-x snap-mandatory hide-scrollbar"
+                className="flex overflow-x-auto gap-6 md:gap-8 px-4 md:px-8 lg:px-[calc((100vw-1280px)/2)] pb-12 snap-x snap-mandatory hide-scrollbar"
                 style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
             >
                 {courses.map((course, index) => (
-                    <div
+                    <Link
+                        href={`/courses/${category.slug}/${course.slug}`}
                         key={course.slug || index}
-                        className="min-w-[85vw] md:min-w-[320px] max-w-[320px] snap-center bg-white border border-gray-100 rounded-2xl overflow-hidden hover:shadow-lg transition-all duration-300 group relative flex flex-col shadow-sm"
+                        className="min-w-[85vw] md:min-w-[320px] max-w-[320px] snap-center bg-white border border-gray-100 hover:border-gray-200 hover:shadow-xl transition-all duration-300 group flex flex-col shadow-sm rounded-2xl"
                     >
-                        {/* Image Area */}
-                        <div className="h-56 relative overflow-hidden bg-gray-100">
+                        {/* Image Area - Taller aspect ratio */}
+                        <div className="h-[360px] w-full relative overflow-hidden bg-gray-50">
                             {(course.image?.url || course.image) && (
                                 <Image
                                     src={course.image?.url || course.image}
                                     alt={course.title}
                                     fill
-                                    className="object-cover group-hover:scale-105 transition-transform duration-500 relative z-0"
+                                    className="object-cover group-hover:scale-105 transition-transform duration-700 relative z-0"
                                 />
                             )}
+                            
+                            {/* Favorite Icon */}
+                            <FavoriteButton course={{...course, categorySlug: category.slug}} />
                         </div>
 
                         {/* Content Area */}
-                        <div className="p-5 flex-1 flex flex-col">
-                            <div className="mb-auto">
-                                <span className="block text-primary text-xs font-semibold tracking-wide uppercase mb-1.5">
-                                    {course.slogan}
-                                </span>
-                                <h3 className="text-xl font-bold text-text mb-2 line-clamp-1">
-                                    {course.title}
-                                </h3>
-                                <p className="text-gray-500 text-sm leading-relaxed mb-4 line-clamp-2">
-                                    {course.description}
-                                </p>
+                        <div className="p-6 flex-1 flex flex-col bg-white border-t border-gray-50">
+                            <h3 className={`text-2xl text-text mb-4 ${cinzel.className} line-clamp-1`}>
+                                {course.title}
+                            </h3>
+                            
+                            <div className="flex justify-between items-end mt-auto gap-4">
+                                <div className="flex-1">
+                                    <p className={`text-gray-600 text-sm leading-relaxed line-clamp-2 font-medium ${manrope.className}`}>
+                                        {course.description}
+                                    </p>
+                                </div>
+                                <div className="shrink-0">
+                                    <span className={`text-2xl text-text tracking-tight ${cinzel.className}`}>
+                                        {course.price ? `₹${course.price}` : '₹2999'}
+                                    </span>
+                                </div>
                             </div>
-
-                            <Link href={`/coursename/${course.slug}`}>
-                                <button className="w-full py-2.5 rounded-xl bg-primary text-white font-semibold hover:bg-primary-hover transition-colors duration-300 text-sm">
-                                    View Course
-                                </button>
-                            </Link>
                         </div>
-                    </div>
+                    </Link>
                 ))}
 
                 <div className="min-w-[20px] md:min-w-[calc((100vw-1280px)/2)] shrink-0"></div>

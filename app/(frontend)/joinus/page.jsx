@@ -14,38 +14,36 @@ export default function JoinUs() {
     };
 
     return (
-        <div className="min-h-screen bg-[#0a0a0a] text-white pt-32 pb-20 px-4">
-            <TextureBackground />
-
-            <div className="max-w-6xl mx-auto">
+        <div className="min-h-screen bg-gray-50 text-text pt-32 pb-20 px-4 relative">
+            <div className="max-w-6xl mx-auto relative z-10">
                 {/* Header */}
                 <div className="text-center mb-20" data-aos="fade-up">
                     <h1 className={`text-5xl md:text-7xl font-bold mb-6 ${cinzel.className}`}>
-                        JOIN <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#C8295E] to-[#FD5D2F]">US</span>
+                        JOIN <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-[#FF9F1C]">US</span>
                     </h1>
-                    <p className={`text-gray-400 text-lg max-w-2xl mx-auto ${manrope.className}`}>
+                    <p className={`text-gray-600 text-lg max-w-2xl mx-auto ${manrope.className}`}>
                         Choose your path to mastery. Select the program that fits your goals.
                     </p>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
                     {/* Expert Program Card */}
-                    <div className="glass-card rounded-3xl overflow-hidden relative group flex flex-col" data-aos="fade-right">
-                        <div className="absolute top-0 right-0 w-64 h-64 bg-[#C8295E] opacity-10 blur-[80px] rounded-full group-hover:opacity-20 transition-opacity"></div>
+                    <div className="bg-white border border-gray-200 shadow-md rounded-3xl overflow-hidden relative group flex flex-col" data-aos="fade-right">
+                        <div className="absolute top-0 right-0 w-64 h-64 bg-primary opacity-5 blur-[80px] rounded-full group-hover:opacity-10 transition-opacity"></div>
 
-                        <div className="p-10 flex-grow">
-                            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#C8295E] to-[#FD5D2F] flex items-center justify-center mb-8 shadow-[0_0_30px_rgba(200,41,94,0.3)]">
+                        <div className="p-10 flex-grow relative z-10">
+                            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary to-[#FF9F1C] flex items-center justify-center mb-8 shadow-sm">
                                 <Star className="text-white" size={32} />
                             </div>
 
                             <h2 className={`text-3xl font-bold mb-4 ${cinzel.className}`}>
                                 Martial Arts Expert Program 2.0
                             </h2>
-                            <p className={`text-gray-400 mb-8 leading-relaxed ${manrope.className}`}>
+                            <p className={`text-gray-600 mb-8 leading-relaxed ${manrope.className}`}>
                                 A comprehensive one-year professional course designed to transform you from a beginner to an expert. Master the fundamentals, advanced techniques, and the philosophy of martial arts.
                             </p>
 
-                            <div className={`text-3xl font-bold text-[#FD5D2F] mb-6 ${cinzel.className}`}>
+                            <div className={`text-3xl font-bold text-primary mb-6 ${cinzel.className}`}>
                                 ₹2,36,000
                             </div>
 
@@ -57,18 +55,18 @@ export default function JoinUs() {
                                     "Personalized Mentorship",
                                     "Access to Exclusive Community"
                                 ].map((feature, i) => (
-                                    <div key={i} className={`flex items-center gap-3 text-gray-300 ${manrope.className}`}>
-                                        <CheckCircle2 className="text-[#FD5D2F] flex-shrink-0" size={20} />
+                                    <div key={i} className={`flex items-center gap-3 text-gray-700 font-medium ${manrope.className}`}>
+                                        <CheckCircle2 className="text-primary flex-shrink-0" size={20} />
                                         <span>{feature}</span>
                                     </div>
                                 ))}
                             </div>
                         </div>
 
-                        <div className="p-10 pt-0 mt-auto">
+                        <div className="p-10 pt-0 mt-auto relative z-10">
                             <button
                                 onClick={() => handleJoin("Martial Arts Expert Program 2.0")}
-                                className="w-full bg-white text-black font-bold py-4 rounded-xl hover:bg-gray-200 transition-colors flex items-center justify-center gap-2 uppercase tracking-widest group-hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]"
+                                className="w-full bg-text text-white font-bold py-4 rounded-xl hover:bg-gray-800 transition-colors flex items-center justify-center gap-2 uppercase tracking-widest shadow-sm"
                             >
                                 <span>Join Now</span>
                                 <ArrowRight size={20} />
@@ -77,22 +75,22 @@ export default function JoinUs() {
                     </div>
 
                     {/* VIP Training Card */}
-                    <div className="glass-card rounded-3xl overflow-hidden relative group flex flex-col border-white/10" data-aos="fade-left">
-                        <div className="absolute top-0 right-0 w-64 h-64 bg-[#FFD700] opacity-5 blur-[80px] rounded-full group-hover:opacity-15 transition-opacity"></div>
+                    <div className="bg-white border border-gray-200 shadow-md rounded-3xl overflow-hidden relative group flex flex-col" data-aos="fade-left">
+                        <div className="absolute top-0 right-0 w-64 h-64 bg-[#FFD700] opacity-5 blur-[80px] rounded-full group-hover:opacity-10 transition-opacity"></div>
 
-                        <div className="p-10 flex-grow">
-                            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#FFD700] to-[#FFA500] flex items-center justify-center mb-8 shadow-[0_0_30px_rgba(255,215,0,0.2)]">
-                                <Crown className="text-black" size={32} />
+                        <div className="p-10 flex-grow relative z-10">
+                            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#FFD700] to-[#FFA500] flex items-center justify-center mb-8 shadow-sm">
+                                <Crown className="text-white" size={32} />
                             </div>
 
-                            <h2 className={`text-3xl font-bold mb-4 text-[#FFD700] ${cinzel.className}`}>
+                            <h2 className={`text-3xl font-bold mb-4 text-[#D4AF37] ${cinzel.className}`}>
                                 VIP Training
                             </h2>
-                            <p className={`text-gray-400 mb-8 leading-relaxed ${manrope.className}`}>
+                            <p className={`text-gray-600 mb-8 leading-relaxed ${manrope.className}`}>
                                 Exclusive, one-on-one training for those who demand the absolute best. Tailored specifically to your goals, schedule, and learning style. Experience the pinnacle of martial arts education.
                             </p>
 
-                            <div className={`text-3xl font-bold text-[#FFD700] mb-6 ${cinzel.className}`}>
+                            <div className={`text-3xl font-bold text-[#D4AF37] mb-6 ${cinzel.className}`}>
                                 ₹2,36,000
                             </div>
 
@@ -104,18 +102,18 @@ export default function JoinUs() {
                                     "Customized Curriculum",
                                     "Priority Support"
                                 ].map((feature, i) => (
-                                    <div key={i} className={`flex items-center gap-3 text-gray-300 ${manrope.className}`}>
-                                        <CheckCircle2 className="text-[#FFD700] flex-shrink-0" size={20} />
+                                    <div key={i} className={`flex items-center gap-3 text-gray-700 font-medium ${manrope.className}`}>
+                                        <CheckCircle2 className="text-[#D4AF37] flex-shrink-0" size={20} />
                                         <span>{feature}</span>
                                     </div>
                                 ))}
                             </div>
                         </div>
 
-                        <div className="p-10 pt-0 mt-auto">
+                        <div className="p-10 pt-0 mt-auto relative z-10">
                             <button
                                 onClick={() => handleJoin("VIP Training")}
-                                className="w-full bg-gradient-to-r from-[#FFD700] to-[#FFA500] text-black font-bold py-4 rounded-xl hover:shadow-[0_0_30px_rgba(255,215,0,0.4)] transition-all duration-300 flex items-center justify-center gap-2 uppercase tracking-widest"
+                                className="w-full bg-gradient-to-r from-[#FFD700] to-[#FFA500] text-white font-bold py-4 rounded-xl hover:shadow-lg transition-all duration-300 flex items-center justify-center gap-2 uppercase tracking-widest"
                             >
                                 <span>Join VIP Now</span>
                                 <ArrowRight size={20} />
@@ -126,18 +124,17 @@ export default function JoinUs() {
 
                 {/* Footer Info */}
                 <div className="mt-20 grid grid-cols-1 md:grid-cols-2 gap-8 text-center md:text-left">
-                    <div className="glass-card p-8 rounded-2xl">
-                        <h3 className={`text-xl font-bold mb-4 ${cinzel.className}`}>Follow Us</h3>
+                    <div className="bg-white border border-gray-100 p-8 rounded-2xl shadow-sm">
+                        <h3 className={`text-xl font-bold mb-4 text-text ${cinzel.className}`}>Follow Us</h3>
                         <div className="flex justify-center md:justify-start gap-6">
-                            {/* Social Icons Placeholder - using text for now or Lucide icons if available */}
-                            <a href="#" className="text-gray-400 hover:text-[#FD5D2F] transition-colors">YouTube</a>
-                            <a href="#" className="text-gray-400 hover:text-[#FD5D2F] transition-colors">Instagram</a>
-                            <a href="#" className="text-gray-400 hover:text-[#FD5D2F] transition-colors">Facebook</a>
+                            <a href="#" className="text-gray-500 hover:text-primary transition-colors">YouTube</a>
+                            <a href="#" className="text-gray-500 hover:text-primary transition-colors">Instagram</a>
+                            <a href="#" className="text-gray-500 hover:text-primary transition-colors">Facebook</a>
                         </div>
                     </div>
-                    <div className="glass-card p-8 rounded-2xl">
-                        <h3 className={`text-xl font-bold mb-4 ${cinzel.className}`}>Address</h3>
-                        <p className={`text-gray-400 ${manrope.className}`}>
+                    <div className="bg-white border border-gray-100 p-8 rounded-2xl shadow-sm">
+                        <h3 className={`text-xl font-bold mb-4 text-text ${cinzel.className}`}>Address</h3>
+                        <p className={`text-gray-600 ${manrope.className}`}>
                             Martial Arts School<br />
                             Indore, Madhya Pradesh, Bharat (452018)
                         </p>

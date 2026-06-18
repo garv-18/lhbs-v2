@@ -1,103 +1,154 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { Cinzel, Manrope } from "next/font/google";
+import FavoriteButton from "./FavoriteButton";
+
+const cinzel = Cinzel({ subsets: ["latin"], weight: ["400", "700"] });
+const manrope = Manrope({ subsets: ["latin"], weight: ["300", "500", "700"] });
 
 export default function CourseListClient({ categories }) {
-  const [activeCategory, setActiveCategory] = useState('all');
+  const [navbarHeight, setNavbarHeight] = useState(68);
+  const [searchQuery, setSearchQuery] = useState("");
 
-  const allCourses = categories.flatMap(cat => cat.courses.map(c => ({...c, categorySlug: cat.slug})));
-  
-  const displayedCourses = activeCategory === 'all' 
-    ? allCourses 
-    : allCourses.filter(c => c.categorySlug === activeCategory);
+  useEffect(() => {
+    const updateHeight = () => {
+      const nav = document.getElementById('navbar');
+      if (nav) {
+        setNavbarHeight(nav.offsetHeight);
+      }
+    };
+    
+    // Initial measurement
+    updateHeight();
+    
+    // Update on resize
+    window.addEventListener('resize', updateHeight);
+    return () => window.removeEventListener('resize', updateHeight);
+  }, []);
+
+  const filteredCategories = categories.map(category => {
+    if (!searchQuery) return category;
+    
+    const lowerQuery = searchQuery.toLowerCase();
+    const filteredCourses = category.courses?.filter(course => 
+      course.title.toLowerCase().includes(lowerQuery) || 
+      course.description?.toLowerCase().includes(lowerQuery)
+    );
+    
+    return { ...category, courses: filteredCourses };
+  }).filter(category => category.courses && category.courses.length > 0);
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-12 flex flex-col md:flex-row gap-8 items-start">
-      {/* Sidebar Filter */}
-      <div className="w-full md:w-64 shrink-0 md:sticky top-24 bg-white border border-gray-100 rounded-2xl p-6 shadow-sm">
-        <h3 className="text-lg font-bold text-text mb-4">Categories</h3>
-        <ul className="space-y-2">
-          <li>
-            <button 
-              onClick={() => setActiveCategory('all')}
-              className={`w-full text-left px-4 py-2 rounded-xl text-sm font-medium transition-colors ${activeCategory === 'all' ? 'bg-primary text-white' : 'text-gray-600 hover:bg-gray-50'}`}
-            >
-              All Courses
-            </button>
-          </li>
-          {categories.map(cat => (
-            <li key={cat.id}>
-              <button 
-                onClick={() => setActiveCategory(cat.slug)}
-                className={`w-full text-left px-4 py-2 rounded-xl text-sm font-medium transition-colors ${activeCategory === cat.slug ? 'bg-primary text-white' : 'text-gray-600 hover:bg-gray-50'}`}
-              >
-                {cat.title}
-              </button>
-            </li>
-          ))}
-        </ul>
-      </div>
-
-      {/* Courses Grid */}
-      <div className="flex-1 w-full">
-        <div className="mb-6 flex justify-between items-end">
-          <h2 className="text-2xl font-bold text-text">
-            {activeCategory === 'all' ? 'All Courses' : categories.find(c => c.slug === activeCategory)?.title}
-          </h2>
-          <span className="text-sm text-gray-500 font-medium">{displayedCourses.length} courses found</span>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {displayedCourses.map((course, index) => (
-            <div
-              key={course.id || index}
-              className="bg-white border border-gray-100 rounded-2xl overflow-hidden hover:shadow-lg transition-all duration-300 group flex flex-col shadow-sm"
-            >
-              <div className="h-48 relative overflow-hidden bg-gray-100">
-                {(course.image?.url || course.image) && (
-                  <Image
-                    src={course.image?.url || course.image}
-                    alt={course.title}
-                    fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-500 relative z-0"
-                  />
-                )}
-              </div>
-
-              <div className="p-5 flex-1 flex flex-col">
-                <div className="mb-auto">
-                  <span className="block text-primary text-xs font-semibold tracking-wide uppercase mb-1.5">
-                    {course.slogan}
-                  </span>
-                  <h3 className="text-xl font-bold text-text mb-2 line-clamp-1">
-                    {course.title}
-                  </h3>
-                  <p className="text-gray-500 text-sm leading-relaxed mb-4 line-clamp-2">
-                    {course.description}
-                  </p>
-                </div>
-
-                <div className="flex items-center justify-between mt-2 pt-4 border-t border-gray-50">
-                   <span className="font-bold text-lg text-text">₹{course.price?.toLocaleString()}</span>
-                   <Link href={`/coursename/${course.slug}`}>
-                      <button className="px-5 py-2 rounded-lg bg-primary text-white font-semibold hover:bg-primary-hover transition-colors duration-300 text-sm">
-                        Enroll
-                      </button>
-                   </Link>
-                </div>
-              </div>
-            </div>
-          ))}
-
-          {displayedCourses.length === 0 && (
-            <div className="col-span-full py-12 text-center text-gray-500">
-               No courses available.
-            </div>
-          )}
+    <div className="w-full bg-background pb-20">
+      {/* Search Bar */}
+      <div className="max-w-7xl mx-auto px-4 pt-4 pb-8">
+        <div className="relative max-w-2xl mx-auto">
+          <input 
+            type="text" 
+            placeholder="Search for courses, martial arts, fitness..." 
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className={`w-full px-8 py-4 bg-white border border-gray-200 rounded-full shadow-sm text-text focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all text-lg ${manrope.className}`}
+          />
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 absolute right-6 top-1/2 -translate-y-1/2 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
         </div>
       </div>
+      
+      {filteredCategories.length === 0 && (
+        <div className="text-center py-20">
+          <p className={`text-xl text-gray-500 ${manrope.className}`}>No courses found matching "{searchQuery}"</p>
+        </div>
+      )}
+
+      {filteredCategories.map((category) => {
+        if (!category.courses || category.courses.length === 0) return null;
+
+        // Display up to 8 courses (2 perfect rows on desktop, 4 on mobile)
+        const displayedCourses = category.courses.slice(0, 8);
+
+        return (
+          <div key={category.id} className="relative pt-8 mb-4">
+            {/* Sticky Header */}
+            <div 
+              className="sticky z-40 bg-background/95 backdrop-blur-md py-4 mb-8 flex justify-between items-center"
+              style={{ top: `${navbarHeight}px` }}
+            >
+              <div className="max-w-7xl mx-auto px-4 w-full flex justify-between items-center">
+                <h2 className={`text-2xl font-bold text-text ${cinzel.className}`}>
+                  {category.title}
+                </h2>
+                <Link href={`/courses/${category.slug}`}>
+                  <button className="text-sm font-bold text-primary hover:text-[#C8295E] transition-colors uppercase tracking-wider">
+                    View All
+                  </button>
+                </Link>
+              </div>
+            </div>
+
+            {/* Courses Grid */}
+            <div className="max-w-7xl mx-auto px-4">
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+                {displayedCourses.map((course, index) => (
+                  <Link
+                    href={`/courses/${category.slug}/${course.slug}`}
+                    key={course.id || index}
+                    className="bg-white border border-gray-100 rounded-2xl overflow-hidden hover:border-gray-200 hover:shadow-xl transition-all duration-300 group flex flex-col shadow-sm"
+                  >
+                    <div className="h-[280px] sm:h-[360px] w-full relative overflow-hidden bg-gray-50">
+                      {(course.image?.url || course.image) && (
+                        <img
+                          src={course.image?.url || course.image}
+                          alt={course.title}
+                          className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-700 relative z-0"
+                        />
+                      )}
+                      
+                      {/* Favorite Icon */}
+                      <FavoriteButton course={{...course, categorySlug: category.slug}} />
+                    </div>
+
+                    {/* Content Area */}
+                    <div className="p-5 md:p-6 flex-1 flex flex-col bg-white border-t border-gray-50">
+                      <h3 className={`text-xl md:text-2xl text-text mb-4 ${cinzel.className} line-clamp-1`}>
+                        {course.title}
+                      </h3>
+                      
+                      <div className="flex justify-between items-end mt-auto gap-2">
+                        <div className="flex-1">
+                          <p className={`text-gray-600 text-sm leading-relaxed line-clamp-2 font-medium ${manrope.className}`}>
+                            {course.description}
+                          </p>
+                        </div>
+                        <div className="shrink-0">
+                          <span className={`text-xl md:text-2xl text-text tracking-tight ${cinzel.className}`}>
+                            {course.price ? `₹${course.price.toLocaleString()}` : '₹2999'}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+
+              {/* Bottom View All Button */}
+              {category.courses.length > 8 && (
+                <div className="mt-12 text-center">
+                  <Link href={`/courses/${category.slug}`}>
+                    <button className="px-8 py-3 rounded-xl border border-gray-200 bg-white hover:bg-gray-50 text-text transition-all duration-300 text-sm font-semibold shadow-sm">
+                      View All {category.title}
+                    </button>
+                  </Link>
+                </div>
+              )}
+            </div>
+          </div>
+        );
+      })}
     </div>
   );
 }
