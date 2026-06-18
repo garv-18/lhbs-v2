@@ -9,7 +9,7 @@ import { RichText } from '@payloadcms/richtext-lexical/react';
 import CourseHeaderClient from "../../../components/CourseHeaderClient";
 import CourseGallery from "../../../components/CourseGallery";
 import CourseSidebarClient from "../../../components/CourseSidebarClient";
-import InstamojoButton from "../../../components/InstamojoButton";
+import PricingCard from "../../../components/PricingCard";
 
 const cinzel = Cinzel({ subsets: ["latin"], weight: ["400", "700"] });
 const manrope = Manrope({ subsets: ["latin"], weight: ["300", "500", "700"] });
@@ -20,7 +20,7 @@ export async function generateMetadata({ params }) {
   const data = await payload.find({
     collection: 'coursenames',
     where: { slug: { equals: courseSlug } },
-    depth: 1
+    depth: 2
   });
   
   const course = data.docs[0];
@@ -61,7 +61,7 @@ export default async function CoursePage({ params }) {
   const data = await payload.find({
     collection: 'coursenames',
     where: { slug: { equals: courseSlug } },
-    depth: 1
+    depth: 2
   });
   
   const course = data.docs[0];
@@ -139,7 +139,10 @@ export default async function CoursePage({ params }) {
               </div>
             </div>
 
-            {/* Pricing card now handled exclusively by CourseSidebarClient fixed bottom bar on mobile */}
+            {/* Mobile Pricing Card Below About */}
+            <div className="lg:hidden mt-8">
+              <PricingCard course={course} courseSlug={courseSlug} />
+            </div>
 
             <div className="border-t border-gray-100 pt-10">
                 <h2 className={`text-2xl font-bold mb-6 text-text ${cinzel.className}`}>What you'll learn</h2>
