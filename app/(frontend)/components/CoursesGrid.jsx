@@ -111,7 +111,7 @@ export default function CoursesGrid() {
                 CHOOSE YOUR <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-[#FF9F1C]">PATH</span>
             </h2>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
                 {courses.map((course, index) => (
                     <Link
                         href={course.link}
@@ -120,7 +120,7 @@ export default function CoursesGrid() {
                         data-aos="fade-up"
                         data-aos-delay={index * 50}
                     >
-                        <div className="h-[280px] sm:h-[360px] w-full relative overflow-hidden bg-gray-50">
+                        <div className="aspect-square w-full relative overflow-hidden bg-gray-50">
                             {course.image && (
                                 <img
                                     src={course.image}
@@ -134,19 +134,19 @@ export default function CoursesGrid() {
                         </div>
 
                         {/* Content Area */}
-                        <div className="p-5 md:p-6 flex-1 flex flex-col bg-white border-t border-gray-50">
-                            <h3 className={`text-xl md:text-2xl text-text mb-4 ${cinzel.className} line-clamp-2`}>
+                        <div className="p-4 md:p-6 flex-1 flex flex-col bg-white border-t border-gray-50">
+                            <h3 className={`text-base sm:text-lg md:text-2xl text-text mb-3 md:mb-4 ${cinzel.className} line-clamp-2`}>
                                 {course.title}
                             </h3>
                             
-                            <div className="flex justify-between items-end mt-auto gap-4">
+                            <div className="flex justify-between items-end mt-auto gap-2 md:gap-4">
                                 <div className="flex-1">
-                                    <p className={`text-gray-600 text-sm leading-relaxed line-clamp-2 font-medium ${manrope.className}`}>
+                                    <p className={`text-gray-600 text-xs sm:text-sm leading-relaxed line-clamp-2 font-medium ${manrope.className}`}>
                                         {course.description}
                                     </p>
                                 </div>
                                 <div className="shrink-0">
-                                    <span className={`text-xl md:text-2xl text-text tracking-tight ${cinzel.className}`}>
+                                    <span className={`text-base sm:text-xl md:text-2xl text-text tracking-tight ${cinzel.className}`}>
                                         {course.price ? `₹${course.price}` : '₹2999'}
                                     </span>
                                 </div>

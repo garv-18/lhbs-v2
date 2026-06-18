@@ -92,14 +92,14 @@ export default function CourseListClient({ categories }) {
 
             {/* Courses Grid */}
             <div className="max-w-7xl mx-auto px-4">
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-6">
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
                 {displayedCourses.map((course, index) => (
                   <Link
                     href={`/courses/${category.slug}/${course.slug}`}
                     key={course.id || index}
                     className="bg-white border border-gray-100 rounded-2xl overflow-hidden hover:border-gray-200 hover:shadow-xl transition-all duration-300 group flex flex-col shadow-sm"
                   >
-                    <div className="h-[280px] sm:h-[360px] w-full relative overflow-hidden bg-gray-50">
+                    <div className="aspect-square w-full relative overflow-hidden bg-gray-50">
                       {(course.image?.url || course.image) && (
                         <img
                           src={course.image?.url || course.image}
@@ -113,19 +113,19 @@ export default function CourseListClient({ categories }) {
                     </div>
 
                     {/* Content Area */}
-                    <div className="p-5 md:p-6 flex-1 flex flex-col bg-white border-t border-gray-50">
-                      <h3 className={`text-xl md:text-2xl text-text mb-4 ${cinzel.className} line-clamp-2`}>
+                    <div className="p-4 md:p-6 flex-1 flex flex-col bg-white border-t border-gray-50">
+                      <h3 className={`text-base sm:text-lg md:text-2xl text-text mb-3 md:mb-4 ${cinzel.className} line-clamp-2`}>
                         {course.title}
                       </h3>
                       
-                      <div className="flex justify-between items-end mt-auto gap-4">
+                      <div className="flex justify-between items-end mt-auto gap-2 md:gap-4">
                         <div className="flex-1">
-                          <p className={`text-gray-600 text-sm leading-relaxed line-clamp-2 font-medium ${manrope.className}`}>
+                          <p className={`text-gray-600 text-xs sm:text-sm leading-relaxed line-clamp-2 font-medium ${manrope.className}`}>
                             {course.description}
                           </p>
                         </div>
                         <div className="shrink-0">
-                          <span className={`text-xl md:text-2xl text-text tracking-tight ${cinzel.className}`}>
+                          <span className={`text-base sm:text-xl md:text-2xl text-text tracking-tight ${cinzel.className}`}>
                             {course.price ? `₹${course.price.toLocaleString()}` : '₹2999'}
                           </span>
                         </div>
