@@ -9,6 +9,7 @@ import { RichText } from '@payloadcms/richtext-lexical/react';
 import CourseHeaderClient from "../../../components/CourseHeaderClient";
 import CourseGallery from "../../../components/CourseGallery";
 import CourseSidebarClient from "../../../components/CourseSidebarClient";
+import InstamojoButton from "../../../components/InstamojoButton";
 
 const cinzel = Cinzel({ subsets: ["latin"], weight: ["400", "700"] });
 const manrope = Manrope({ subsets: ["latin"], weight: ["300", "500", "700"] });
@@ -111,7 +112,7 @@ export default async function CoursePage({ params }) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <div className="max-w-7xl mx-auto px-4 pt-24 pb-20">
+      <div className="max-w-7xl mx-auto px-4 pt-24 pb-10 lg:pb-20">
         {/* Header Section */}
         <CourseHeaderClient 
           course={course} 
@@ -126,7 +127,7 @@ export default async function CoursePage({ params }) {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 mt-12 relative">
           
           {/* Left Column: Description & Features */}
-          <div className="lg:col-span-2 space-y-12 pb-24 lg:pb-0">
+          <div className="lg:col-span-2 space-y-12 pb-6 lg:pb-0">
             <div className="prose prose-lg prose-gray max-w-none">
               <h2 className={`text-2xl font-bold mb-6 text-text ${cinzel.className}`}>About This Course</h2>
               <div className="text-gray-600 leading-relaxed">
@@ -136,6 +137,15 @@ export default async function CoursePage({ params }) {
                   <p>{course.description}</p>
                 )}
               </div>
+            </div>
+
+            {/* Mobile Buy Button Below About */}
+            <div className="lg:hidden mt-8">
+              <InstamojoButton
+                amount={course.price}
+                courseSlug={courseSlug}
+                className="w-full py-4 rounded-xl bg-primary text-white font-bold text-base hover:bg-primary-hover shadow-md transition-all duration-300"
+              />
             </div>
 
             <div className="border-t border-gray-100 pt-10">
