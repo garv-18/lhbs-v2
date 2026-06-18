@@ -57,14 +57,14 @@ export default function FavoritesPage() {
                         </Link>
                     </div>
                 ) : (
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                         {favorites.map((course, index) => (
                             <Link
                                 href={`/courses/${course.categorySlug || 'master-program'}/${course.slug}`}
                                 key={course.slug || index}
                                 className="bg-white border border-gray-100 rounded-2xl overflow-hidden hover:border-gray-200 hover:shadow-xl transition-all duration-300 group flex flex-col shadow-sm"
                             >
-                                <div className="h-[360px] w-full relative overflow-hidden bg-gray-50">
+                                <div className="h-[280px] sm:h-[360px] w-full relative overflow-hidden bg-gray-50">
                                     {(course.image?.url || course.image) && (
                                         <img
                                             src={course.image?.url || course.image}
@@ -77,8 +77,8 @@ export default function FavoritesPage() {
                                     <FavoriteButton course={course} />
                                 </div>
 
-                                <div className="p-6 flex-1 flex flex-col bg-white border-t border-gray-50">
-                                    <h3 className={`text-2xl text-text mb-4 ${cinzel.className} line-clamp-1`}>
+                                <div className="p-5 md:p-6 flex-1 flex flex-col bg-white border-t border-gray-50">
+                                    <h3 className={`text-xl md:text-2xl text-text mb-4 ${cinzel.className} line-clamp-2`}>
                                         {course.title}
                                     </h3>
                                     
@@ -89,7 +89,7 @@ export default function FavoritesPage() {
                                             </p>
                                         </div>
                                         <div className="shrink-0">
-                                            <span className={`text-2xl text-text tracking-tight ${cinzel.className}`}>
+                                            <span className={`text-xl md:text-2xl text-text tracking-tight ${cinzel.className}`}>
                                                 {course.price ? `₹${course.price.toLocaleString()}` : '₹2999'}
                                             </span>
                                         </div>

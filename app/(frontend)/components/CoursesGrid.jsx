@@ -111,7 +111,7 @@ export default function CoursesGrid() {
                 CHOOSE YOUR <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-[#FF9F1C]">PATH</span>
             </h2>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
                 {courses.map((course, index) => (
                     <Link
                         href={course.link}
@@ -120,7 +120,7 @@ export default function CoursesGrid() {
                         data-aos="fade-up"
                         data-aos-delay={index * 50}
                     >
-                        <div className="h-[360px] w-full relative overflow-hidden bg-gray-50">
+                        <div className="h-[280px] sm:h-[360px] w-full relative overflow-hidden bg-gray-50">
                             {course.image && (
                                 <img
                                     src={course.image}
@@ -134,8 +134,8 @@ export default function CoursesGrid() {
                         </div>
 
                         {/* Content Area */}
-                        <div className="p-6 flex-1 flex flex-col bg-white border-t border-gray-50">
-                            <h3 className={`text-2xl text-text mb-4 ${cinzel.className} line-clamp-1`}>
+                        <div className="p-5 md:p-6 flex-1 flex flex-col bg-white border-t border-gray-50">
+                            <h3 className={`text-xl md:text-2xl text-text mb-4 ${cinzel.className} line-clamp-2`}>
                                 {course.title}
                             </h3>
                             
@@ -146,7 +146,7 @@ export default function CoursesGrid() {
                                     </p>
                                 </div>
                                 <div className="shrink-0">
-                                    <span className={`text-2xl text-text tracking-tight ${cinzel.className}`}>
+                                    <span className={`text-xl md:text-2xl text-text tracking-tight ${cinzel.className}`}>
                                         {course.price ? `₹${course.price}` : '₹2999'}
                                     </span>
                                 </div>
