@@ -46,9 +46,7 @@ export default async function Home() {
 
   return (
     <>
-      <TextureBackground />
-      <HomeAnimations />
-      <main className="min-h-screen bg-[#0a0a0a] overflow-x-hidden w-full max-w-[100vw]">
+      <main className="min-h-screen bg-background text-text overflow-x-hidden w-full max-w-[100vw]">
         <Hero />
         <Programs />
         {categoriesWithCourses.map(category => (

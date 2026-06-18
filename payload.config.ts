@@ -127,6 +127,8 @@ export default buildConfig({
   ],
   editor: lexicalEditor({}),
   secret: process.env.PAYLOAD_SECRET || 'secret-key',
+  defaultDepth: 1,
+  maxDepth: 2,
   db: postgresAdapter({
     pool: {
       connectionString: process.env.DATABASE_URI,

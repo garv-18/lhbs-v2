@@ -1,20 +1,19 @@
 
 
-import { Cinzel, Manrope } from 'next/font/google';
+import { Inter } from 'next/font/google';
 import Providers from './providers';
 import Navbar from './components/Navbar';
 import Footer from './components/footer';
 import AOSInitializer from './components/AOSInitializer';
 
-const cinzel = Cinzel({ subsets: ['latin'], weight: ['500'], display: 'swap', variable: '--font-cinzel' });
-const manrope = Manrope({ subsets: ['latin'], weight: ['400'], display: 'swap', variable: '--font-manrope' });
+const inter = Inter({ subsets: ['latin'], display: 'swap', variable: '--font-inter' });
 
 import './globals.css';
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`${cinzel.variable} ${manrope.variable}`}>
-      <body className={manrope.className}>
+    <html lang="en" className={`${inter.variable}`}>
+      <body className={`${inter.className} bg-background text-text`}>
         <Providers>
           <Navbar />
           <AOSInitializer />

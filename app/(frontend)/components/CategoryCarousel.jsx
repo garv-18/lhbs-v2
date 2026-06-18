@@ -1,13 +1,9 @@
 "use client";
 
 import { useRef } from "react";
-import { Cinzel, Manrope } from "next/font/google";
 import { ChevronLeft, ChevronRight, Zap } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
-
-const cinzel = Cinzel({ subsets: ["latin"], weight: ["400", "700"] });
-const manrope = Manrope({ subsets: ["latin"], weight: ["300", "500", "700"] });
 
 export default function CategoryCarousel({ category, courses = [] }) {
     const scrollRef = useRef(null);
@@ -27,21 +23,21 @@ export default function CategoryCarousel({ category, courses = [] }) {
     if (courses.length === 0) return null;
 
     return (
-        <div className="py-20 relative">
-            <div className="max-w-7xl mx-auto px-4 mb-12 flex flex-col md:flex-row items-end justify-between gap-6">
+        <div className="py-20 relative bg-background border-b border-gray-100">
+            <div className="max-w-7xl mx-auto px-4 mb-10 flex flex-col md:flex-row items-end justify-between gap-6">
                 <div>
-                    <span className={`block text-[#FD5D2F] text-sm font-bold tracking-[0.2em] uppercase mb-2 ${manrope.className}`}>
-                        Exclusive Collection
-                    </span>
-                    <h2 className={`text-4xl md:text-5xl font-bold text-white leading-tight ${cinzel.className}`}>
-                        {category.title.split(' ')[0]} <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#C8295E] to-[#FD5D2F]">{category.title.split(' ').slice(1).join(' ')}</span>
+                    <h2 className="text-3xl md:text-4xl font-bold text-text leading-tight">
+                        {category.title}
                     </h2>
+                    <p className="text-gray-500 mt-2 text-sm">
+                        Explore our top-rated {category.title.toLowerCase()}s
+                    </p>
                 </div>
 
                 {/* Desktop Buttons */}
                 <div className="hidden md:flex gap-4">
                     <Link href={`/courses/${category.slug}`}>
-                        <button className="px-6 py-3 rounded-full border border-white/10 bg-white/5 hover:bg-[#FD5D2F] hover:border-[#FD5D2F] text-white transition-all duration-300 text-sm font-bold uppercase tracking-wider">
+                        <button className="px-6 py-2.5 rounded-xl border border-gray-200 bg-white hover:bg-gray-50 text-text transition-all duration-300 text-sm font-semibold shadow-sm">
                             View All
                         </button>
                     </Link>
@@ -49,15 +45,15 @@ export default function CategoryCarousel({ category, courses = [] }) {
                     <div className="flex gap-2">
                         <button
                             onClick={() => scroll("left")}
-                            className="p-3 rounded-full border border-white/10 bg-white/5 hover:bg-[#FD5D2F] hover:border-[#FD5D2F] text-white transition-all duration-300 group flex"
+                            className="p-2.5 rounded-full border border-gray-200 bg-white hover:bg-gray-50 text-text transition-all duration-300 group flex shadow-sm"
                         >
-                            <ChevronLeft size={24} className="group-hover:-translate-x-1 transition-transform" />
+                            <ChevronLeft size={20} className="group-hover:-translate-x-0.5 transition-transform" />
                         </button>
                         <button
                             onClick={() => scroll("right")}
-                            className="p-3 rounded-full border border-white/10 bg-white/5 hover:bg-[#FD5D2F] hover:border-[#FD5D2F] text-white transition-all duration-300 group flex"
+                            className="p-2.5 rounded-full border border-gray-200 bg-white hover:bg-gray-50 text-text transition-all duration-300 group flex shadow-sm"
                         >
-                            <ChevronRight size={24} className="group-hover:translate-x-1 transition-transform" />
+                            <ChevronRight size={20} className="group-hover:translate-x-0.5 transition-transform" />
                         </button>
                     </div>
                 </div>
@@ -72,41 +68,37 @@ export default function CategoryCarousel({ category, courses = [] }) {
                 {courses.map((course, index) => (
                     <div
                         key={course.slug || index}
-                        className="min-w-[85vw] md:min-w-[340px] snap-center bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl overflow-hidden hover:border-[#FD5D2F]/50 transition-all duration-500 group relative flex flex-col"
+                        className="min-w-[85vw] md:min-w-[320px] max-w-[320px] snap-center bg-white border border-gray-100 rounded-2xl overflow-hidden hover:shadow-lg transition-all duration-300 group relative flex flex-col shadow-sm"
                     >
                         {/* Image Area */}
-                        <div className="h-64 relative overflow-hidden bg-black/50">
-                            <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-transparent to-transparent z-10"></div>
-                            <div className="absolute inset-0 flex items-center justify-center text-white/10 group-hover:text-[#FD5D2F]/20 transition-colors">
-                                <Zap size={64} strokeWidth={1} />
-                            </div>
+                        <div className="h-56 relative overflow-hidden bg-gray-100">
                             {(course.image?.url || course.image) && (
                                 <Image
                                     src={course.image?.url || course.image}
                                     alt={course.title}
                                     fill
-                                    className="object-cover group-hover:scale-110 transition-transform duration-700 relative z-0"
+                                    className="object-cover group-hover:scale-105 transition-transform duration-500 relative z-0"
                                 />
                             )}
                         </div>
 
                         {/* Content Area */}
-                        <div className="p-6 flex-1 flex flex-col">
+                        <div className="p-5 flex-1 flex flex-col">
                             <div className="mb-auto">
-                                <span className={`block text-[#FD5D2F] text-xs font-bold tracking-widest uppercase mb-2 ${manrope.className}`}>
+                                <span className="block text-primary text-xs font-semibold tracking-wide uppercase mb-1.5">
                                     {course.slogan}
                                 </span>
-                                <h3 className={`text-2xl font-bold text-white mb-4 ${cinzel.className}`}>
+                                <h3 className="text-xl font-bold text-text mb-2 line-clamp-1">
                                     {course.title}
                                 </h3>
-                                <p className={`text-gray-400 text-sm leading-relaxed mb-6 line-clamp-3 ${manrope.className}`}>
+                                <p className="text-gray-500 text-sm leading-relaxed mb-4 line-clamp-2">
                                     {course.description}
                                 </p>
                             </div>
 
                             <Link href={`/coursename/${course.slug}`}>
-                                <button className="w-full py-3 rounded-xl bg-white/10 border border-white/10 text-white font-bold hover:bg-[#FD5D2F] hover:border-[#FD5D2F] transition-all duration-300">
-                                    Explore Course
+                                <button className="w-full py-2.5 rounded-xl bg-primary text-white font-semibold hover:bg-primary-hover transition-colors duration-300 text-sm">
+                                    View Course
                                 </button>
                             </Link>
                         </div>
@@ -117,25 +109,25 @@ export default function CategoryCarousel({ category, courses = [] }) {
             </div>
 
             {/* Mobile Controls */}
-            <div className="px-4 md:hidden flex items-center justify-between gap-4 mt-[-20px] mb-10">
+            <div className="px-4 md:hidden flex items-center justify-between gap-4 mt-[-20px] mb-4">
                 <button
                     onClick={() => scroll("left")}
-                    className="p-3 rounded-full border border-white/10 bg-white/5 hover:bg-[#FD5D2F] hover:border-[#FD5D2F] text-white transition-all duration-300 flex-shrink-0"
+                    className="p-3 rounded-full border border-gray-200 bg-white hover:bg-gray-50 text-text transition-all duration-300 flex-shrink-0 shadow-sm"
                 >
-                    <ChevronLeft size={24} />
+                    <ChevronLeft size={20} />
                 </button>
 
                 <Link href={`/courses/${category.slug}`} className="flex-1">
-                    <button className="w-full py-3 rounded-full border border-white/10 bg-white/5 hover:bg-[#FD5D2F] hover:border-[#FD5D2F] text-white transition-all duration-300 text-sm font-bold uppercase tracking-wider">
+                    <button className="w-full py-3 rounded-xl border border-gray-200 bg-white hover:bg-gray-50 text-text transition-all duration-300 text-sm font-semibold shadow-sm">
                         View All
                     </button>
                 </Link>
 
                 <button
                     onClick={() => scroll("right")}
-                    className="p-3 rounded-full border border-white/10 bg-white/5 hover:bg-[#FD5D2F] hover:border-[#FD5D2F] text-white transition-all duration-300 flex-shrink-0"
+                    className="p-3 rounded-full border border-gray-200 bg-white hover:bg-gray-50 text-text transition-all duration-300 flex-shrink-0 shadow-sm"
                 >
-                    <ChevronRight size={24} />
+                    <ChevronRight size={20} />
                 </button>
             </div>
         </div>

@@ -1,13 +1,8 @@
-import { Cinzel, Manrope } from "next/font/google";
-import TextureBackground from "../components/TextureBackground";
-import GridCategory from "../components/GridCategory";
+import CourseListClient from "../components/CourseListClient";
 import { CheckCircle2 } from "lucide-react";
 import "../globals.css";
 import { getPayload } from 'payload';
 import configPromise from '../../../payload.config';
-
-const cinzel = Cinzel({ subsets: ["latin"], weight: ["400", "700"] });
-const manrope = Manrope({ subsets: ["latin"], weight: ["300", "500"] });
 
 const features = [
   "24X7 Course Access",
@@ -39,32 +34,28 @@ export default async function Courses() {
             equals: category.id,
           },
         },
-        limit: 8, // limit to 8 for grid display
+        limit: 100, // fetch all for client side filtering
       });
       return { ...category, courses: coursesRes.docs };
     })
   );
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] text-white selection:bg-[#FD5D2F] selection:text-white pb-20">
-      <TextureBackground />
-
+    <div className="min-h-screen bg-background text-text pb-20">
       {/* Header Section */}
-      <div className="relative pt-40 pb-20 px-4 text-center overflow-hidden">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-[#C8295E] opacity-20 blur-[120px] rounded-full pointer-events-none"></div>
-
+      <div className="relative pt-32 pb-16 px-4 text-center overflow-hidden bg-gray-50 border-b border-gray-100">
         <h1
-          className={`text-5xl md:text-7xl font-bold tracking-tighter mb-6 ${cinzel.className}`}
+          className="text-4xl md:text-6xl font-extrabold tracking-tight mb-6 text-text"
           data-aos="zoom-in"
         >
-          LEARN FROM THE <br />
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#C8295E] via-[#F81F24] to-[#FD5D2F]">
-            BEST, BE YOUR BEST
+          Learn from the <br />
+          <span className="text-primary">
+            Best, Be Your Best
           </span>
         </h1>
 
         <p
-          className={`max-w-3xl mx-auto text-gray-300 text-lg md:text-xl font-light leading-relaxed mb-12 ${manrope.className}`}
+          className="max-w-3xl mx-auto text-gray-600 text-lg md:text-xl leading-relaxed mb-10"
           data-aos="fade-up"
           data-aos-delay="200"
         >
@@ -74,29 +65,21 @@ export default async function Courses() {
 
         {/* Features List */}
         <div
-          className="flex flex-wrap justify-center gap-4 md:gap-8 mb-16"
+          className="flex flex-wrap justify-center gap-4 md:gap-8 max-w-4xl mx-auto"
           data-aos="fade-up"
           data-aos-delay="400"
         >
           {features.map((feature, idx) => (
-            <div key={idx} className={`flex items-center gap-2 text-[#FD5D2F] ${manrope.className}`}>
-              <CheckCircle2 size={20} />
-              <span className="text-white/90 font-light">{feature}</span>
+            <div key={idx} className="flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-sm border border-gray-100">
+              <CheckCircle2 size={18} className="text-primary" />
+              <span className="text-gray-700 text-sm font-medium">{feature}</span>
             </div>
           ))}
         </div>
       </div>
 
-      {/* Categories Grid */}
-      {categoriesWithCourses.map(category => (
-        category.courses.length > 0 && (
-          <GridCategory 
-            key={category.id} 
-            category={category} 
-            courses={category.courses} 
-          />
-        )
-      ))}
+      {/* Courses List with Sidebar */}
+      <CourseListClient categories={categoriesWithCourses} />
     </div>
   );
 }

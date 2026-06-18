@@ -2,12 +2,8 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Cinzel, Manrope } from "next/font/google";
 import { Menu, X, Search } from "lucide-react";
 import SearchOverlay from "./SearchOverlay";
-
-const cinzel = Cinzel({ subsets: ["latin"], weight: ["500", "700"] });
-const manrope = Manrope({ subsets: ["latin"], weight: ["400", "500"] });
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -16,7 +12,7 @@ export default function Navbar() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
+      setIsScrolled(window.scrollY > 10);
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
@@ -34,28 +30,24 @@ export default function Navbar() {
       <SearchOverlay isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
 
       <nav
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b ${isScrolled && !isMobileMenuOpen
-          ? "bg-black/60 backdrop-blur-md border-white/10 py-4"
-          : "bg-transparent border-transparent py-6"
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled
+          ? "bg-white/90 backdrop-blur-md border-b border-gray-100 shadow-sm py-3"
+          : "bg-white border-b border-gray-100 py-4"
           }`}
       >
         <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
           {/* Logo */}
-          <Link href="/" className="relative z-50 group">
-            <img
-              src="/lhbs-logo.png"
-              alt="LHBS Logo"
-              className="h-9 md:h-12 w-auto object-contain transition-all duration-300"
-            />
+          <Link href="/" className="relative z-50 flex items-center gap-2">
+            <span className="text-primary font-black text-2xl tracking-tighter">LHBS</span>
           </Link>
 
           {/* Desktop Links */}
-          <div className={`hidden lg:flex gap-8 items-center ${manrope.className}`}>
+          <div className="hidden md:flex gap-8 items-center">
             {navLinks.map((link) => (
               <Link
                 key={link.name}
                 href={link.href}
-                className="text-white/80 hover:text-white transition-colors text-sm uppercase tracking-widest hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]"
+                className="text-gray-600 hover:text-primary transition-colors text-sm font-semibold"
               >
                 {link.name}
               </Link>
@@ -64,41 +56,41 @@ export default function Navbar() {
             {/* Desktop Search Trigger */}
             <button
               onClick={() => setIsSearchOpen(true)}
-              className="text-white/80 hover:text-[#FD5D2F] transition-colors p-2"
+              className="text-gray-500 hover:text-primary transition-colors p-2"
             >
               <Search size={20} />
             </button>
           </div>
 
           {/* Mobile Controls */}
-          <div className="lg:hidden flex items-center gap-4 z-[60] relative">
+          <div className="md:hidden flex items-center gap-4 z-[60] relative">
             <button
               onClick={() => setIsSearchOpen(true)}
-              className="text-white hover:text-[#FD5D2F] transition-colors"
+              className="text-gray-600 hover:text-primary transition-colors"
             >
-              <Search size={24} />
+              <Search size={22} />
             </button>
 
             <button
-              className="text-white hover:scale-110 transition-transform"
+              className="text-gray-600 hover:text-primary transition-transform"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             >
-              {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
+              {isMobileMenuOpen ? <X size={26} /> : <Menu size={26} />}
             </button>
           </div>
 
           {/* Mobile Menu Overlay */}
           <div
-            className={`fixed inset-0 bg-black/95 backdrop-blur-xl flex flex-col items-center justify-center gap-8 transition-all duration-500 lg:hidden ${isMobileMenuOpen
-              ? "translate-y-0 opacity-100 visible"
-              : "-translate-y-full opacity-0 invisible"
+            className={`fixed inset-0 bg-white z-[55] flex flex-col pt-24 px-6 gap-6 transition-all duration-300 md:hidden ${isMobileMenuOpen
+              ? "translate-y-0 opacity-100"
+              : "-translate-y-full opacity-0 pointer-events-none"
               }`}
           >
             {navLinks.map((link) => (
               <Link
                 key={link.name}
                 href={link.href}
-                className={`text-3xl text-white font-light ${cinzel.className}`}
+                className="text-2xl text-text font-bold border-b border-gray-100 pb-4"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 {link.name}
