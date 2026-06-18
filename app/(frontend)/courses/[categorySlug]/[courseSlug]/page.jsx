@@ -139,10 +139,7 @@ export default async function CoursePage({ params }) {
               </div>
             </div>
 
-            {/* Mobile Pricing Card Below About */}
-            <div className="lg:hidden mt-8">
-              <CourseSidebarClient course={course} courseSlug={courseSlug} />
-            </div>
+            {/* Pricing card now handled exclusively by CourseSidebarClient fixed bottom bar on mobile */}
 
             <div className="border-t border-gray-100 pt-10">
                 <h2 className={`text-2xl font-bold mb-6 text-text ${cinzel.className}`}>What you'll learn</h2>
@@ -173,8 +170,8 @@ export default async function CoursePage({ params }) {
             </div>
           </div>
 
-          {/* Right Column: Pricing Sidebar (Desktop Only) */}
-          <div className="hidden lg:block lg:col-span-1">
+          {/* Right Column: Pricing Sidebar & Mobile Bottom Bar */}
+          <div className="lg:col-span-1">
             <CourseSidebarClient course={course} courseSlug={courseSlug} />
           </div>
 

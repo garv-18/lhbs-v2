@@ -11,12 +11,10 @@ export default function CourseGallery({ photos }) {
   const openModal = (index = 0) => {
     setCurrentIndex(index);
     setIsModalOpen(true);
-    document.body.style.overflow = 'hidden';
   };
 
   const closeModal = () => {
     setIsModalOpen(false);
-    document.body.style.overflow = 'auto';
   };
 
   const nextPhoto = () => {
@@ -39,6 +37,7 @@ export default function CourseGallery({ photos }) {
             priority
           />
           <button 
+            type="button"
             onClick={(e) => { e.stopPropagation(); openModal(0); }}
             className="absolute bottom-4 right-4 bg-white/95 backdrop-blur-md text-text px-4 py-2 rounded-lg font-semibold text-sm flex items-center gap-2 hover:bg-gray-50 hover:scale-105 transition-all shadow-md z-10"
           >
@@ -60,7 +59,7 @@ export default function CourseGallery({ photos }) {
               <Image src={photos[1]} alt="Course image 2" fill className="object-contain bg-gray-50 hover:scale-105 transition-transform duration-500" />
             </div>
           </div>
-          <button onClick={() => openModal(0)} className="absolute bottom-4 right-4 bg-white/95 backdrop-blur-md text-text px-4 py-2 rounded-lg font-semibold text-sm flex items-center gap-2 hover:bg-gray-50 hover:scale-105 transition-all shadow-md z-10">
+          <button type="button" onClick={() => openModal(0)} className="absolute bottom-4 right-4 bg-white/95 backdrop-blur-md text-text px-4 py-2 rounded-lg font-semibold text-sm flex items-center gap-2 hover:bg-gray-50 hover:scale-105 transition-all shadow-md z-10">
             <Grid size={18} />
             Show all photos
           </button>
@@ -93,7 +92,7 @@ export default function CourseGallery({ photos }) {
           </div>
         </div>
 
-        <button onClick={() => openModal(0)} className="absolute bottom-4 right-4 bg-white/95 backdrop-blur-md text-text px-4 py-2 rounded-lg font-semibold text-sm flex items-center gap-2 hover:bg-gray-50 hover:scale-105 transition-all shadow-md z-10">
+        <button type="button" onClick={() => openModal(0)} className="absolute bottom-4 right-4 bg-white/95 backdrop-blur-md text-text px-4 py-2 rounded-lg font-semibold text-sm flex items-center gap-2 hover:bg-gray-50 hover:scale-105 transition-all shadow-md z-10">
           <Grid size={18} />
           Show all photos
         </button>
@@ -115,6 +114,7 @@ export default function CourseGallery({ photos }) {
               <h2 className="text-xl md:text-2xl font-bold text-text">{title || "Course Details"}</h2>
             </div>
             <button 
+              type="button"
               onClick={closeModal}
               className="p-2 border border-gray-200 hover:bg-gray-50 rounded-full transition-colors text-gray-500 shrink-0"
             >
@@ -134,16 +134,19 @@ export default function CourseGallery({ photos }) {
                   fill
                   className="object-contain"
                   priority={true}
+                  unoptimized={true}
                 />
                 
                 {/* Arrows */}
                 <button 
+                  type="button"
                   onClick={prevPhoto}
                   className="absolute left-4 top-1/2 -translate-y-1/2 p-3 md:p-4 bg-white hover:bg-gray-50 text-text rounded-full transition-colors z-20 shadow-md border border-gray-100"
                 >
                   <ChevronLeft size={20} />
                 </button>
                 <button 
+                  type="button"
                   onClick={nextPhoto}
                   className="absolute right-4 top-1/2 -translate-y-1/2 p-3 md:p-4 bg-white hover:bg-gray-50 text-text rounded-full transition-colors z-20 shadow-md border border-gray-100"
                 >
@@ -172,6 +175,7 @@ export default function CourseGallery({ photos }) {
                       alt={`Thumbnail ${index + 1}`}
                       fill
                       className="object-cover"
+                      unoptimized={true}
                     />
                   </div>
                 ))}
