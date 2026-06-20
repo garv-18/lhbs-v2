@@ -226,6 +226,10 @@ export interface Coursename {
       }[]
     | null;
   price?: number | null;
+  /**
+   * If provided and greater than the standard price, a discount percentage badge will automatically appear on the website.
+   */
+  originalPrice?: number | null;
   image?: (number | null) | Media;
   gallery?:
     | {
@@ -429,6 +433,7 @@ export interface CoursenamesSelect<T extends boolean = true> {
         id?: T;
       };
   price?: T;
+  originalPrice?: T;
   image?: T;
   gallery?:
     | T
