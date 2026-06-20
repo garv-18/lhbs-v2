@@ -8,12 +8,24 @@ const cinzel = Cinzel({ subsets: ["latin"], weight: ["400", "700"] });
 const manrope = Manrope({ subsets: ["latin"], weight: ["300", "500", "700"] });
 
 export default function PricingCard({ course, courseSlug, className = "" }) {
+  const hasDiscount = course.originalPrice && course.originalPrice > course.price;
+  const discountPercentage = hasDiscount 
+    ? Math.round(((course.originalPrice - course.price) / course.originalPrice) * 100)
+    : 0;
+
   return (
     <div className={`bg-white border border-gray-200 rounded-3xl p-6 md:p-8 shadow-xl ${className}`}>
       <div className="mb-6">
-        <div className="flex items-end gap-2 mb-2">
-          <span className={`text-4xl font-extrabold text-text ${cinzel.className}`}>Rs. {course.price.toLocaleString()}</span>
-          <span className="text-gray-400 line-through text-lg mb-1">Rs. {(course.price + 2000).toLocaleString()}</span>
+        <div className="flex flex-wrap items-end gap-2 mb-2">
+          <span className={`text-4xl font-extrabold text-text ${cinzel.className}`}>Rs. {course.price?.toLocaleString()}</span>
+          {hasDiscount && (
+            <>
+              <span className="text-gray-400 line-through text-lg mb-1">Rs. {course.originalPrice.toLocaleString()}</span>
+              <span className="bg-green-100 text-green-800 text-xs font-bold px-2 py-1 rounded mb-2 uppercase tracking-wide">
+                {discountPercentage}% OFF
+              </span>
+            </>
+          )}
         </div>
         <p className="text-gray-500 text-sm">One-Time Payment for full lifetime access</p>
         <div className="mt-4 inline-flex items-center gap-1.5 bg-green-50 text-green-700 px-3 py-1.5 rounded-lg text-sm font-semibold border border-green-100">

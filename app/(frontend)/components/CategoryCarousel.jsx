@@ -71,7 +71,13 @@ export default function CategoryCarousel({ category, courses = [] }) {
                 className="flex overflow-x-auto gap-4 md:gap-8 px-4 md:px-8 lg:px-[calc((100vw-1280px)/2)] pb-8 snap-x snap-mandatory hide-scrollbar"
                 style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
             >
-                {courses.map((course, index) => (
+                {courses.map((course, index) => {
+                    const hasDiscount = course.originalPrice && course.originalPrice > course.price;
+                    const discountPercentage = hasDiscount 
+                        ? Math.round(((course.originalPrice - course.price) / course.originalPrice) * 100)
+                        : 0;
+
+                    return (
                     <Link
                         href={`/courses/${category.slug}/${course.slug}`}
                         key={course.slug || index}
@@ -101,7 +107,17 @@ export default function CategoryCarousel({ category, courses = [] }) {
                                         {course.description}
                                     </p>
                                 </div>
-                                <div className="shrink-0">
+                                <div className="shrink-0 flex flex-col items-end justify-end">
+                                    {hasDiscount && (
+                                        <div className="flex items-center gap-1 mb-0.5">
+                                            <span className="text-gray-400 line-through text-[10px] md:text-xs">
+                                                Rs. {course.originalPrice.toLocaleString()}
+                                            </span>
+                                            <span className="bg-green-100 text-green-800 text-[8px] md:text-[10px] font-bold px-1.5 py-0.5 rounded uppercase tracking-wide">
+                                                {discountPercentage}% OFF
+                                            </span>
+                                        </div>
+                                    )}
                                     <span className={`text-sm sm:text-base md:text-xl text-text tracking-tight ${cinzel.className}`}>
                                         {course.price ? `Rs. ${course.price.toLocaleString()}` : 'Rs. 2,999'}
                                     </span>
@@ -109,7 +125,8 @@ export default function CategoryCarousel({ category, courses = [] }) {
                             </div>
                         </div>
                     </Link>
-                ))}
+                    );
+                })}
 
                 <div className="min-w-[20px] md:min-w-[calc((100vw-1280px)/2)] shrink-0"></div>
             </div>

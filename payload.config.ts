@@ -100,6 +100,13 @@ export default buildConfig({
           type: 'number',
         },
         {
+          name: 'originalPrice',
+          type: 'number',
+          admin: {
+            description: 'If provided and greater than the standard price, a discount percentage badge will automatically appear on the website.'
+          }
+        },
+        {
           name: 'image',
           type: 'upload',
           relationTo: 'media' as any,

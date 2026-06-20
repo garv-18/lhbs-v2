@@ -7,6 +7,8 @@ import { Cinzel } from "next/font/google";
 const cinzel = Cinzel({ subsets: ["latin"], weight: ["400", "700"] });
 
 export default function CourseSidebarClient({ course, courseSlug }) {
+  const hasDiscount = course.originalPrice && course.originalPrice > course.price;
+
   return (
     <>
       {/* Desktop Sticky Sidebar */}
@@ -15,9 +17,13 @@ export default function CourseSidebarClient({ course, courseSlug }) {
       {/* Mobile Fixed Bottom Bar */}
       <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-3 px-4 pb-4 shadow-[0_-4px_20px_rgba(0,0,0,0.05)] z-50 flex items-center justify-between">
         <div className="flex flex-col">
-          <span className="text-xs text-gray-500 font-medium">Lifetime Access</span>
+          {hasDiscount ? (
+            <span className="text-gray-400 line-through text-xs mb-0.5">Rs. {course.originalPrice.toLocaleString()}</span>
+          ) : (
+            <span className="text-xs text-gray-500 font-medium">Lifetime Access</span>
+          )}
           <div className="flex items-center gap-2">
-            <span className={`text-xl font-bold text-text ${cinzel.className}`}>Rs. {course.price.toLocaleString()}</span>
+            <span className={`text-xl font-bold text-text ${cinzel.className}`}>Rs. {course.price?.toLocaleString()}</span>
           </div>
         </div>
         

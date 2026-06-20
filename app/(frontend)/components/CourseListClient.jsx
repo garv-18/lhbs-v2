@@ -68,7 +68,7 @@ export default function CourseListClient({ categories }) {
       {/* Quick-Jump Category Menu (Hidden when searching) */}
       {!isSearching && (
         <div className="max-w-7xl mx-auto px-4 pb-8 overflow-x-auto hide-scrollbar">
-          <div className="flex gap-3 md:justify-center md:min-w-0">
+          <div className="flex gap-4 md:justify-center md:min-w-0">
             {categories.filter(c => c.courses && c.courses.length > 0).map((category) => (
               <button
                 key={category.id}
@@ -101,7 +101,13 @@ export default function CourseListClient({ categories }) {
             </div>
           ) : (
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
-              {allSearchMatches.map((course, index) => (
+              {allSearchMatches.map((course, index) => {
+                const hasDiscount = course.originalPrice && course.originalPrice > course.price;
+                const discountPercentage = hasDiscount 
+                    ? Math.round(((course.originalPrice - course.price) / course.originalPrice) * 100)
+                    : 0;
+
+                return (
                 <Link
                   href={`/courses/${course.categorySlug}/${course.slug}`}
                   key={course.id || index}
@@ -125,7 +131,17 @@ export default function CourseListClient({ categories }) {
                           {course.description}
                         </p>
                       </div>
-                      <div className="shrink-0">
+                      <div className="shrink-0 flex flex-col items-end justify-end">
+                        {hasDiscount && (
+                            <div className="flex items-center gap-1 mb-0.5">
+                                <span className="text-gray-400 line-through text-[10px] md:text-xs">
+                                    Rs. {course.originalPrice.toLocaleString()}
+                                </span>
+                                <span className="bg-green-100 text-green-800 text-[8px] md:text-[10px] font-bold px-1.5 py-0.5 rounded uppercase tracking-wide">
+                                    {discountPercentage}% OFF
+                                </span>
+                            </div>
+                        )}
                         <span className={`text-base sm:text-xl md:text-2xl text-text tracking-tight ${cinzel.className}`}>
                           {course.price ? `Rs. ${course.price.toLocaleString()}` : 'Rs. 2,999'}
                         </span>
@@ -133,7 +149,8 @@ export default function CourseListClient({ categories }) {
                     </div>
                   </div>
                 </Link>
-              ))}
+                );
+              })}
             </div>
           )}
         </div>
