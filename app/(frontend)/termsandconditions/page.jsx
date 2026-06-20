@@ -1,9 +1,9 @@
 import React from 'react'
-import './termsandconditions.css'
+
 const TermsandConditions = () => {
   return (
-    <div className="terms-conditions-container">
-      <h1 className='terms-conditions-title'>Terms & Conditions</h1>
+    <div className="max-w-[1400px] mx-auto p-5 text-gray-800 min-h-screen pt-32 pb-20 prose prose-lg">
+      <h1 className='text-3xl font-bold mb-6'>Terms & Conditions</h1>
 
       <h2>Introduction</h2>
       <p>

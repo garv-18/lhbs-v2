@@ -2,9 +2,9 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { Cinzel, Manrope } from "next/font/google";
 import FavoriteButton from "./FavoriteButton";
+import CourseImage from "./CourseImage";
 
 const cinzel = Cinzel({ subsets: ["latin"], weight: ["400", "700"] });
 const manrope = Manrope({ subsets: ["latin"], weight: ["300", "500", "700"] });
@@ -47,7 +47,7 @@ export default function CategoryViewClient({ category, courses }) {
             placeholder={`Search in ${category.title}...`} 
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className={`w-full px-8 py-4 bg-white border border-gray-200 rounded-full shadow-sm text-text focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all text-lg ${manrope.className}`}
+            className={`w-full px-5 py-3.5 pr-12 bg-white border border-gray-200 rounded-2xl md:rounded-full shadow-sm text-text focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all text-base md:px-8 md:py-4 md:text-lg ${manrope.className}`}
           />
           <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 absolute right-6 top-1/2 -translate-y-1/2 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -72,13 +72,11 @@ export default function CategoryViewClient({ category, courses }) {
                 className="bg-white border border-gray-100 rounded-2xl overflow-hidden hover:border-gray-200 hover:shadow-xl transition-all duration-300 group flex flex-col shadow-sm"
               >
                 <div className="aspect-square w-full relative overflow-hidden bg-gray-50">
-                  {(course.image?.url || course.image) && (
-                    <img
-                      src={course.image?.url || course.image}
-                      alt={course.title}
-                      className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-700 relative z-0"
-                    />
-                  )}
+                  <CourseImage
+                    src={course.image?.url || course.image}
+                    alt={course.title}
+                    className="group-hover:scale-105 transition-transform duration-700"
+                  />
                   
                   {/* Favorite Icon */}
                   <FavoriteButton course={{...course, categorySlug: category.slug}} />
@@ -98,7 +96,7 @@ export default function CategoryViewClient({ category, courses }) {
                     </div>
                     <div className="shrink-0">
                       <span className={`text-base sm:text-xl md:text-2xl text-text tracking-tight ${cinzel.className}`}>
-                        {course.price ? `₹${course.price.toLocaleString()}` : '₹2999'}
+                        {course.price ? `Rs. ${course.price.toLocaleString()}` : 'Rs. 2,999'}
                       </span>
                     </div>
                   </div>

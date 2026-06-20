@@ -17,7 +17,7 @@ export default function CourseSidebarClient({ course, courseSlug }) {
         <div className="flex flex-col">
           <span className="text-xs text-gray-500 font-medium">Lifetime Access</span>
           <div className="flex items-center gap-2">
-            <span className={`text-xl font-bold text-text ${cinzel.className}`}>₹{course.price.toLocaleString()}</span>
+            <span className={`text-xl font-bold text-text ${cinzel.className}`}>Rs. {course.price.toLocaleString()}</span>
           </div>
         </div>
         

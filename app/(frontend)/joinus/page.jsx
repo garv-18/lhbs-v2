@@ -44,7 +44,7 @@ export default function JoinUs() {
                             </p>
 
                             <div className={`text-3xl font-bold text-primary mb-6 ${cinzel.className}`}>
-                                ₹2,36,000
+                                Rs. 2,36,000
                             </div>
 
                             <div className="space-y-4 mb-10">
@@ -91,7 +91,7 @@ export default function JoinUs() {
                             </p>
 
                             <div className={`text-3xl font-bold text-[#D4AF37] mb-6 ${cinzel.className}`}>
-                                ₹2,36,000
+                                Rs. 2,36,000
                             </div>
 
                             <div className="space-y-4 mb-10">

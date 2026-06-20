@@ -1,12 +1,12 @@
 "use client";
 
 import { useRef } from "react";
-import { ChevronLeft, ChevronRight, Heart } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import Link from "next/link";
-import Image from "next/image";
 import { Cinzel, Manrope } from "next/font/google";
 
 import FavoriteButton from "./FavoriteButton";
+import CourseImage from "./CourseImage";
 
 const cinzel = Cinzel({ subsets: ["latin"], weight: ["400", "700"] });
 const manrope = Manrope({ subsets: ["latin"], weight: ["300", "500", "700"] });
@@ -79,14 +79,11 @@ export default function CategoryCarousel({ category, courses = [] }) {
                     >
                         {/* Image Area - Taller aspect ratio */}
                         <div className="aspect-square w-full relative overflow-hidden bg-gray-50">
-                            {(course.image?.url || course.image) && (
-                                <Image
-                                    src={course.image?.url || course.image}
-                                    alt={course.title}
-                                    fill
-                                    className="object-cover group-hover:scale-105 transition-transform duration-700 relative z-0"
-                                />
-                            )}
+                            <CourseImage
+                                src={course.image?.url || course.image}
+                                alt={course.title}
+                                className="group-hover:scale-105 transition-transform duration-700"
+                            />
                             
                             {/* Favorite Icon */}
                             <FavoriteButton course={{...course, categorySlug: category.slug}} />
@@ -106,7 +103,7 @@ export default function CategoryCarousel({ category, courses = [] }) {
                                 </div>
                                 <div className="shrink-0">
                                     <span className={`text-base sm:text-xl md:text-2xl text-text tracking-tight ${cinzel.className}`}>
-                                        {course.price ? `₹${course.price.toLocaleString()}` : '₹2999'}
+                                        {course.price ? `Rs. ${course.price.toLocaleString()}` : 'Rs. 2,999'}
                                     </span>
                                 </div>
                             </div>

@@ -43,7 +43,7 @@ export default function ContactPage() {
                                 <h3 className="font-semibold text-lg text-text mb-1">Location</h3>
                                 <p className="text-gray-600 leading-relaxed">
                                     LHBS Martial Arts Academy<br />
-                                    New Delhi, India
+                                    Indore, Madhya Pradesh, Bharat (452018)
                                 </p>
                                 <a 
                                     href="https://maps.app.goo.gl/b5QzmscbyFokUtVT9" 
@@ -104,7 +104,7 @@ export default function ContactPage() {
             {/* Google Map Embed */}
             <div className="h-[600px] w-full rounded-3xl overflow-hidden shadow-xl border border-gray-200">
                 <iframe 
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14006.155708891505!2d77.10629535!3d28.6435641!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d03b0c6df81e1%3A0xf6b5b141a021c337!2sLHBS%20Martial%20Arts%20Academy!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin" 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d117763.55655388031!2d75.7866324208047!3d22.724228429990543!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3962fcad1b410bbf%3A0x96e7c1c50406bc4b!2sIndore%2C%20Madhya%20Pradesh!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin" 
                     width="100%" 
                     height="100%" 
                     style={{ border: 0 }} 

@@ -2,6 +2,7 @@ import { Cinzel, Manrope } from "next/font/google";
 import { ArrowUpRight, CheckCircle2 } from "lucide-react";
 import Link from "next/link";
 import FavoriteButton from "./FavoriteButton";
+import CourseImage from "./CourseImage";
 
 const cinzel = Cinzel({ subsets: ["latin"], weight: ["400", "700"] });
 const manrope = Manrope({ subsets: ["latin"], weight: ["300", "500"] });
@@ -121,13 +122,11 @@ export default function CoursesGrid() {
                         data-aos-delay={index * 50}
                     >
                         <div className="aspect-square w-full relative overflow-hidden bg-gray-50">
-                            {course.image && (
-                                <img
-                                    src={course.image}
-                                    alt={course.title}
-                                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 relative z-0"
-                                />
-                            )}
+                            <CourseImage
+                                src={course.image}
+                                alt={course.title}
+                                className="group-hover:scale-105 transition-transform duration-700"
+                            />
                             
                             {/* Favorite Icon */}
                             <FavoriteButton course={{...course, slug: course.link?.split('/').pop(), categorySlug: course.link?.split('/')[1]}} />
@@ -147,7 +146,7 @@ export default function CoursesGrid() {
                                 </div>
                                 <div className="shrink-0">
                                     <span className={`text-base sm:text-xl md:text-2xl text-text tracking-tight ${cinzel.className}`}>
-                                        {course.price ? `₹${course.price}` : '₹2999'}
+                                        {course.price ? `Rs. ${course.price}` : 'Rs. 2,999'}
                                     </span>
                                 </div>
                             </div>

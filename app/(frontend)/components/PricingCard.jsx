@@ -12,8 +12,8 @@ export default function PricingCard({ course, courseSlug, className = "" }) {
     <div className={`bg-white border border-gray-200 rounded-3xl p-6 md:p-8 shadow-xl ${className}`}>
       <div className="mb-6">
         <div className="flex items-end gap-2 mb-2">
-          <span className={`text-4xl font-extrabold text-text ${cinzel.className}`}>₹{course.price.toLocaleString()}</span>
-          <span className="text-gray-400 line-through text-lg mb-1">₹{(course.price + 2000).toLocaleString()}</span>
+          <span className={`text-4xl font-extrabold text-text ${cinzel.className}`}>Rs. {course.price.toLocaleString()}</span>
+          <span className="text-gray-400 line-through text-lg mb-1">Rs. {(course.price + 2000).toLocaleString()}</span>
         </div>
         <p className="text-gray-500 text-sm">One-Time Payment for full lifetime access</p>
         <div className="mt-4 inline-flex items-center gap-1.5 bg-green-50 text-green-700 px-3 py-1.5 rounded-lg text-sm font-semibold border border-green-100">

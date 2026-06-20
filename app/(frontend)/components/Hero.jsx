@@ -45,7 +45,7 @@ export default function Hero() {
                 </h1>
 
                 <p
-                    className="text-gray-200 text-lg md:text-xl max-w-2xl leading-relaxed font-light"
+                    className="hidden md:block text-gray-200 text-lg md:text-xl max-w-2xl leading-relaxed font-light"
                     data-aos="fade-up"
                     data-aos-delay="400"
                 >
@@ -66,7 +66,7 @@ export default function Hero() {
             </div>
 
             {/* Scroll Indicator */}
-            <div className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce text-primary z-20">
+            <div className="hidden md:block absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce text-primary z-20">
                 <div className="w-[1px] h-16 bg-gradient-to-b from-transparent via-primary to-transparent"></div>
             </div>
         </section>

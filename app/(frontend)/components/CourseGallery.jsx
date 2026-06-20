@@ -4,7 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import { X, ChevronLeft, ChevronRight, Grid } from "lucide-react";
 
-export default function CourseGallery({ photos }) {
+export default function CourseGallery({ photos = [], title = "Course Details" }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -26,6 +26,17 @@ export default function CourseGallery({ photos }) {
   };
 
   const renderGrid = () => {
+    if (!photos.length) {
+      return (
+        <div className="relative mb-8 flex h-[300px] w-full items-center justify-center rounded-2xl border border-gray-100 bg-gray-50 text-center md:h-[420px] md:rounded-3xl">
+          <div>
+            <p className="text-sm font-bold uppercase tracking-[0.2em] text-gray-400">Course Preview</p>
+            <h2 className="mt-3 text-2xl font-bold text-text">{title}</h2>
+          </div>
+        </div>
+      );
+    }
+
     if (photos.length === 1) {
       return (
         <div className="relative w-full h-[300px] sm:h-[400px] md:h-[500px] rounded-2xl md:rounded-3xl overflow-hidden mb-8 group cursor-pointer" onClick={() => openModal(0)}>
@@ -111,7 +122,7 @@ export default function CourseGallery({ photos }) {
           <div className="flex justify-between items-start p-4 md:p-6 bg-white z-20 shrink-0">
             <div>
               <p className="text-[10px] font-bold text-gray-400 tracking-[0.2em] uppercase mb-1">Photo Tour</p>
-              <h2 className="text-xl md:text-2xl font-bold text-text">{title || "Course Details"}</h2>
+              <h2 className="text-xl md:text-2xl font-bold text-text">{title}</h2>
             </div>
             <button 
               type="button"

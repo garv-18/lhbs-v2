@@ -1,10 +1,9 @@
 import React from 'react'
-import './refundpolicy.css'
 
 const Refundpolicy = () => {
   return (
-    <div className="refund-policy-container">
-      <h1 className="refund-policy-title">Refund Policy</h1>
+    <div className="max-w-[1400px] mx-auto p-5 text-text min-h-screen pt-32 pb-20">
+      <h1 className="m-auto p-5 text-center text-4xl font-bold mb-8">Refund Policy</h1>
 
       <p>
         If the refund is approved, the amount will be automatically refunded to your original payment method within 25 business days.
