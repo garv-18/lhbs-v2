@@ -1,7 +1,19 @@
-export const dynamic = 'force-dynamic';
 import { getPayload } from 'payload';
 import configPromise from '../../../../payload.config';
 import CategoryViewClient from '../../components/CategoryViewClient';
+
+export async function generateStaticParams() {
+    const payload = await getPayload({ config: configPromise });
+    const categories = await payload.find({
+        collection: 'categories',
+        limit: 100,
+        select: { slug: true }
+    });
+    
+    return categories.docs.map((category) => ({
+        categorySlug: category.slug,
+    }));
+}
 
 export async function generateMetadata({ params }) {
     const payload = await getPayload({ config: configPromise });
@@ -21,6 +33,9 @@ export async function generateMetadata({ params }) {
     return {
         title: category ? `${category.title} | LHBS` : 'Programs | LHBS',
         description: `Explore all courses in our ${category?.title || 'Program'}.`,
+        alternates: {
+            canonical: `https://masterpramod.com/courses/${categorySlug}`,
+        },
     };
 }
 
@@ -62,7 +77,23 @@ export default async function CategoryPage({ params }) {
 
     const courses = coursesRes.docs;
 
+    const jsonLd = {
+        "@context": "https://schema.org",
+        "@type": "ItemList",
+        "itemListElement": courses.map((course, idx) => ({
+            "@type": "ListItem",
+            "position": idx + 1,
+            "url": `https://masterpramod.com/courses/${categorySlug}/${course.slug}`
+        }))
+    };
+
     return (
-        <CategoryViewClient category={category} courses={courses} />
+        <>
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+            />
+            <CategoryViewClient category={category} courses={courses} />
+        </>
     );
 }

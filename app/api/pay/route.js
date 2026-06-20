@@ -1,5 +1,4 @@
-import axios from "axios";
-
+// Next.js API route for Instamojo payment
 export async function POST(req) {
   try {
     const body = await req.json();
@@ -41,31 +40,33 @@ export async function POST(req) {
       ...rest,
     };
 
-    let response;
+    let responseData;
     try {
-      response = await axios.post(
-        "https://www.instamojo.com/api/1.1/payment-requests/",
-        payload,
-        {
-          headers: {
-            "X-Api-Key": process.env.INSTAMOJO_API_KEY,
-            "X-Auth-Token": process.env.INSTAMOJO_AUTH_TOKEN,
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      console.log('Instamojo response:', JSON.stringify(response.data, null, 2));
+      const res = await fetch("https://www.instamojo.com/api/1.1/payment-requests/", {
+        method: "POST",
+        headers: {
+          "X-Api-Key": process.env.INSTAMOJO_API_KEY,
+          "X-Auth-Token": process.env.INSTAMOJO_AUTH_TOKEN,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload)
+      });
+      responseData = await res.json();
+      if (!res.ok) {
+        throw new Error(responseData.message || "Instamojo API Error");
+      }
+      console.log('Instamojo response:', JSON.stringify(responseData, null, 2));
     } catch (apiErr) {
-      console.error('❌ Instamojo API error:', apiErr.response?.data || apiErr.message);
+      console.error('❌ Instamojo API error:', apiErr.message);
       // Return mock success on API error for testing if requested
-      return Response.json({ success: false, message: apiErr.response?.data?.message || apiErr.message || 'Instamojo API error' }, { status: 500 });
+      return Response.json({ success: false, message: apiErr.message || 'Instamojo API error' }, { status: 500 });
     }
 
-    if (response.data && response.data.payment_request && response.data.payment_request.longurl) {
-      return Response.json({ success: true, redirectUrl: response.data.payment_request.longurl });
+    if (responseData && responseData.payment_request && responseData.payment_request.longurl) {
+      return Response.json({ success: true, redirectUrl: responseData.payment_request.longurl });
     } else {
       // Try to show Instamojo error message if available
-      const msg = response.data && response.data.message ? response.data.message : "Failed to create payment request.";
+      const msg = responseData && responseData.message ? responseData.message : "Failed to create payment request.";
       return Response.json({ success: false, message: msg }, { status: 500 });
     }
   } catch (err) {

@@ -14,8 +14,27 @@ import PricingCard from "../../../components/PricingCard";
 const cinzel = Cinzel({ subsets: ["latin"], weight: ["400", "700"] });
 const manrope = Manrope({ subsets: ["latin"], weight: ["300", "500", "700"] });
 
+export async function generateStaticParams() {
+  const payload = await getPayload({ config: configPromise });
+  const courses = await payload.find({
+    collection: 'coursenames',
+    limit: 1000,
+    select: { slug: true, category: true },
+    populate: {
+      category: {
+        select: { slug: true }
+      }
+    }
+  });
+
+  return courses.docs.filter(course => course.category?.slug).map((course) => ({
+    categorySlug: course.category.slug,
+    courseSlug: course.slug,
+  }));
+}
+
 export async function generateMetadata({ params }) {
-  const { courseSlug } = await params;
+  const { categorySlug, courseSlug } = await params;
   const payload = await getPayload({ config: configPromise });
   const data = await payload.find({
     collection: 'coursenames',
@@ -46,6 +65,9 @@ export async function generateMetadata({ params }) {
           alt: course.title,
         },
       ],
+    },
+    alternates: {
+      canonical: `https://masterpramod.com/courses/${categorySlug}/${courseSlug}`,
     },
   };
 }

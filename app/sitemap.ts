@@ -8,8 +8,6 @@ export default async function sitemap() {
   const routes = [
     '',
     '/courses',
-    '/courses/masterprogram',
-    '/courses/programs',
     '/joinus',
     '/refundpolicy',
     '/termsandconditions',
@@ -20,22 +18,38 @@ export default async function sitemap() {
     priority: route === '' ? 1 : 0.8,
   }));
 
-  // Course dynamic routes
   const payload = await getPayload({ config: configPromise });
-  const data = await payload.find({
-    collection: 'coursenames',
+
+  // Dynamically fetch all categories for category pages
+  const categoriesRes = await payload.find({
+    collection: 'categories',
     limit: 100,
-    depth: 0, // No need to fetch related media
     select: { slug: true }
   });
-  const allCourses = data.docs;
   
-  const courseRoutes = allCourses.map((course) => ({
-    url: `${baseUrl}/coursename/${course.slug}`,
+  const categoryRoutes = categoriesRes.docs.map((category) => ({
+    url: `${baseUrl}/courses/${category.slug}`,
     lastModified: new Date(),
     changeFrequency: 'weekly',
     priority: 0.9,
   }));
 
-  return [...routes, ...courseRoutes];
+  // Fetch all courses and populate their category to build correct nested routes
+  const coursesRes = await payload.find({
+    collection: 'coursenames',
+    limit: 1000,
+    depth: 1, // Need depth 1 to get category slug
+    select: { slug: true, category: true }
+  });
+  
+  const courseRoutes = coursesRes.docs
+    .filter(course => course.category && (course.category as any).slug)
+    .map((course) => ({
+      url: `${baseUrl}/courses/${(course.category as any).slug}/${course.slug}`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.9,
+    }));
+
+  return [...routes, ...categoryRoutes, ...courseRoutes];
 }

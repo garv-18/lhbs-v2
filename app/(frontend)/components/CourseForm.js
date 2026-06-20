@@ -1,6 +1,5 @@
 // frontend/CourseForm.jsx
 import { useState } from 'react';
-import axios from 'axios';
 
 export default function CourseForm() {
   const [form, setForm] = useState({ name: '', email: '', phone: '', course: '', amount: '' });

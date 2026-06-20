@@ -9,6 +9,22 @@ export const Categories: CollectionConfig = {
   access: {
     read: () => true,
   },
+  hooks: {
+    afterChange: [
+      async ({ doc, req }) => {
+        const { revalidatePath } = await import('next/cache');
+        revalidatePath('/courses', 'layout');
+        return doc;
+      }
+    ],
+    afterDelete: [
+      async ({ doc, req }) => {
+        const { revalidatePath } = await import('next/cache');
+        revalidatePath('/courses', 'layout');
+        return doc;
+      }
+    ]
+  },
   fields: [
     {
       name: 'title',

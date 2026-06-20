@@ -1,4 +1,3 @@
-export const dynamic = 'force-dynamic';
 import CourseListClient from "../components/CourseListClient";
 import { CheckCircle2 } from "lucide-react";
 import "../globals.css";
@@ -12,6 +11,14 @@ const features = [
   "Live Classes on Zoom",
   "Certification Through Test"
 ];
+
+export const metadata = {
+  title: 'All Programs | LHBS',
+  description: 'Explore our catalog of martial arts training programs. Learn on your mobile with the best coaches.',
+  alternates: {
+    canonical: 'https://masterpramod.com/courses',
+  },
+};
 
 export default async function Courses() {
   const payload = await getPayload({ config: configPromise });
@@ -45,8 +52,23 @@ export default async function Courses() {
     })
   );
 
+  // Build ItemList JSON-LD
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "itemListElement": categoriesWithCourses.flatMap(c => c.courses).map((course, idx) => ({
+      "@type": "ListItem",
+      "position": idx + 1,
+      "url": `https://masterpramod.com/courses/${course.category ? (course.category).slug : ''}/${course.slug}`
+    }))
+  };
+
   return (
     <div className="min-h-screen bg-background text-text pb-20">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       {/* Header Section */}
       <div className="relative pt-28 pb-8 px-4 text-center overflow-hidden bg-gray-50 border-b border-gray-100">
         <h1
