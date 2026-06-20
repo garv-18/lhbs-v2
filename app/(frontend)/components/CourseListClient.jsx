@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Cinzel, Manrope } from "next/font/google";
 import FavoriteButton from "./FavoriteButton";
 import CourseImage from "./CourseImage";
+import CategoryCarousel from "./CategoryCarousel";
 
 const cinzel = Cinzel({ subsets: ["latin"], weight: ["400", "700"] });
 const manrope = Manrope({ subsets: ["latin"], weight: ["300", "500", "700"] });
@@ -142,82 +143,9 @@ export default function CourseListClient({ categories }) {
       {!isSearching && categories.map((category) => {
         if (!category.courses || category.courses.length === 0) return null;
 
-        // Display up to 8 courses
-        const displayedCourses = category.courses.slice(0, 8);
-
         return (
-          <div key={category.id} id={`category-${category.slug}`} className="relative pt-4 mb-4 scroll-mt-24">
-            {/* Sticky Header */}
-            <div 
-              className="sticky z-40 bg-background/95 backdrop-blur-md py-4 mb-8 flex justify-between items-center"
-              style={{ top: `${navbarHeight}px` }}
-            >
-              <div className="max-w-7xl mx-auto px-4 w-full flex justify-between items-center">
-                <h2 className={`text-2xl font-bold text-text ${cinzel.className}`}>
-                  {category.title}
-                </h2>
-                <Link href={`/courses/${category.slug}`}>
-                  <button className="text-sm font-bold text-primary hover:text-[#C8295E] transition-colors uppercase tracking-wider">
-                    View All
-                  </button>
-                </Link>
-              </div>
-            </div>
-
-            {/* Courses Grid */}
-            <div className="max-w-7xl mx-auto px-4">
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
-                {displayedCourses.map((course, index) => (
-                  <Link
-                    href={`/courses/${category.slug}/${course.slug}`}
-                    key={course.id || index}
-                    className="bg-white border border-gray-100 rounded-2xl overflow-hidden hover:border-gray-200 hover:shadow-xl transition-all duration-300 group flex flex-col shadow-sm"
-                  >
-                    <div className="aspect-square w-full relative overflow-hidden bg-gray-50">
-                      <CourseImage
-                        src={course.image?.url || course.image}
-                        alt={course.title}
-                        className="group-hover:scale-105 transition-transform duration-700"
-                      />
-                      
-                      {/* Favorite Icon */}
-                      <FavoriteButton course={{...course, categorySlug: category.slug}} />
-                    </div>
-
-                    {/* Content Area */}
-                    <div className="p-4 md:p-6 flex-1 flex flex-col bg-white border-t border-gray-50">
-                      <h3 className={`text-base sm:text-lg md:text-2xl text-text mb-3 md:mb-4 ${cinzel.className} line-clamp-2`}>
-                        {course.title}
-                      </h3>
-                      
-                      <div className="flex justify-between items-end mt-auto gap-2 md:gap-4">
-                        <div className="flex-1">
-                          <p className={`text-gray-600 text-xs sm:text-sm leading-relaxed line-clamp-2 font-medium ${manrope.className}`}>
-                            {course.description}
-                          </p>
-                        </div>
-                        <div className="shrink-0">
-                          <span className={`text-base sm:text-xl md:text-2xl text-text tracking-tight ${cinzel.className}`}>
-                            {course.price ? `Rs. ${course.price.toLocaleString()}` : 'Rs. 2,999'}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  </Link>
-                ))}
-              </div>
-
-              {/* Bottom View All Button */}
-              {category.courses.length > 8 && (
-                <div className="mt-12 text-center">
-                  <Link href={`/courses/${category.slug}`}>
-                    <button className="px-8 py-3 rounded-xl border border-gray-200 bg-white hover:bg-gray-50 text-text transition-all duration-300 text-sm font-semibold shadow-sm">
-                      View All {category.title}
-                    </button>
-                  </Link>
-                </div>
-              )}
-            </div>
+          <div key={category.id} id={`category-${category.slug}`} className="scroll-mt-24">
+            <CategoryCarousel category={category} courses={category.courses} />
           </div>
         );
       })}

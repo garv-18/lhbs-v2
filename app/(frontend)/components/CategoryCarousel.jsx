@@ -29,7 +29,7 @@ export default function CategoryCarousel({ category, courses = [] }) {
     if (courses.length === 0) return null;
 
     return (
-        <div className="py-20 relative bg-background border-b border-gray-100">
+        <div className="py-10 md:py-16 relative bg-background border-b border-gray-100">
             <div className="max-w-7xl mx-auto px-4 mb-10 flex flex-col md:flex-row items-end justify-between gap-6">
                 <div>
                     <h2 className={`text-3xl md:text-4xl font-bold text-text leading-tight ${cinzel.className}`}>
@@ -68,17 +68,17 @@ export default function CategoryCarousel({ category, courses = [] }) {
             {/* Carousel Container */}
             <div
                 ref={scrollRef}
-                className="flex overflow-x-auto gap-6 md:gap-8 px-4 md:px-8 lg:px-[calc((100vw-1280px)/2)] pb-12 snap-x snap-mandatory hide-scrollbar"
+                className="flex overflow-x-auto gap-4 md:gap-8 px-4 md:px-8 lg:px-[calc((100vw-1280px)/2)] pb-8 snap-x snap-mandatory hide-scrollbar"
                 style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
             >
                 {courses.map((course, index) => (
                     <Link
                         href={`/courses/${category.slug}/${course.slug}`}
                         key={course.slug || index}
-                        className="min-w-[85vw] md:min-w-[320px] max-w-[320px] snap-center bg-white border border-gray-100 hover:border-gray-200 hover:shadow-xl transition-all duration-300 group flex flex-col shadow-sm rounded-2xl"
+                        className="min-w-[42vw] max-w-[42vw] sm:min-w-[280px] sm:max-w-[280px] md:min-w-[320px] md:max-w-[320px] snap-center bg-white border border-gray-100 hover:border-gray-200 hover:shadow-xl transition-all duration-300 group flex flex-col shadow-sm rounded-2xl"
                     >
-                        {/* Image Area - Taller aspect ratio */}
-                        <div className="aspect-square w-full relative overflow-hidden bg-gray-50">
+                        {/* Image Area */}
+                        <div className="aspect-square w-full relative overflow-hidden bg-gray-50 rounded-t-2xl">
                             <CourseImage
                                 src={course.image?.url || course.image}
                                 alt={course.title}
@@ -90,19 +90,19 @@ export default function CategoryCarousel({ category, courses = [] }) {
                         </div>
 
                         {/* Content Area */}
-                        <div className="p-4 md:p-6 flex-1 flex flex-col bg-white border-t border-gray-50">
-                            <h3 className={`text-base sm:text-lg md:text-2xl text-text mb-3 md:mb-4 ${cinzel.className} line-clamp-2`}>
+                        <div className="p-3 sm:p-4 md:p-6 flex-1 flex flex-col bg-white border-t border-gray-50 rounded-b-2xl">
+                            <h3 className={`text-sm sm:text-base md:text-2xl text-text mb-2 md:mb-4 ${cinzel.className} line-clamp-2`}>
                                 {course.title}
                             </h3>
                             
                             <div className="flex justify-between items-end mt-auto gap-2 md:gap-4">
                                 <div className="flex-1">
-                                    <p className={`text-gray-600 text-xs sm:text-sm leading-relaxed line-clamp-2 font-medium ${manrope.className}`}>
+                                    <p className={`text-gray-600 text-[10px] sm:text-xs md:text-sm leading-relaxed line-clamp-2 font-medium ${manrope.className}`}>
                                         {course.description}
                                     </p>
                                 </div>
                                 <div className="shrink-0">
-                                    <span className={`text-base sm:text-xl md:text-2xl text-text tracking-tight ${cinzel.className}`}>
+                                    <span className={`text-sm sm:text-base md:text-xl text-text tracking-tight ${cinzel.className}`}>
                                         {course.price ? `Rs. ${course.price.toLocaleString()}` : 'Rs. 2,999'}
                                     </span>
                                 </div>
@@ -114,27 +114,13 @@ export default function CategoryCarousel({ category, courses = [] }) {
                 <div className="min-w-[20px] md:min-w-[calc((100vw-1280px)/2)] shrink-0"></div>
             </div>
 
-            {/* Mobile Controls */}
-            <div className="px-4 md:hidden flex items-center justify-between gap-4 mt-[-20px] mb-4">
-                <button
-                    onClick={() => scroll("left")}
-                    className="p-3 rounded-full border border-gray-200 bg-white hover:bg-gray-50 text-text transition-all duration-300 flex-shrink-0 shadow-sm"
-                >
-                    <ChevronLeft size={20} />
-                </button>
-
-                <Link href={`/courses/${category.slug}`} className="flex-1">
-                    <button className="w-full py-3 rounded-xl border border-gray-200 bg-white hover:bg-gray-50 text-text transition-all duration-300 text-sm font-semibold shadow-sm">
-                        View All
+            {/* Large View All Button */}
+            <div className="px-4 max-w-7xl mx-auto mt-4">
+                <Link href={`/courses/${category.slug}`} className="block w-full">
+                    <button className="w-full py-4 rounded-xl border border-gray-200 bg-white hover:bg-gray-50 text-text transition-all duration-300 text-sm md:text-base font-bold shadow-sm uppercase tracking-wider">
+                        View All {category.title} Courses
                     </button>
                 </Link>
-
-                <button
-                    onClick={() => scroll("right")}
-                    className="p-3 rounded-full border border-gray-200 bg-white hover:bg-gray-50 text-text transition-all duration-300 flex-shrink-0 shadow-sm"
-                >
-                    <ChevronRight size={20} />
-                </button>
             </div>
         </div>
     );
