@@ -29,22 +29,27 @@ export default function CourseListClient({ categories }) {
     return () => window.removeEventListener('resize', updateHeight);
   }, []);
 
-  const filteredCategories = categories.map(category => {
-    if (!searchQuery) return category;
-    
+  const isSearching = searchQuery.trim().length > 0;
+
+  // Flattened search results
+  let allSearchMatches = [];
+  if (isSearching) {
     const lowerQuery = searchQuery.toLowerCase();
-    const filteredCourses = category.courses?.filter(course => 
-      course.title.toLowerCase().includes(lowerQuery) || 
-      course.description?.toLowerCase().includes(lowerQuery)
-    );
-    
-    return { ...category, courses: filteredCourses };
-  }).filter(category => category.courses && category.courses.length > 0);
+    categories.forEach(category => {
+      if (category.courses) {
+        const matches = category.courses.filter(course => 
+          course.title.toLowerCase().includes(lowerQuery) || 
+          course.description?.toLowerCase().includes(lowerQuery)
+        );
+        matches.forEach(m => allSearchMatches.push({ ...m, categorySlug: category.slug }));
+      }
+    });
+  }
 
   return (
     <div className="w-full bg-background pb-20">
       {/* Search Bar */}
-      <div className="max-w-7xl mx-auto px-4 pt-4 pb-8">
+      <div className="max-w-7xl mx-auto px-4 pt-4 pb-6">
         <div className="relative max-w-2xl mx-auto">
           <input 
             type="text" 
@@ -59,20 +64,91 @@ export default function CourseListClient({ categories }) {
         </div>
       </div>
       
-      {filteredCategories.length === 0 && (
-        <div className="text-center py-20">
-          <p className={`text-xl text-gray-500 ${manrope.className}`}>No courses found matching "{searchQuery}"</p>
+      {/* Quick-Jump Category Menu (Hidden when searching) */}
+      {!isSearching && (
+        <div className="max-w-7xl mx-auto px-4 pb-8 overflow-x-auto hide-scrollbar">
+          <div className="flex gap-3 md:justify-center min-w-max">
+            {categories.filter(c => c.courses && c.courses.length > 0).map((category) => (
+              <button
+                key={category.id}
+                onClick={() => {
+                  const el = document.getElementById(`category-${category.slug}`);
+                  if (el) {
+                    const y = el.getBoundingClientRect().top + window.scrollY - navbarHeight - 20;
+                    window.scrollTo({ top: y, behavior: 'smooth' });
+                  }
+                }}
+                className={`px-6 py-2.5 rounded-full border border-gray-200 bg-white hover:bg-primary hover:text-white hover:border-primary transition-all text-sm font-semibold text-gray-700 whitespace-nowrap shadow-sm ${manrope.className}`}
+              >
+                {category.title}
+              </button>
+            ))}
+          </div>
         </div>
       )}
 
-      {filteredCategories.map((category) => {
+      {/* Flat Search Results */}
+      {isSearching && (
+        <div className="max-w-7xl mx-auto px-4 pt-4">
+          <h2 className={`text-2xl font-bold text-text mb-8 ${cinzel.className}`}>
+            Search Results for "{searchQuery}"
+          </h2>
+          
+          {allSearchMatches.length === 0 ? (
+            <div className="text-center py-20">
+              <p className={`text-xl text-gray-500 ${manrope.className}`}>No courses found matching "{searchQuery}"</p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+              {allSearchMatches.map((course, index) => (
+                <Link
+                  href={`/courses/${course.categorySlug}/${course.slug}`}
+                  key={course.id || index}
+                  className="bg-white border border-gray-100 rounded-2xl overflow-hidden hover:border-gray-200 hover:shadow-xl transition-all duration-300 group flex flex-col shadow-sm"
+                >
+                  <div className="aspect-square w-full relative overflow-hidden bg-gray-50">
+                    {(course.image?.url || course.image) && (
+                      <img
+                        src={course.image?.url || course.image}
+                        alt={course.title}
+                        className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-700 relative z-0"
+                      />
+                    )}
+                    <FavoriteButton course={{...course, categorySlug: course.categorySlug}} />
+                  </div>
+                  <div className="p-4 md:p-6 flex-1 flex flex-col bg-white border-t border-gray-50">
+                    <h3 className={`text-base sm:text-lg md:text-2xl text-text mb-3 md:mb-4 ${cinzel.className} line-clamp-2`}>
+                      {course.title}
+                    </h3>
+                    <div className="flex justify-between items-end mt-auto gap-2 md:gap-4">
+                      <div className="flex-1">
+                        <p className={`text-gray-600 text-xs sm:text-sm leading-relaxed line-clamp-2 font-medium ${manrope.className}`}>
+                          {course.description}
+                        </p>
+                      </div>
+                      <div className="shrink-0">
+                        <span className={`text-base sm:text-xl md:text-2xl text-text tracking-tight ${cinzel.className}`}>
+                          {course.price ? `₹${course.price.toLocaleString()}` : '₹2999'}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* Normal Category Grid */}
+      {!isSearching && categories.map((category) => {
         if (!category.courses || category.courses.length === 0) return null;
 
-        // Display up to 8 courses (2 perfect rows on desktop, 4 on mobile)
+        // Display up to 8 courses
         const displayedCourses = category.courses.slice(0, 8);
 
         return (
-          <div key={category.id} className="relative pt-8 mb-4">
+          <div key={category.id} id={`category-${category.slug}`} className="relative pt-4 mb-4 scroll-mt-24">
             {/* Sticky Header */}
             <div 
               className="sticky z-40 bg-background/95 backdrop-blur-md py-4 mb-8 flex justify-between items-center"
