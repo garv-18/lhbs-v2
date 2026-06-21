@@ -67,7 +67,7 @@ export async function generateMetadata({ params }) {
       ],
     },
     alternates: {
-      canonical: `https://masterpramod.com/courses/${categorySlug}/${courseSlug}`,
+      canonical: `https://www.martialartsschool.in/courses/${categorySlug}/${courseSlug}`,
     },
   };
 }
@@ -102,7 +102,7 @@ export default async function CoursePage({ params }) {
     "provider": {
       "@type": "Organization",
       "name": "LHBS",
-      "sameAs": "https://masterpramod.com/lhbs"
+      "sameAs": "https://www.martialartsschool.in"
     },
     "offers": {
       "@type": "Offer",

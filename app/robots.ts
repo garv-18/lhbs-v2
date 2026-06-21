@@ -5,6 +5,6 @@ export default function robots() {
       allow: '/',
       disallow: ['/admin/', '/api/'],
     },
-    sitemap: 'https://masterpramod.com/sitemap.xml',
+    sitemap: 'https://www.martialartsschool.in/sitemap.xml',
   }
 }

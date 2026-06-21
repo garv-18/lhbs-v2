@@ -7,7 +7,7 @@ export const metadata = {
   title: 'All Programs | LHBS',
   description: 'Explore our catalog of martial arts training programs. Learn on your mobile with the best coaches.',
   alternates: {
-    canonical: 'https://masterpramod.com/courses',
+    canonical: 'https://www.martialartsschool.in/courses',
   },
 };
 
@@ -63,7 +63,7 @@ export default async function Courses() {
     "itemListElement": categoriesWithCourses.flatMap(c => c.courses).map((course, idx) => ({
       "@type": "ListItem",
       "position": idx + 1,
-      "url": `https://masterpramod.com/courses/${course.category ? (course.category).slug : ''}/${course.slug}`
+      "url": `https://www.martialartsschool.in/courses/${course.category ? (course.category).slug : ''}/${course.slug}`
     }))
   };
 

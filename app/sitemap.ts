@@ -2,7 +2,7 @@ import { getPayload } from 'payload';
 import configPromise from '../payload.config';
 
 export default async function sitemap() {
-  const baseUrl = 'https://masterpramod.com';
+  const baseUrl = 'https://www.martialartsschool.in';
 
   // Base routes
   const routes = [

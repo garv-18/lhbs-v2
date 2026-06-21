@@ -34,7 +34,7 @@ export async function generateMetadata({ params }) {
         title: category ? `${category.title} | LHBS` : 'Programs | LHBS',
         description: `Explore all courses in our ${category?.title || 'Program'}.`,
         alternates: {
-            canonical: `https://masterpramod.com/courses/${categorySlug}`,
+            canonical: `https://www.martialartsschool.in/courses/${categorySlug}`,
         },
     };
 }
@@ -83,7 +83,7 @@ export default async function CategoryPage({ params }) {
         "itemListElement": courses.map((course, idx) => ({
             "@type": "ListItem",
             "position": idx + 1,
-            "url": `https://masterpramod.com/courses/${categorySlug}/${course.slug}`
+            "url": `https://www.martialartsschool.in/courses/${categorySlug}/${course.slug}`
         }))
     };
 

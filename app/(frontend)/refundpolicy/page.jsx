@@ -25,7 +25,7 @@ const Refundpolicy = () => {
         <li>Fee once paid is non-transferable and non-adjustable to another person or program.</li>
         <li>Rejoining after a break of 30+ days is treated as a new enrollment, subject to availability and updated fees.</li>
         <li>All offers are non-transferable between programs or individuals.</li>
-        <li>MasterPramod.com reserves the right to update pricing, and new clients must comply with current prices.</li>
+        <li>martialartsschool.in reserves the right to update pricing, and new clients must comply with current prices.</li>
       </ul>
 
       <h2>Daily Training & Attendance Policy</h2>
@@ -36,7 +36,7 @@ const Refundpolicy = () => {
         <li>Clients must maintain 80% attendance to remain in their fixed time slot.</li>
         <li>No make-up sessions are guaranteed for missed classes unless approved in advance.</li>
         <li>Training days lost due to client travel or personal issues will not be adjusted or extended.</li>
-        <li>If MasterPramod.com fails to deliver more than 5 sessions in a month, extra sessions will be compensated.</li>
+        <li>If martialartsschool.in fails to deliver more than 5 sessions in a month, extra sessions will be compensated.</li>
         <li>Public holidays or trainer travel days are counted as training days and included in the plan.</li>
         <li>A weekly attendance sheet is maintained for all clients.</li>
         <li>Clients should notify absence at least 24 hours in advance.</li>
@@ -82,7 +82,7 @@ const Refundpolicy = () => {
         <li>Fees for Golden Slots are non-negotiable and final.</li>
         <li>Full attendance is expected. Lazy attitude, regular skipping, or casual behavior may result in removal.</li>
         <li>Only highly committed clients are accepted in these slots.</li>
-        <li>Refund is only possible if MasterPramod.com cancels the slot — no other reasons apply.</li>
+        <li>Refund is only possible if martialartsschool.in cancels the slot — no other reasons apply.</li>
       </ul>
 
       <h2>Health Claims, Breaks & Misuse Protection</h2>
@@ -120,7 +120,7 @@ const Refundpolicy = () => {
         <li>No legal claim can be made for delays caused by force majeure (natural disasters, pandemic).</li>
         <li>All clients must sign an agreement or accept these policies digitally before joining.</li>
         <li>No cancellation will be processed once the plan is live.</li>
-        <li>All decisions made by MasterPramod.com in disputes are final and non-negotiable.</li>
+        <li>All decisions made by martialartsschool.in in disputes are final and non-negotiable.</li>
       </ul>
     </div>
   )
