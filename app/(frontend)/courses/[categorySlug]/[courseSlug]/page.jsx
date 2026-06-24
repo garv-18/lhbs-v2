@@ -10,6 +10,7 @@ import CourseHeaderClient from "../../../components/CourseHeaderClient";
 import CourseGallery from "../../../components/CourseGallery";
 import CourseSidebarClient from "../../../components/CourseSidebarClient";
 import PricingCard from "../../../components/PricingCard";
+import ReviewCarousel from "../../../components/ReviewCarousel";
 
 const cinzel = Cinzel({ subsets: ["latin"], weight: ["400", "700"] });
 const manrope = Manrope({ subsets: ["latin"], weight: ["300", "500", "700"] });
@@ -87,6 +88,13 @@ export default async function CoursePage({ params }) {
   });
   
   const course = data.docs[0];
+
+  const reviewsRes = await payload.find({
+    collection: 'reviews',
+    sort: '-createdAt',
+    limit: 20,
+  });
+  const reviews = reviewsRes.docs;
 
   if (!course) return (
     <div className="min-h-screen bg-background flex items-center justify-center text-text">
@@ -202,6 +210,9 @@ export default async function CoursePage({ params }) {
 
         </div>
       </div>
+      
+      {/* Dynamic Google Reviews */}
+      <ReviewCarousel reviews={reviews} />
     </div>
   );
 }

@@ -2,6 +2,7 @@ import CourseListClient from "../components/CourseListClient";
 import "../globals.css";
 import { getPayload } from 'payload';
 import configPromise from '../../../payload.config';
+import ReviewCarousel from "../components/ReviewCarousel";
 
 export const metadata = {
   title: 'All Programs | LHBS',
@@ -56,6 +57,14 @@ export default async function Courses() {
     })
   );
 
+  // Fetch Reviews
+  const reviewsRes = await payload.find({
+    collection: 'reviews',
+    sort: '-createdAt',
+    limit: 20,
+  });
+  const reviews = reviewsRes.docs;
+
   // Build ItemList JSON-LD
   const jsonLd = {
     "@context": "https://schema.org",
@@ -76,6 +85,9 @@ export default async function Courses() {
 
       {/* Courses List with Sidebar */}
       <CourseListClient categories={categoriesWithCourses} />
+
+      {/* Dynamic Google Reviews */}
+      <ReviewCarousel reviews={reviews} />
     </div>
   );
 }

@@ -6,6 +6,7 @@ import { fileURLToPath } from 'url';
 import { Media } from './app/collections/Media';
 import { Categories } from './app/collections/Categories';
 import { Pages } from './app/collections/Pages';
+import { Reviews } from './app/collections/Reviews';
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -21,6 +22,7 @@ export default buildConfig({
     Media,
     Categories,
     Pages,
+    Reviews,
     {
       slug: 'users',
       auth: true,

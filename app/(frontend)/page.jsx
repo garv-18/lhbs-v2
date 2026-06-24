@@ -6,6 +6,7 @@ import TextureBackground from "./components/TextureBackground";
 import AboutMaster from "./components/AboutMaster";
 import Testimonials from "./components/Testimonials";
 import CategoryCarousel from "./components/CategoryCarousel";
+import ReviewCarousel from "./components/ReviewCarousel";
 import { getPayload } from 'payload';
 import configPromise from '../../payload.config';
 
@@ -44,6 +45,14 @@ export default async function Home() {
     })
   );
 
+  // Fetch Reviews
+  const reviewsRes = await payload.find({
+    collection: 'reviews',
+    sort: '-createdAt',
+    limit: 20,
+  });
+  const reviews = reviewsRes.docs;
+
   return (
     <>
       <main className="min-h-screen bg-background text-text overflow-x-hidden w-full max-w-[100vw]">
@@ -59,6 +68,7 @@ export default async function Home() {
           )
         ))}
         <AboutMaster />
+        <ReviewCarousel reviews={reviews} />
         <Testimonials />
         <Training />
       </main>
