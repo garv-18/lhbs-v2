@@ -1,5 +1,8 @@
 import { Cinzel, Manrope } from "next/font/google";
 import { MapPin, Mail, Phone, Clock, ArrowRight } from "lucide-react";
+import { getPayload } from 'payload'
+import configPromise from '../../../payload.config'
+import { RichText } from '@payloadcms/richtext-lexical/react'
 
 const cinzel = Cinzel({ subsets: ["latin"], weight: ["400", "700"] });
 const manrope = Manrope({ subsets: ["latin"], weight: ["400", "600"] });
@@ -9,7 +12,17 @@ export const metadata = {
   description: "Visit our martial arts academy. Find our location, hours, and contact information.",
 };
 
-export default function ContactPage() {
+export const revalidate = 60;
+
+export default async function ContactPage() {
+  const payload = await getPayload({ config: configPromise });
+  const data = await payload.find({
+    collection: 'pages',
+    where: { slug: { equals: 'contact' } },
+  });
+
+  const page = data.docs[0];
+
   return (
     <div className="min-h-screen bg-background text-text pt-32 pb-20">
       <div className="max-w-7xl mx-auto px-4">
@@ -20,7 +33,7 @@ export default function ContactPage() {
                 Visit The Academy
             </span>
             <h1 className={`text-5xl md:text-7xl font-bold mb-6 text-text ${cinzel.className}`}>
-                Train At The Dojo
+                {page?.title || 'Train At The Dojo'}
             </h1>
             <p className="text-gray-600 text-lg md:text-xl leading-relaxed">
                 Step onto the mat and experience traditional martial arts training. Visit our facility to meet Master Pramod and start your journey.
@@ -32,56 +45,65 @@ export default function ContactPage() {
             {/* Contact Information */}
             <div className="space-y-8">
                 <div className="bg-white border border-gray-200 rounded-3xl p-8 shadow-sm">
-                    <h2 className="text-2xl font-bold mb-6 text-text">Academy Information</h2>
                     
-                    <div className="space-y-6">
-                        <div className="flex items-start gap-4">
-                            <div className="bg-primary/10 p-3 rounded-xl text-primary mt-1">
-                                <MapPin size={24} />
-                            </div>
-                            <div>
-                                <h3 className="font-semibold text-lg text-text mb-1">Location</h3>
-                                <p className="text-gray-600 leading-relaxed">
-                                    LHBS Martial Arts Academy<br />
-                                    Indore, Madhya Pradesh, Bharat (452018)
-                                </p>
-                                <a 
-                                    href="https://maps.app.goo.gl/b5QzmscbyFokUtVT9" 
-                                    target="_blank" 
-                                    rel="noopener noreferrer"
-                                    className="inline-flex items-center gap-2 text-primary font-semibold mt-3 hover:underline"
-                                >
-                                    Get Directions <ArrowRight size={16} />
-                                </a>
-                            </div>
+                    {page?.content ? (
+                        <div className="prose prose-lg prose-gray max-w-none">
+                            <RichText data={page.content} />
                         </div>
+                    ) : (
+                        <>
+                            <h2 className="text-2xl font-bold mb-6 text-text">Academy Information</h2>
+                            
+                            <div className="space-y-6">
+                                <div className="flex items-start gap-4">
+                                    <div className="bg-primary/10 p-3 rounded-xl text-primary mt-1">
+                                        <MapPin size={24} />
+                                    </div>
+                                    <div>
+                                        <h3 className="font-semibold text-lg text-text mb-1">Location</h3>
+                                        <p className="text-gray-600 leading-relaxed">
+                                            LHBS Martial Arts Academy<br />
+                                            Indore, Madhya Pradesh, Bharat (452018)
+                                        </p>
+                                        <a 
+                                            href="https://maps.app.goo.gl/b5QzmscbyFokUtVT9" 
+                                            target="_blank" 
+                                            rel="noopener noreferrer"
+                                            className="inline-flex items-center gap-2 text-primary font-semibold mt-3 hover:underline"
+                                        >
+                                            Get Directions <ArrowRight size={16} />
+                                        </a>
+                                    </div>
+                                </div>
 
-                        <div className="flex items-start gap-4">
-                            <div className="bg-primary/10 p-3 rounded-xl text-primary mt-1">
-                                <Clock size={24} />
-                            </div>
-                            <div>
-                                <h3 className="font-semibold text-lg text-text mb-1">Training Hours</h3>
-                                <div className="text-gray-600 space-y-1">
-                                    <p><span className="font-medium text-text">Mon-Fri:</span> 6:00 AM - 9:00 PM</p>
-                                    <p><span className="font-medium text-text">Saturday:</span> 8:00 AM - 2:00 PM</p>
-                                    <p><span className="font-medium text-text">Sunday:</span> Closed</p>
+                                <div className="flex items-start gap-4">
+                                    <div className="bg-primary/10 p-3 rounded-xl text-primary mt-1">
+                                        <Clock size={24} />
+                                    </div>
+                                    <div>
+                                        <h3 className="font-semibold text-lg text-text mb-1">Training Hours</h3>
+                                        <div className="text-gray-600 space-y-1">
+                                            <p><span className="font-medium text-text">Mon-Fri:</span> 6:00 AM - 9:00 PM</p>
+                                            <p><span className="font-medium text-text">Saturday:</span> 8:00 AM - 2:00 PM</p>
+                                            <p><span className="font-medium text-text">Sunday:</span> Closed</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="flex items-start gap-4">
+                                    <div className="bg-primary/10 p-3 rounded-xl text-primary mt-1">
+                                        <Phone size={24} />
+                                    </div>
+                                    <div>
+                                        <h3 className="font-semibold text-lg text-text mb-1">Contact</h3>
+                                        <p className="text-gray-600">
+                                            Call us or message on WhatsApp to schedule your first trial class.
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-
-                        <div className="flex items-start gap-4">
-                            <div className="bg-primary/10 p-3 rounded-xl text-primary mt-1">
-                                <Phone size={24} />
-                            </div>
-                            <div>
-                                <h3 className="font-semibold text-lg text-text mb-1">Contact</h3>
-                                <p className="text-gray-600">
-                                    Call us or message on WhatsApp to schedule your first trial class.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
+                        </>
+                    )}
                 </div>
 
                 <div className="bg-gray-900 rounded-3xl p-8 text-white relative overflow-hidden">

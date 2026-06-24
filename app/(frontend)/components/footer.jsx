@@ -99,7 +99,7 @@ const Footer = () => {
                 <div className={`border-t border-gray-100 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-500 ${manrope.className}`}>
                     <p>© 2025 Martial Arts School. All rights reserved.</p>
                     <div className="flex flex-wrap gap-4 md:gap-6 justify-center md:justify-end">
-                        <a href="/#about" className="hover:text-primary transition-colors whitespace-nowrap">About Us</a>
+                        <a href="/about" className="hover:text-primary transition-colors whitespace-nowrap">About Us</a>
                         <a href="/contact" className="hover:text-primary transition-colors whitespace-nowrap">Contact Us</a>
                         <a href="/refundpolicy" className="hover:text-primary transition-colors whitespace-nowrap">Refund Policy</a>
                         <a href="/termsandconditions" className="hover:text-primary transition-colors whitespace-nowrap">Terms & Conditions</a>
