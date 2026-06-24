@@ -103,50 +103,59 @@ export default function Navbar() {
         {/* Premium Mobile Menu Overlay */}
         <AnimatePresence>
           {isMobileMenuOpen && (
-            <motion.div
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-              className="fixed inset-0 top-0 left-0 right-0 bottom-0 bg-white/95 backdrop-blur-2xl z-[55] flex flex-col pt-32 px-8 pb-12 md:hidden min-h-screen"
-            >
-              <div className="flex flex-col gap-6 flex-1 mt-4">
-                {navLinks.map((link, i) => (
-                  <motion.div
-                    key={link.name}
-                    initial={{ opacity: 0, x: -40 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -20 }}
-                    transition={{ duration: 0.5, delay: i * 0.1 + 0.1, ease: [0.22, 1, 0.36, 1] }}
-                  >
-                    <Link
-                      href={link.href}
-                      className={`block text-4xl sm:text-5xl text-text font-black tracking-tight hover:text-primary hover:translate-x-2 transition-all duration-300 ${cinzel.className}`}
-                      onClick={() => setIsMobileMenuOpen(false)}
-                    >
-                      {link.name}
-                    </Link>
-                  </motion.div>
-                ))}
-              </div>
-
-              {/* Bottom Decorative Element */}
+            <>
+              {/* Backdrop */}
               <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 10 }}
-                transition={{ duration: 0.5, delay: navLinks.length * 0.1 + 0.2, ease: "easeOut" }}
-                className="mt-auto w-full pt-8"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3 }}
+                className="fixed inset-0 bg-black/10 backdrop-blur-[2px] z-[50] md:hidden"
+                onClick={() => setIsMobileMenuOpen(false)}
+              />
+
+              {/* Side Drawer */}
+              <motion.div
+                initial={{ x: "100%" }}
+                animate={{ x: 0 }}
+                exit={{ x: "100%" }}
+                transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+                className="fixed top-0 right-0 bottom-0 w-[280px] bg-white/95 backdrop-blur-2xl z-[55] shadow-2xl flex flex-col pt-24 px-8 pb-8 md:hidden border-l border-white/20"
               >
-                <div className="h-[1px] w-full bg-gradient-to-r from-gray-200 via-gray-300 to-transparent mb-6"></div>
-                <p className={`text-gray-500 text-xs sm:text-sm tracking-[0.2em] uppercase font-bold ${cinzel.className}`}>
-                  Live Healthy Be Safe
-                </p>
-                <p className="text-gray-400 text-xs mt-2 font-medium">
-                  Martial Arts Academy
-                </p>
+                <div className="flex flex-col gap-8 flex-1 mt-8">
+                  {navLinks.map((link, i) => (
+                    <motion.div
+                      key={link.name}
+                      initial={{ opacity: 0, x: 20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: 10 }}
+                      transition={{ duration: 0.4, delay: i * 0.05 + 0.1, ease: "easeOut" }}
+                    >
+                      <Link
+                        href={link.href}
+                        className="block text-xl text-gray-700 font-medium tracking-wide hover:text-primary hover:translate-x-1 transition-all duration-300"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                      >
+                        {link.name}
+                      </Link>
+                    </motion.div>
+                  ))}
+                </div>
+
+                {/* Bottom Decorative Element */}
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.5, delay: 0.3 }}
+                  className="mt-auto w-full pt-8"
+                >
+                  <div className="h-[1px] w-full bg-gradient-to-r from-gray-200 to-transparent mb-6"></div>
+                  <p className="text-gray-400 text-[10px] tracking-widest uppercase font-semibold">
+                    LHBS Academy
+                  </p>
+                </motion.div>
               </motion.div>
-            </motion.div>
+            </>
           )}
         </AnimatePresence>
       </nav>
