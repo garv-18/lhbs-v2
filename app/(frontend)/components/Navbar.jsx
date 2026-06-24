@@ -123,7 +123,7 @@ export default function Navbar() {
               transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
               className="fixed top-0 right-0 bottom-0 w-[280px] bg-white/95 backdrop-blur-2xl z-[55] shadow-2xl flex flex-col pt-24 px-8 pb-8 md:hidden border-l border-white/20"
             >
-              <div className="flex flex-col gap-8 flex-1 mt-8">
+              <div className="flex flex-col gap-6 flex-1 mt-8">
                 {navLinks.map((link, i) => (
                   <motion.div
                     key={link.name}
@@ -131,10 +131,11 @@ export default function Navbar() {
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: 10 }}
                     transition={{ duration: 0.4, delay: i * 0.05 + 0.1, ease: "easeOut" }}
+                    className="border-b border-gray-200/60 pb-5 w-3/4"
                   >
                     <Link
                       href={link.href}
-                      className="block text-xl text-gray-700 font-medium tracking-wide hover:text-primary hover:translate-x-1 transition-all duration-300"
+                      className="block text-[13px] text-gray-800 font-medium tracking-[0.15em] uppercase hover:text-primary hover:translate-x-1 transition-all duration-300"
                       onClick={() => setIsMobileMenuOpen(false)}
                     >
                       {link.name}
