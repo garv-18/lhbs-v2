@@ -134,7 +134,7 @@ export default function CategoryCarousel({ category, courses = [] }) {
             {/* Large View All Button */}
             <div className="px-4 max-w-7xl mx-auto mt-4">
                 <Link href={`/courses/${category.slug}`} className="block w-full">
-                    <button className="w-full py-4 rounded-xl border border-gray-200 bg-white hover:bg-gray-50 text-text transition-all duration-300 text-sm md:text-base font-bold shadow-sm uppercase tracking-wider">
+                    <button className="w-full py-4 rounded-xl border border-gray-200 bg-white hover:bg-gray-50 text-text transition-all duration-300 text-sm md:text-base font-normal shadow-sm tracking-wider">
                         View All {category.title}
                     </button>
                 </Link>
