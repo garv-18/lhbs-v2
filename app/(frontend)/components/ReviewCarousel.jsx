@@ -43,11 +43,9 @@ export default function ReviewCarousel({ reviews }) {
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
           <div>
             <div className="flex items-center gap-3 mb-2">
-              <Image 
+              <img 
                 src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" 
                 alt="Google" 
-                width={24} 
-                height={24} 
                 className="w-6 h-6"
               />
               <span className="text-gray-900 font-semibold text-lg tracking-tight">Rating</span>
@@ -128,12 +126,10 @@ export default function ReviewCarousel({ reviews }) {
                     <span className="text-gray-400">Local Guide</span>
                   </div>
                 </div>
-                <Image 
+                <img 
                   src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" 
                   alt="Google" 
-                  width={18} 
-                  height={18} 
-                  className="opacity-80"
+                  className="w-[18px] h-[18px] opacity-80"
                 />
               </div>
 
