@@ -110,12 +110,11 @@ export default function ReviewCarousel({ reviews }) {
               <div className="flex items-start gap-4 mb-4">
                 <div className="w-12 h-12 rounded-full overflow-hidden bg-gray-200 flex-shrink-0 relative">
                   {review.profilePhotoUrl ? (
-                    <Image 
+                    <img 
                       src={review.profilePhotoUrl} 
                       alt={review.reviewerName} 
-                      fill
-                      sizes="48px"
-                      className="object-cover" 
+                      className="w-full h-full object-cover"
+                      referrerPolicy="no-referrer"
                     />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center bg-blue-600 text-white font-bold text-lg">
