@@ -151,9 +151,11 @@ export default function ReviewCarousel({ reviews }) {
                 )}
               </div>
 
-              <p className="text-gray-700 text-sm md:text-base leading-relaxed line-clamp-6">
-                {review.reviewText}
-              </p>
+              <div className="flex-1 overflow-y-auto hide-scrollbar max-h-[350px] pr-1">
+                <p className="text-gray-700 text-sm md:text-base leading-relaxed whitespace-pre-line">
+                  {review.reviewText}
+                </p>
+              </div>
             </CardWrapper>
           )})}
         </div>
