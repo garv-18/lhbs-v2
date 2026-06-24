@@ -68,7 +68,7 @@ export default function ReviewCarousel({ reviews }) {
           
           <div className="flex items-center gap-4">
             <a 
-              href="https://maps.google.com" 
+              href="https://maps.app.goo.gl/Cnzw2Lrby94eG8ji9" 
               target="_blank" 
               rel="noopener noreferrer"
               className="text-primary font-bold text-sm tracking-widest uppercase hover:underline mr-4"
