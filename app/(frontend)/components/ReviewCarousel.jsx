@@ -33,6 +33,8 @@ export default function ReviewCarousel({ reviews }) {
 
   if (!shuffledReviews || shuffledReviews.length === 0) return null;
 
+  const averageRating = (reviews.reduce((acc, curr) => acc + (curr.rating || 5), 0) / reviews.length).toFixed(1);
+
   return (
     <div className={`w-full py-20 bg-gray-50 overflow-hidden ${manrope.className}`}>
       <div className="max-w-7xl mx-auto px-4 md:px-6 relative">
@@ -51,7 +53,7 @@ export default function ReviewCarousel({ reviews }) {
               <span className="text-gray-900 font-semibold text-lg tracking-tight">Rating</span>
             </div>
             <h2 className="text-4xl md:text-5xl font-black text-gray-900 tracking-tight">
-              4.9<span className="text-2xl text-gray-400 font-medium ml-1">/5</span>
+              {averageRating}<span className="text-2xl text-gray-400 font-medium ml-1">/5</span>
             </h2>
             <div className="flex items-center gap-1 mt-3">
               {[...Array(5)].map((_, i) => (

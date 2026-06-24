@@ -4,7 +4,6 @@ import Training from "./components/Training";
 import HomeAnimations from "./components/HomeAnimations";
 import TextureBackground from "./components/TextureBackground";
 import AboutMaster from "./components/AboutMaster";
-import Testimonials from "./components/Testimonials";
 import CategoryCarousel from "./components/CategoryCarousel";
 import ReviewCarousel from "./components/ReviewCarousel";
 import { getPayload } from 'payload';
@@ -15,7 +14,7 @@ export const metadata = {
   description: "Learn Martial Arts from the best. Expert training in Muay Thai, Kung-fu, Krav Maga, and more.",
 };
 
-export const revalidate = 3600; // Cache home page for 1 hour
+export const revalidate = 60; // Cache home page for 1 minute
 
 export default async function Home() {
   const payload = await getPayload({ config: configPromise });
@@ -69,7 +68,6 @@ export default async function Home() {
         ))}
         <AboutMaster />
         <ReviewCarousel reviews={reviews} />
-        <Testimonials />
         <Training />
       </main>
     </>

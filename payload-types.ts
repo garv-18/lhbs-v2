@@ -70,6 +70,7 @@ export interface Config {
     media: Media;
     categories: Category;
     pages: Page;
+    reviews: Review;
     users: User;
     coursenames: Coursename;
     orders: Order;
@@ -84,6 +85,7 @@ export interface Config {
     media: MediaSelect<false> | MediaSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     pages: PagesSelect<false> | PagesSelect<true>;
+    reviews: ReviewsSelect<false> | ReviewsSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     coursenames: CoursenamesSelect<false> | CoursenamesSelect<true>;
     orders: OrdersSelect<false> | OrdersSelect<true>;
@@ -193,6 +195,30 @@ export interface Page {
     };
     [k: string]: unknown;
   };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "reviews".
+ */
+export interface Review {
+  id: number;
+  reviewerName: string;
+  reviewText: string;
+  rating: number;
+  /**
+   * Optional: Paste the image URL of the reviewer's profile photo.
+   */
+  profilePhotoUrl?: string | null;
+  /**
+   * Optional: e.g. "2 weeks ago" or "a month ago"
+   */
+  datePosted?: string | null;
+  /**
+   * Optional: Link directly to this specific review on Google Maps.
+   */
+  googleMapsUrl?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -339,6 +365,10 @@ export interface PayloadLockedDocument {
         value: number | Page;
       } | null)
     | ({
+        relationTo: 'reviews';
+        value: number | Review;
+      } | null)
+    | ({
         relationTo: 'users';
         value: number | User;
       } | null)
@@ -436,6 +466,20 @@ export interface PagesSelect<T extends boolean = true> {
   title?: T;
   slug?: T;
   content?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "reviews_select".
+ */
+export interface ReviewsSelect<T extends boolean = true> {
+  reviewerName?: T;
+  reviewText?: T;
+  rating?: T;
+  profilePhotoUrl?: T;
+  datePosted?: T;
+  googleMapsUrl?: T;
   updatedAt?: T;
   createdAt?: T;
 }
