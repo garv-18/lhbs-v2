@@ -42,17 +42,13 @@ export default function CourseHeaderClient({ course, categorySlug, courseSlug })
         </div>
 
         {/* Title */}
-        <h1 className={`text-3xl md:text-4xl lg:text-5xl font-extrabold mb-3 text-text leading-tight ${cinzel.className}`}>
+        <h1 className={`text-3xl md:text-4xl lg:text-5xl font-bold uppercase mb-3 text-text leading-tight tracking-tight ${cinzel.className}`}>
           {course.title}
         </h1>
         
         {/* Badges */}
         <div className="flex items-center gap-3 text-sm">
-          <span className="inline-block px-3 py-1 rounded-md bg-green-50 text-green-700 font-semibold tracking-wide border border-green-100">
-            {course.courseType === 'master' ? 'Premium Course' : 'Fundamentals Course'}
-          </span>
-          <span className="text-gray-500">•</span>
-          <span className="text-gray-500">Lifetime Access</span>
+          <span className="text-gray-500 font-medium">Lifetime Access</span>
         </div>
       </div>
 

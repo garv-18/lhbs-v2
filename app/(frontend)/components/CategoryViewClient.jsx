@@ -28,7 +28,7 @@ export default function CategoryViewClient({ category, courses }) {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ type: "spring", stiffness: 80, damping: 20 }}
-          className={`text-4xl md:text-5xl font-extrabold tracking-tight mb-3 text-text ${cinzel.className}`}
+          className={`text-4xl md:text-5xl font-bold uppercase tracking-tight mb-3 text-text ${cinzel.className}`}
         >
           {category.title}
         </motion.h1>
@@ -75,13 +75,13 @@ export default function CategoryViewClient({ category, courses }) {
               <Link
                 href={`/courses/${category.slug}/${course.slug}`}
                 key={course.id || index}
-                className="bg-white border border-gray-100 rounded-2xl overflow-hidden hover:border-gray-200 hover:shadow-xl transition-all duration-300 group flex flex-col shadow-sm"
+                className="group relative h-full bg-white border border-gray-200 rounded-none hover:shadow-lg transition-all duration-300 flex flex-col shadow-[0_4px_10px_rgba(0,0,0,0.03)] overflow-hidden"
               >
-                <div className="aspect-square w-full relative overflow-hidden bg-gray-50">
+                <div className="aspect-square w-full relative overflow-hidden bg-gray-900">
                   <CourseImage
                     src={course.image?.url || course.image}
                     alt={course.title}
-                    className="group-hover:scale-105 transition-transform duration-700"
+                    className="object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700"
                   />
                   
                   {/* Favorite Icon */}
@@ -89,20 +89,21 @@ export default function CategoryViewClient({ category, courses }) {
                 </div>
 
                 {/* Content Area */}
-                <div className="p-4 md:p-6 flex-1 flex flex-col bg-white border-t border-gray-50">
-                  <h3 className={`text-base sm:text-lg md:text-2xl text-text mb-3 md:mb-4 ${cinzel.className} line-clamp-2`}>
+                <div className="p-4 md:p-6 flex-1 flex flex-col bg-white">
+                  <h3 className={`text-base md:text-xl font-bold text-black leading-tight uppercase tracking-tight mb-2 line-clamp-2 ${cinzel.className}`}>
                     {course.title}
                   </h3>
                   
-                  <div className="flex justify-between items-end mt-auto gap-2 md:gap-4">
-                    <div className="flex-1">
-                      <p className={`text-gray-600 text-xs sm:text-sm leading-relaxed line-clamp-2 font-medium ${manrope.className}`}>
-                        {course.description}
-                      </p>
-                    </div>
-                    <div className="shrink-0">
-                      <span className={`text-base sm:text-xl md:text-2xl text-text tracking-tight ${cinzel.className}`}>
-                        {course.price ? `Rs. ${course.price.toLocaleString()}` : 'Rs. 2,999'}
+                  <p className={`text-xs md:text-sm text-gray-500 leading-snug line-clamp-2 mb-4 ${manrope.className}`}>
+                    {course.description}
+                  </p>
+                  
+                  <div className="mt-auto border-t border-gray-100 pt-3 flex flex-col">
+                    <span className={`text-[10px] md:text-xs text-gray-400 font-medium mb-1 ${manrope.className}`}>Total Price</span>
+                    <div className={`flex items-baseline text-[#0f172a] ${manrope.className}`}>
+                      <span className="text-[11px] md:text-[13px] font-bold mr-[2px]">₹</span>
+                      <span className="text-[18px] md:text-[24px] font-black tracking-tight leading-none">
+                        {course.price ? course.price.toLocaleString() : '2,999'}
                       </span>
                     </div>
                   </div>
