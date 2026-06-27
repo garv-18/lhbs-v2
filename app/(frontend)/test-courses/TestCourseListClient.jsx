@@ -1,11 +1,10 @@
 "use client";
 
-import { useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { Cinzel, Manrope } from "next/font/google";
 import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
-import CourseImage from "./CourseImage";
-import FavoriteButton from "./FavoriteButton";
+import CourseImage from "../components/CourseImage";
 
 const cinzel = Cinzel({ subsets: ["latin"], weight: ["400", "700"] });
 const manrope = Manrope({ subsets: ["latin"], weight: ["300", "500", "700"] });
@@ -14,8 +13,8 @@ const CourseCardV15 = ({ course, categorySlug }) => (
     <Link href={`/courses/${categorySlug}/${course.slug}`} className="min-w-[42vw] w-[42vw] sm:min-w-[280px] sm:w-[280px] md:min-w-[320px] md:w-[320px] shrink-0 snap-start bg-white border border-gray-200 rounded-none overflow-hidden flex flex-col shadow-[0_4px_10px_rgba(0,0,0,0.03)] hover:shadow-lg transition-all group">
         <div className="aspect-square w-full bg-gray-50 relative overflow-hidden">
             <CourseImage src={course.image?.url || course.image} alt={course.title} className="object-cover group-hover:scale-105 transition-transform duration-700" />
-            <div className="absolute top-3 right-3 z-10">
-                <FavoriteButton course={{ ...course, categorySlug }} />
+            <div className="absolute top-3 right-3 w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-sm">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gray-400 hover:text-red-500 transition-colors"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
             </div>
         </div>
         <div className="p-3 md:p-5 flex-1 flex flex-col bg-white">
@@ -38,7 +37,7 @@ const CourseCardV15 = ({ course, categorySlug }) => (
     </Link>
 );
 
-export default function CategoryCarousel({ category, courses = [] }) {
+const Variant15Section = ({ category, courses }) => {
     const scrollRef = useRef(null);
 
     const scroll = (direction) => {
@@ -52,8 +51,6 @@ export default function CategoryCarousel({ category, courses = [] }) {
             }
         }
     };
-
-    if (courses.length === 0) return null;
 
     return (
         <div className="py-12 md:py-20 bg-white border-t border-gray-100 overflow-hidden">
@@ -100,4 +97,94 @@ export default function CategoryCarousel({ category, courses = [] }) {
             </div>
         </div>
     );
+};
+
+export default function TestCourseListClient({ categories }) {
+  const [navbarHeight, setNavbarHeight] = useState(68);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  useEffect(() => {
+    const updateHeight = () => {
+      const nav = document.getElementById('navbar');
+      if (nav) {
+        setNavbarHeight(nav.offsetHeight);
+      }
+    };
+    updateHeight();
+    window.addEventListener('resize', updateHeight);
+    return () => window.removeEventListener('resize', updateHeight);
+  }, []);
+
+  const isSearching = searchQuery.trim().length > 0;
+
+  // Flattened search results
+  let allSearchMatches = [];
+  if (isSearching) {
+    const lowerQuery = searchQuery.toLowerCase();
+    categories.forEach(category => {
+      if (category.courses) {
+        const matches = category.courses.filter(course => 
+          course.title.toLowerCase().includes(lowerQuery) || 
+          course.description?.toLowerCase().includes(lowerQuery)
+        );
+        matches.forEach(m => allSearchMatches.push({ ...m, categorySlug: category.slug }));
+      }
+    });
+  }
+
+  return (
+    <div className="w-full bg-white pb-20">
+      {/* Search Bar */}
+      <div className="max-w-7xl mx-auto px-4 pt-4 pb-6">
+        <div className="relative max-w-2xl mx-auto">
+          <input 
+            type="text" 
+            placeholder="Search for courses, martial arts, fitness..." 
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className={`w-full px-5 py-3.5 pr-12 bg-white border border-gray-200 rounded-2xl md:rounded-full shadow-sm text-black focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all text-base md:px-8 md:py-4 md:text-lg ${manrope.className}`}
+          />
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 absolute right-6 top-1/2 -translate-y-1/2 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+        </div>
+      </div>
+      
+      {/* Quick-Jump Category Menu */}
+      {!isSearching && (
+        <div className="max-w-7xl mx-auto px-4 pb-8 overflow-x-auto hide-scrollbar">
+          <div className="flex gap-2 md:gap-4 md:justify-center md:min-w-0 pr-4">
+            {categories.filter(c => c.courses && c.courses.length > 0).map((category) => (
+              <button
+                key={category.id}
+                onClick={() => {
+                  const el = document.getElementById(`category-${category.slug}`);
+                  if (el) {
+                    const y = el.getBoundingClientRect().top + window.scrollY - navbarHeight - 20;
+                    window.scrollTo({ top: y, behavior: 'smooth' });
+                  }
+                }}
+                className={`px-4 py-1.5 md:px-6 md:py-2.5 rounded-full border border-gray-200 bg-white hover:bg-black hover:text-white hover:border-black transition-all text-[10px] md:text-sm font-bold uppercase tracking-wide md:tracking-wider text-black whitespace-nowrap shadow-sm ${manrope.className}`}
+              >
+                {category.title}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Flat Search Results omitted for brevity in test page, but we will render the normal categories */}
+      
+      {/* Normal Category Variant 15 Flat Sections */}
+      {!isSearching && categories.map((category) => {
+        if (!category.courses || category.courses.length === 0) return null;
+
+        return (
+          <div key={category.id} id={`category-${category.slug}`} className="scroll-mt-24">
+            <Variant15Section category={category} courses={category.courses} />
+          </div>
+        );
+      })}
+    </div>
+  );
 }

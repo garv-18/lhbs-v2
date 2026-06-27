@@ -48,7 +48,7 @@ export default function CourseListClient({ categories }) {
   }
 
   return (
-    <div className="w-full bg-background pb-20">
+    <div className="w-full bg-white pb-20">
       {/* Search Bar */}
       <div className="max-w-7xl mx-auto px-4 pt-4 pb-6">
         <div className="relative max-w-2xl mx-auto">
@@ -57,7 +57,7 @@ export default function CourseListClient({ categories }) {
             placeholder="Search for courses, martial arts, fitness..." 
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className={`w-full px-5 py-3.5 pr-12 bg-white border border-gray-200 rounded-2xl md:rounded-full shadow-sm text-text focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all text-base md:px-8 md:py-4 md:text-lg ${manrope.className}`}
+            className={`w-full px-5 py-3.5 pr-12 bg-white border border-gray-200 rounded-2xl md:rounded-full shadow-sm text-black focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all text-base md:px-8 md:py-4 md:text-lg ${manrope.className}`}
           />
           <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 absolute right-6 top-1/2 -translate-y-1/2 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -65,10 +65,10 @@ export default function CourseListClient({ categories }) {
         </div>
       </div>
       
-      {/* Quick-Jump Category Menu (Hidden when searching) */}
+      {/* Quick-Jump Category Menu */}
       {!isSearching && (
         <div className="max-w-7xl mx-auto px-4 pb-8 overflow-x-auto hide-scrollbar">
-          <div className="flex gap-4 md:justify-center md:min-w-0">
+          <div className="flex gap-2 md:gap-4 md:justify-center md:min-w-0 pr-4">
             {categories.filter(c => c.courses && c.courses.length > 0).map((category) => (
               <button
                 key={category.id}
@@ -79,7 +79,7 @@ export default function CourseListClient({ categories }) {
                     window.scrollTo({ top: y, behavior: 'smooth' });
                   }
                 }}
-                className={`px-6 py-2.5 rounded-full border border-gray-200 bg-white hover:bg-primary hover:text-white hover:border-primary transition-all text-sm font-semibold text-gray-700 whitespace-nowrap shadow-sm ${manrope.className}`}
+                className={`px-4 py-1.5 md:px-6 md:py-2.5 rounded-full border border-gray-200 bg-white hover:bg-black hover:text-white hover:border-black transition-all text-[10px] md:text-sm font-bold uppercase tracking-wide md:tracking-wider text-black whitespace-nowrap shadow-sm ${manrope.className}`}
               >
                 {category.title}
               </button>
@@ -91,7 +91,7 @@ export default function CourseListClient({ categories }) {
       {/* Flat Search Results */}
       {isSearching && (
         <div className="max-w-7xl mx-auto px-4 pt-4">
-          <h2 className={`text-2xl font-bold text-text mb-8 ${cinzel.className}`}>
+          <h2 className={`text-2xl font-bold text-black mb-8 ${cinzel.className}`}>
             Search Results for "{searchQuery}"
           </h2>
           
@@ -122,7 +122,7 @@ export default function CourseListClient({ categories }) {
                     <FavoriteButton course={{...course, categorySlug: course.categorySlug}} />
                   </div>
                   <div className="p-4 md:p-6 flex-1 flex flex-col bg-white border-t border-gray-50">
-                    <h3 className={`text-base sm:text-lg md:text-2xl text-text mb-3 md:mb-4 ${cinzel.className} line-clamp-2`}>
+                    <h3 className={`text-base sm:text-lg md:text-2xl text-black mb-3 md:mb-4 font-bold uppercase tracking-tight ${cinzel.className} line-clamp-2`}>
                       {course.title}
                     </h3>
                     <div className="flex justify-between items-end mt-auto gap-2 md:gap-4">
@@ -135,15 +135,15 @@ export default function CourseListClient({ categories }) {
                         {hasDiscount && (
                             <div className="flex items-center gap-1 mb-0.5">
                                 <span className="text-gray-400 line-through text-[10px] md:text-xs">
-                                    Rs. {course.originalPrice.toLocaleString()}
+                                    ₹ {course.originalPrice.toLocaleString()}
                                 </span>
                                 <span className="bg-green-100 text-green-800 text-[8px] md:text-[10px] font-bold px-1.5 py-0.5 rounded uppercase tracking-wide">
                                     {discountPercentage}% OFF
                                 </span>
                             </div>
                         )}
-                        <span className={`text-base sm:text-xl md:text-2xl text-text tracking-tight ${cinzel.className}`}>
-                          {course.price ? `Rs. ${course.price.toLocaleString()}` : 'Rs. 2,999'}
+                        <span className={`text-base sm:text-xl md:text-2xl text-black font-black tracking-tight ${manrope.className}`}>
+                          {course.price ? `₹ ${course.price.toLocaleString()}` : '₹ 2,999'}
                         </span>
                       </div>
                     </div>
