@@ -10,7 +10,6 @@ export default function PaymentButton({ amount, courseSlug, className }) {
 
     const [formData, setFormData] = useState({
         name: "",
-        email: "",
         phone: ""
     });
 
@@ -21,7 +20,7 @@ export default function PaymentButton({ amount, courseSlug, className }) {
     const handlePayment = async (e) => {
         e.preventDefault();
 
-        if (!formData.name || !formData.email || !formData.phone || formData.phone.length < 10) {
+        if (!formData.name || !formData.phone || formData.phone.length < 10) {
             alert("Please fill in all details correctly.");
             return;
         }
@@ -31,7 +30,6 @@ export default function PaymentButton({ amount, courseSlug, className }) {
             const payload = {
                 amount: amount,
                 name: formData.name,
-                email: formData.email,
                 mobileNumber: formData.phone,
                 slug: courseSlug
             };
@@ -70,18 +68,18 @@ export default function PaymentButton({ amount, courseSlug, className }) {
     }
 
     return (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-200">
-            <div className="relative w-full max-w-md bg-[#0a0a0a] border border-white/10 rounded-2xl shadow-2xl overflow-hidden">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200">
+            <div className="relative w-full max-w-md bg-white border border-gray-200 rounded-2xl shadow-2xl overflow-hidden">
 
                 {/* Header */}
-                <div className="p-6 border-b border-white/10 flex justify-between items-center bg-white/5">
-                    <h3 className="text-xl font-bold text-white flex items-center gap-2">
+                <div className="p-6 border-b border-gray-100 flex justify-between items-center bg-gray-50">
+                    <h3 className="text-xl font-bold text-text flex items-center gap-2">
                         <CreditCard className="text-[#FD5D2F]" size={20} />
                         Secure Payment
                     </h3>
                     <button
                         onClick={() => setShowModal(false)}
-                        className="text-gray-400 hover:text-white transition-colors"
+                        className="text-gray-400 hover:text-gray-600 transition-colors"
                     >
                         <X size={24} />
                     </button>
@@ -90,48 +88,32 @@ export default function PaymentButton({ amount, courseSlug, className }) {
                 {/* Form */}
                 <form onSubmit={handlePayment} className="p-6 space-y-4">
                     <div className="space-y-2">
-                        <label className="text-sm text-gray-400 ml-1">Full Name</label>
+                        <label className="text-sm font-medium text-gray-700 ml-1">Full Name</label>
                         <div className="relative">
-                            <User className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" size={18} />
+                            <User className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
                             <input
                                 type="text"
                                 name="name"
                                 placeholder="John Doe"
                                 value={formData.name}
                                 onChange={handleChange}
-                                className="w-full pl-10 pr-4 py-3 rounded-lg bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-[#FD5D2F] focus:ring-1 focus:ring-[#FD5D2F] transition-all"
+                                className="w-full pl-10 pr-4 py-3 rounded-lg bg-gray-50 border border-gray-200 text-text placeholder-gray-400 focus:outline-none focus:border-[#FD5D2F] focus:ring-1 focus:ring-[#FD5D2F] transition-all"
                                 required
                             />
                         </div>
                     </div>
 
                     <div className="space-y-2">
-                        <label className="text-sm text-gray-400 ml-1">Email Address</label>
+                        <label className="text-sm font-medium text-gray-700 ml-1">Phone Number</label>
                         <div className="relative">
-                            <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" size={18} />
-                            <input
-                                type="email"
-                                name="email"
-                                placeholder="john@example.com"
-                                value={formData.email}
-                                onChange={handleChange}
-                                className="w-full pl-10 pr-4 py-3 rounded-lg bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-[#FD5D2F] focus:ring-1 focus:ring-[#FD5D2F] transition-all"
-                                required
-                            />
-                        </div>
-                    </div>
-
-                    <div className="space-y-2">
-                        <label className="text-sm text-gray-400 ml-1">Phone Number</label>
-                        <div className="relative">
-                            <Phone className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" size={18} />
+                            <Phone className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
                             <input
                                 type="tel"
                                 name="phone"
                                 placeholder="9876543210"
                                 value={formData.phone}
                                 onChange={handleChange}
-                                className="w-full pl-10 pr-4 py-3 rounded-lg bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-[#FD5D2F] focus:ring-1 focus:ring-[#FD5D2F] transition-all"
+                                className="w-full pl-10 pr-4 py-3 rounded-lg bg-gray-50 border border-gray-200 text-text placeholder-gray-400 focus:outline-none focus:border-[#FD5D2F] focus:ring-1 focus:ring-[#FD5D2F] transition-all"
                                 required
                                 minLength={10}
                             />
