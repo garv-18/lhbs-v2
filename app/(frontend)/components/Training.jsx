@@ -26,7 +26,20 @@ const trainingItems = [
     },
 ];
 
-export default function Training() {
+export default function Training({ media }) {
+    const dynamicTrainingItems = trainingItems.map(item => {
+        if (item.title === "CULTURES" && media?.trainingCulturesImage?.url) {
+            return { ...item, image: media.trainingCulturesImage.url };
+        }
+        if (item.title === "ANIMALS" && media?.trainingAnimalsImage?.url) {
+            return { ...item, image: media.trainingAnimalsImage.url };
+        }
+        if (item.title === "WEAPONS" && media?.trainingWeaponsImage?.url) {
+            return { ...item, image: media.trainingWeaponsImage.url };
+        }
+        return item;
+    });
+
     return (
         <section id="training" className="relative py-32 px-4 max-w-7xl mx-auto">
             <div className="flex flex-col md:flex-row items-end justify-between mb-20 border-b border-gray-200 pb-8">
@@ -52,7 +65,7 @@ export default function Training() {
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                {trainingItems.map((item, index) => (
+                {dynamicTrainingItems.map((item, index) => (
                     <motion.div
                         key={index}
                         initial={{ opacity: 0, y: 30 }}

@@ -51,11 +51,21 @@ export default async function Home() {
   });
   const reviews = reviewsRes.docs;
 
+  // Fetch Homepage Media
+  let homepageMedia = null;
+  try {
+    homepageMedia = await payload.findGlobal({
+      slug: 'homepage-media',
+    });
+  } catch (error) {
+    console.error("Error fetching homepage media:", error);
+  }
+
   return (
     <>
       <main className="min-h-screen bg-background text-text overflow-x-hidden w-full max-w-[100vw]">
-        <Hero />
-        <Programs />
+        <Hero media={homepageMedia} />
+        <Programs media={homepageMedia} />
         {categoriesWithCourses.map(category => (
           category.courses.length > 0 && (
             <CategoryCarousel 
@@ -65,9 +75,9 @@ export default async function Home() {
             />
           )
         ))}
-        <AboutMaster />
+        <AboutMaster media={homepageMedia} />
         <ReviewCarousel reviews={reviews} />
-        <Training />
+        <Training media={homepageMedia} />
       </main>
     </>
   );

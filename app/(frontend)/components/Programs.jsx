@@ -38,7 +38,21 @@ const programs = [
     },
 ];
 
-export default function Programs() {
+export default function Programs({ media }) {
+    // Override images dynamically if provided from CMS
+    const dynamicPrograms = programs.map(program => {
+        if (program.title === "Expert Program" && media?.expertProgramImage?.url) {
+            return { ...program, image: media.expertProgramImage.url };
+        }
+        if (program.title === "Master Program" && media?.masterProgramImage?.url) {
+            return { ...program, image: media.masterProgramImage.url };
+        }
+        if (program.title === "Business Program" && media?.businessProgramImage?.url) {
+            return { ...program, image: media.businessProgramImage.url };
+        }
+        return program;
+    });
+
     return (
         <section id="programs" className="relative py-32 px-4 max-w-7xl mx-auto">
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-32 bg-gradient-to-b from-transparent via-gray-300 to-transparent"></div>
@@ -54,7 +68,7 @@ export default function Programs() {
             </motion.h2>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                {programs.map((program, index) => (
+                {dynamicPrograms.map((program, index) => (
                     <motion.div
                         key={index}
                         initial={{ opacity: 0, y: 30 }}

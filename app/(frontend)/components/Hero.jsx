@@ -6,7 +6,9 @@ import { Cinzel } from 'next/font/google';
 
 const cinzel = Cinzel({ subsets: ["latin"], weight: ["400", "700"] });
 
-export default function Hero() {
+export default function Hero({ media }) {
+    const videoSrc = media?.heroVideo?.url || "https://ik.imagekit.io/lhbs/Video%20Project.mp4?tr=f-auto";
+
     return (
         <section className="relative h-screen w-full flex items-center justify-center overflow-hidden">
             
@@ -22,7 +24,7 @@ export default function Hero() {
                     poster="https://images.unsplash.com/photo-1555597673-b21d5c935865?q=40&w=1280&auto=format&fit=crop"
                     className="absolute inset-0 w-full h-full object-cover"
                 >
-                    <source src="https://ik.imagekit.io/lhbs/Video%20Project.mp4?tr=f-auto" type="video/mp4" />
+                    <source src={videoSrc} type="video/mp4" />
                 </video>
             </div>
 

@@ -7,6 +7,7 @@ import { Media } from './app/collections/Media';
 import { Categories } from './app/collections/Categories';
 import { Pages } from './app/collections/Pages';
 import { Reviews } from './app/collections/Reviews';
+import { HomepageMedia } from './app/globals/HomepageMedia';
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -162,6 +163,9 @@ export default buildConfig({
         { name: 'paid', type: 'checkbox' },
       ],
     }
+  ],
+  globals: [
+    HomepageMedia,
   ],
   editor: lexicalEditor({}),
   secret: process.env.PAYLOAD_SECRET || 'secret-key',

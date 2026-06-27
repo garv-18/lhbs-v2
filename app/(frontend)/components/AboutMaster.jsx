@@ -5,7 +5,9 @@ import { ArrowRight, Trophy, Globe, Users, Shield, Youtube } from "lucide-react"
 
 const cinzel = Cinzel({ subsets: ["latin"], weight: ["400", "700"] });
 
-export default function AboutMaster() {
+export default function AboutMaster({ media }) {
+    const imageSrc = media?.aboutMasterImage?.url || "/photo.jpg";
+
     return (
         <section className="py-24 relative overflow-hidden bg-white text-text">
             {/* Ambient background effect */}
@@ -93,7 +95,7 @@ export default function AboutMaster() {
                 >
                     <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-transparent to-transparent z-10"></div>
                     <img
-                        src="/photo.jpg"
+                        src={imageSrc}
                         alt="Master Pramod Goswami"
                         className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
                     />
