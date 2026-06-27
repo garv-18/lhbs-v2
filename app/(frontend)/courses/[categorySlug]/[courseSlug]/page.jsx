@@ -11,6 +11,7 @@ import CourseGallery from "../../../components/CourseGallery";
 import CourseSidebarClient from "../../../components/CourseSidebarClient";
 import PricingCard from "../../../components/PricingCard";
 import ReviewCarousel from "../../../components/ReviewCarousel";
+import CourseFAQ from "../../../components/CourseFAQ";
 
 const cinzel = Cinzel({ subsets: ["latin"], weight: ["400", "700"] });
 const manrope = Manrope({ subsets: ["latin"], weight: ["300", "500", "700"] });
@@ -201,6 +202,9 @@ export default async function CoursePage({ params }) {
                 )}
                 </div>
             </div>
+
+            {/* FAQ Section */}
+            <CourseFAQ faqs={course.faqs} />
           </div>
 
           {/* Right Column: Pricing Sidebar & Mobile Bottom Bar */}

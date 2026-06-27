@@ -101,6 +101,22 @@ export default buildConfig({
           ]
         },
         {
+          name: 'faqs',
+          type: 'array',
+          fields: [
+            {
+              name: 'question',
+              type: 'text',
+              required: true,
+            },
+            {
+              name: 'answer',
+              type: 'textarea',
+              required: true,
+            }
+          ]
+        },
+        {
           name: 'price',
           type: 'number',
         },

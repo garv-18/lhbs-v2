@@ -99,8 +99,12 @@ export interface Config {
     defaultIDType: number;
   };
   fallbackLocale: null;
-  globals: {};
-  globalsSelect: {};
+  globals: {
+    'homepage-media': HomepageMedia;
+  };
+  globalsSelect: {
+    'homepage-media': HomepageMediaSelect<false> | HomepageMediaSelect<true>;
+  };
   locale: null;
   widgets: {
     collections: CollectionsWidget;
@@ -279,6 +283,13 @@ export interface Coursename {
   features?:
     | {
         feature?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  faqs?:
+    | {
+        question: string;
+        answer: string;
         id?: string | null;
       }[]
     | null;
@@ -522,6 +533,13 @@ export interface CoursenamesSelect<T extends boolean = true> {
         feature?: T;
         id?: T;
       };
+  faqs?:
+    | T
+    | {
+        question?: T;
+        answer?: T;
+        id?: T;
+      };
   price?: T;
   originalPrice?: T;
   image?: T;
@@ -602,6 +620,40 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   batch?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "homepage-media".
+ */
+export interface HomepageMedia {
+  id: number;
+  heroVideo?: (number | null) | Media;
+  expertProgramImage?: (number | null) | Media;
+  masterProgramImage?: (number | null) | Media;
+  businessProgramImage?: (number | null) | Media;
+  aboutMasterImage?: (number | null) | Media;
+  trainingCulturesImage?: (number | null) | Media;
+  trainingAnimalsImage?: (number | null) | Media;
+  trainingWeaponsImage?: (number | null) | Media;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "homepage-media_select".
+ */
+export interface HomepageMediaSelect<T extends boolean = true> {
+  heroVideo?: T;
+  expertProgramImage?: T;
+  masterProgramImage?: T;
+  businessProgramImage?: T;
+  aboutMasterImage?: T;
+  trainingCulturesImage?: T;
+  trainingAnimalsImage?: T;
+  trainingWeaponsImage?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
