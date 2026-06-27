@@ -1,4 +1,6 @@
+"use client";
 import Link from 'next/link';
+import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import { Cinzel } from 'next/font/google';
 
@@ -26,42 +28,51 @@ export default function Hero() {
 
             {/* Content */}
             <div className="relative z-20 text-center max-w-5xl mx-auto flex flex-col items-center gap-6 px-4 mt-16">
-                <span
+                <motion.span
+                    initial={{ opacity: 0, y: -20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ type: "spring", stiffness: 100, damping: 20 }}
                     className="text-primary bg-primary/20 backdrop-blur-sm border border-primary/30 px-5 py-2 rounded-full text-xs font-bold tracking-[0.2em] uppercase text-white"
-                    data-aos="fade-down"
                 >
                     Discipline • Honor • Strength
-                </span>
+                </motion.span>
 
-                <h1
+                <motion.h1
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ type: "spring", stiffness: 100, damping: 20, delay: 0.1 }}
                     className={`text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tight leading-tight text-white ${cinzel.className}`}
-                    data-aos="zoom-in"
-                    data-aos-delay="200"
                 >
                     Master the <br />
                     <span className="text-primary drop-shadow-[0_0_15px_rgba(255,90,95,0.5)]">
                         Art of War
                     </span>
-                </h1>
+                </motion.h1>
 
-                <p
+                <motion.p
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ type: "spring", stiffness: 100, damping: 20, delay: 0.2 }}
                     className="hidden md:block text-gray-200 text-lg md:text-xl max-w-2xl leading-relaxed font-light"
-                    data-aos="fade-up"
-                    data-aos-delay="400"
                 >
                     Join the elite. Train with masters. Transform your mind and body through the ancient traditions of martial arts.
-                </p>
+                </motion.p>
 
                 <Link href="/courses">
-                    <button
+                    <motion.button
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ type: "spring", stiffness: 100, damping: 20, delay: 0.3 }}
                         className="mt-8 group relative px-8 py-4 bg-primary text-white rounded-full font-semibold overflow-hidden transition-all hover:bg-primary-hover shadow-[0_0_20px_rgba(255,90,95,0.4)] hover:shadow-[0_0_30px_rgba(255,90,95,0.6)]"
-                        data-aos="fade-up"
-                        data-aos-delay="600"
                     >
                         <span className="relative flex items-center gap-3 text-sm uppercase tracking-wider">
                             Explore Courses <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
                         </span>
-                    </button>
+                    </motion.button>
                 </Link>
             </div>
 

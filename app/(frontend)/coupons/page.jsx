@@ -2,6 +2,7 @@
 
 import { Cinzel, Manrope } from "next/font/google";
 import { Ticket, ArrowRight, Sparkles, Tag } from "lucide-react";
+import { motion } from "framer-motion";
 
 const cinzel = Cinzel({ subsets: ["latin"], weight: ["400", "700"] });
 const manrope = Manrope({ subsets: ["latin"], weight: ["300", "500", "700", "800"] });
@@ -36,7 +37,13 @@ export default function Coupons() {
                 <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-green-500/5 blur-[100px] rounded-full pointer-events-none -z-10"></div>
 
                 {/* Header */}
-                <div className="mb-16 text-center" data-aos="fade-up">
+                <motion.div 
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-100px" }}
+                    transition={{ type: "spring", stiffness: 80, damping: 20 }}
+                    className="mb-16 text-center"
+                >
                     <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-primary/10 border border-primary/20 mb-6 shadow-sm">
                         <Sparkles size={16} className="text-primary" />
                         <span className={`text-sm tracking-widest uppercase font-extrabold text-primary ${manrope.className}`}>Exclusive Rewards</span>
@@ -47,16 +54,18 @@ export default function Coupons() {
                     <p className={`text-gray-500 text-base md:text-lg max-w-2xl mx-auto font-medium ${manrope.className}`}>
                         Choose from our exclusive selection of passes, discounts, and free events. Claim your code instantly via WhatsApp.
                     </p>
-                </div>
+                </motion.div>
 
                 {/* Offers Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 lg:gap-8">
                     {offers.map((offer, index) => (
-                        <div
+                        <motion.div
                             key={index}
-                            data-aos="fade-up"
-                            data-aos-delay={(index % 3) * 100}
-                            className="group relative bg-white border border-gray-200 rounded-3xl shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_10px_40px_rgba(0,0,0,0.08)] hover:-translate-y-1 transition-all duration-500 flex overflow-hidden cursor-pointer"
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true, margin: "-50px" }}
+                            transition={{ type: "spring", stiffness: 80, damping: 20, delay: (index % 3) * 0.1 }}
+                            className="group relative bg-white border border-gray-200 rounded-3xl shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_10px_40px_rgba(0,0,0,0.08)] transition-all duration-500 flex overflow-hidden cursor-pointer"
                             onClick={() => handleClaim(offer)}
                         >
                             {/* Left Side (Offer details) */}
@@ -95,7 +104,7 @@ export default function Coupons() {
                                     <ArrowRight className="text-gray-400 group-hover:text-white transition-colors duration-500 transform group-hover:translate-x-1" size={18} />
                                 </div>
                             </div>
-                        </div>
+                        </motion.div>
                     ))}
                 </div>
             </div>

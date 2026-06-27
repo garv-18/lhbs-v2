@@ -1,3 +1,5 @@
+"use client";
+import { motion } from "framer-motion";
 import { Cinzel, Manrope } from "next/font/google";
 import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
@@ -41,20 +43,25 @@ export default function Programs() {
         <section id="programs" className="relative py-32 px-4 max-w-7xl mx-auto">
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-32 bg-gradient-to-b from-transparent via-gray-300 to-transparent"></div>
 
-            <h2
+            <motion.h2
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ type: "spring", stiffness: 80, damping: 20 }}
                 className={`text-4xl md:text-6xl text-center mb-20 text-text font-extrabold tracking-tight ${cinzel.className}`}
-                data-aos="fade-up"
             >
                 CHOOSE YOUR <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-[#FF9F1C]">PATH</span>
             </h2>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 {programs.map((program, index) => (
-                    <div
+                    <motion.div
                         key={index}
-                        className="group relative bg-white border border-gray-200 rounded-3xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-500 hover:-translate-y-2"
-                        data-aos="fade-up"
-                        data-aos-delay={index * 100}
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, margin: "-50px" }}
+                        transition={{ type: "spring", stiffness: 80, damping: 20, delay: index * 0.1 }}
+                        className="group relative bg-white border border-gray-200 rounded-3xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-500"
                     >
                         {/* Image Background with Overlay */}
                         <div className="absolute inset-0 z-0">
@@ -103,7 +110,7 @@ export default function Programs() {
                                 </Link>
                             </div>
                         </div>
-                    </div>
+                    </motion.div>
                 ))}
             </div>
         </section>

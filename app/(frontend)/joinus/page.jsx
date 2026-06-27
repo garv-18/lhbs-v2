@@ -3,6 +3,7 @@
 import { Cinzel, Manrope } from "next/font/google";
 import TextureBackground from "../components/TextureBackground";
 import { CheckCircle2, ArrowRight, Star, Crown } from "lucide-react";
+import { motion } from "framer-motion";
 
 const cinzel = Cinzel({ subsets: ["latin"], weight: ["400", "700"] });
 const manrope = Manrope({ subsets: ["latin"], weight: ["300", "500", "700"] });
@@ -17,18 +18,30 @@ export default function JoinUs() {
         <div className="min-h-screen bg-gray-50 text-text pt-32 pb-20 px-4 relative">
             <div className="max-w-6xl mx-auto relative z-10">
                 {/* Header */}
-                <div className="text-center mb-20" data-aos="fade-up">
+                <motion.div 
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-100px" }}
+                    transition={{ type: "spring", stiffness: 80, damping: 20 }}
+                    className="text-center mb-20"
+                >
                     <h1 className={`text-5xl md:text-7xl font-bold mb-6 ${cinzel.className}`}>
                         JOIN <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-[#FF9F1C]">US</span>
                     </h1>
                     <p className={`text-gray-600 text-lg max-w-2xl mx-auto ${manrope.className}`}>
                         Choose your path to mastery. Select the program that fits your goals.
                     </p>
-                </div>
+                </motion.div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
                     {/* Expert Program Card */}
-                    <div className="bg-white border border-gray-200 shadow-md rounded-3xl overflow-hidden relative group flex flex-col" data-aos="fade-right">
+                    <motion.div 
+                        initial={{ opacity: 0, x: -40 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true, margin: "-100px" }}
+                        transition={{ type: "spring", stiffness: 80, damping: 20 }}
+                        className="bg-white border border-gray-200 shadow-md rounded-3xl overflow-hidden relative group flex flex-col"
+                    >
                         <div className="absolute top-0 right-0 w-64 h-64 bg-primary opacity-5 blur-[80px] rounded-full group-hover:opacity-10 transition-opacity"></div>
 
                         <div className="p-10 flex-grow relative z-10">
@@ -72,10 +85,16 @@ export default function JoinUs() {
                                 <ArrowRight size={20} />
                             </button>
                         </div>
-                    </div>
+                    </motion.div>
 
                     {/* VIP Training Card */}
-                    <div className="bg-white border border-gray-200 shadow-md rounded-3xl overflow-hidden relative group flex flex-col" data-aos="fade-left">
+                    <motion.div 
+                        initial={{ opacity: 0, x: 40 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true, margin: "-100px" }}
+                        transition={{ type: "spring", stiffness: 80, damping: 20, delay: 0.1 }}
+                        className="bg-white border border-gray-200 shadow-md rounded-3xl overflow-hidden relative group flex flex-col"
+                    >
                         <div className="absolute top-0 right-0 w-64 h-64 bg-[#FFD700] opacity-5 blur-[80px] rounded-full group-hover:opacity-10 transition-opacity"></div>
 
                         <div className="p-10 flex-grow relative z-10">
@@ -119,7 +138,7 @@ export default function JoinUs() {
                                 <ArrowRight size={20} />
                             </button>
                         </div>
-                    </div>
+                    </motion.div>
                 </div>
 
                 {/* Footer Info */}

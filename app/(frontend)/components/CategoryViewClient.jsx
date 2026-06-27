@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { motion } from "framer-motion";
 import { Cinzel, Manrope } from "next/font/google";
 import FavoriteButton from "./FavoriteButton";
 import CourseImage from "./CourseImage";
@@ -22,21 +23,26 @@ export default function CategoryViewClient({ category, courses }) {
     <div className="min-h-screen bg-background text-text pb-20">
       {/* Header Section */}
       <div className="relative pt-28 pb-8 px-4 text-center overflow-hidden bg-gray-50 border-b border-gray-100">
-        <h1
+        <motion.h1
+          initial={{ opacity: 0, y: -20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ type: "spring", stiffness: 80, damping: 20 }}
           className={`text-4xl md:text-5xl font-extrabold tracking-tight mb-3 text-text ${cinzel.className}`}
-          data-aos="zoom-in"
         >
           {category.title}
-        </h1>
+        </motion.h1>
 
-        <p
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ type: "spring", stiffness: 80, damping: 20, delay: 0.1 }}
           className={`max-w-3xl mx-auto text-gray-600 text-lg md:text-xl leading-relaxed mb-6 ${manrope.className}`}
-          data-aos="fade-up"
-          data-aos-delay="200"
         >
           Explore all courses available in {category.title}. 
           Start your journey with us and learn from the best.
-        </p>
+        </motion.p>
       </div>
 
       {/* Search Bar */}

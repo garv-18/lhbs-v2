@@ -1,3 +1,5 @@
+"use client";
+import { motion } from "framer-motion";
 import { Cinzel, Manrope } from "next/font/google";
 import { ArrowUpRight, CheckCircle2 } from "lucide-react";
 import Link from "next/link";
@@ -105,21 +107,28 @@ export default function CoursesGrid() {
         <section id="courses" className="relative py-32 px-4 max-w-7xl mx-auto">
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-32 bg-gradient-to-b from-transparent via-gray-300 to-transparent"></div>
 
-            <h2
+            <motion.h2
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ type: "spring", stiffness: 80, damping: 20 }}
                 className={`text-4xl md:text-6xl text-center mb-20 text-text font-extrabold tracking-tight ${cinzel.className}`}
-                data-aos="fade-up"
             >
                 CHOOSE YOUR <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-[#FF9F1C]">PATH</span>
-            </h2>
+            </motion.h2>
 
             <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
                 {courses.map((course, index) => (
+                    <motion.div
+                        key={index}
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, margin: "-50px" }}
+                        transition={{ type: "spring", stiffness: 80, damping: 20, delay: Math.min(index * 0.05, 0.3) }}
+                    >
                     <Link
                         href={course.link}
-                        key={index}
-                        className="group relative bg-white border border-gray-100 rounded-2xl hover:border-gray-200 hover:shadow-xl transition-all duration-300 flex flex-col shadow-sm"
-                        data-aos="fade-up"
-                        data-aos-delay={index * 50}
+                        className="group relative h-full bg-white border border-gray-100 rounded-2xl hover:border-gray-200 hover:shadow-xl transition-all duration-300 flex flex-col shadow-sm"
                     >
                         <div className="aspect-square w-full relative overflow-hidden bg-gray-50">
                             <CourseImage
@@ -152,6 +161,7 @@ export default function CoursesGrid() {
                             </div>
                         </div>
                     </Link>
+                    </motion.div>
                 ))}
             </div>
         </section>

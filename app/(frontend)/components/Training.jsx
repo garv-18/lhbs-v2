@@ -1,3 +1,5 @@
+"use client";
+import { motion } from "framer-motion";
 import { Cinzel, Manrope } from "next/font/google";
 
 const cinzel = Cinzel({ subsets: ["latin"], weight: ["400", "700"] });
@@ -28,25 +30,36 @@ export default function Training() {
     return (
         <section id="training" className="relative py-32 px-4 max-w-7xl mx-auto">
             <div className="flex flex-col md:flex-row items-end justify-between mb-20 border-b border-gray-200 pb-8">
-                <h2
+                <motion.h2
+                    initial={{ opacity: 0, x: -40 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true, margin: "-100px" }}
+                    transition={{ type: "spring", stiffness: 80, damping: 20 }}
                     className={`text-4xl md:text-7xl text-text font-extrabold tracking-tight ${cinzel.className}`}
-                    data-aos="fade-right"
                 >
                     WHAT WE <br />
                     <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-[#C8295E]">TRAIN</span>
-                </h2>
-                <p className={`text-gray-500 max-w-md text-right mt-4 md:mt-0 ${manrope.className}`} data-aos="fade-left">
+                </motion.h2>
+                <motion.p 
+                    initial={{ opacity: 0, x: 40 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true, margin: "-100px" }}
+                    transition={{ type: "spring", stiffness: 80, damping: 20 }}
+                    className={`text-gray-500 max-w-md text-right mt-4 md:mt-0 ${manrope.className}`}
+                >
                     Our curriculum is a fusion of history, nature, and steel. Designed to forge the ultimate warrior.
-                </p>
+                </motion.p>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 {trainingItems.map((item, index) => (
-                    <div
+                    <motion.div
                         key={index}
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, margin: "-50px" }}
+                        transition={{ type: "spring", stiffness: 80, damping: 20, delay: index * 0.15 }}
                         className="group relative h-[600px] overflow-hidden rounded-3xl border border-gray-200 bg-gray-50 shadow-sm"
-                        data-aos="fade-up"
-                        data-aos-delay={index * 150}
                     >
                         {/* Background Image */}
                         <div className="absolute inset-0 transition-transform duration-700 group-hover:scale-105">
@@ -73,7 +86,7 @@ export default function Training() {
 
                         {/* Hover Border Glow */}
                         <div className="absolute inset-0 border-2 border-transparent group-hover:border-primary/30 rounded-3xl transition-colors duration-500 pointer-events-none"></div>
-                    </div>
+                    </motion.div>
                 ))}
             </div>
         </section>

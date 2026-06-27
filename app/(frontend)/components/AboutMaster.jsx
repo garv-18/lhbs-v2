@@ -1,3 +1,5 @@
+"use client";
+import { motion } from "framer-motion";
 import { Cinzel } from "next/font/google";
 import { ArrowRight, Trophy, Globe, Users, Shield, Youtube } from "lucide-react";
 
@@ -11,7 +13,13 @@ export default function AboutMaster() {
 
             <div className="max-w-7xl mx-auto px-4 grid lg:grid-cols-2 gap-16 items-center relative z-10">
                 {/* Left Content - Bio */}
-                <div className="space-y-8" data-aos="fade-right">
+                <motion.div 
+                    initial={{ opacity: 0, x: -40 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true, margin: "-100px" }}
+                    transition={{ type: "spring", stiffness: 80, damping: 20 }}
+                    className="space-y-8"
+                >
                     <div>
                         <p className="text-primary text-sm font-bold tracking-[0.2em] uppercase mb-3 flex items-center gap-2">
                             <Youtube size={18} /> @pramodgoswami
@@ -73,10 +81,16 @@ export default function AboutMaster() {
                             <Youtube size={20} /> Subscribe on YouTube
                         </a>
                     </div>
-                </div>
+                </motion.div>
 
                 {/* Right Content - Visual */}
-                <div className="relative h-[600px] w-full rounded-3xl overflow-hidden shadow-2xl border border-white/10" data-aos="fade-left">
+                <motion.div 
+                    initial={{ opacity: 0, x: 40 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true, margin: "-100px" }}
+                    transition={{ type: "spring", stiffness: 80, damping: 20 }}
+                    className="relative h-[600px] w-full rounded-3xl overflow-hidden shadow-2xl border border-gray-200"
+                >
                     <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-transparent to-transparent z-10"></div>
                     <img
                         src="/photo.jpg"
@@ -90,7 +104,7 @@ export default function AboutMaster() {
                         </p>
                         <div className="w-16 h-1 bg-primary mt-5 rounded-full"></div>
                     </div>
-                </div>
+                </motion.div>
             </div>
         </section>
     );
