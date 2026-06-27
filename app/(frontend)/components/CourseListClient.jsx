@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Cinzel, Manrope } from "next/font/google";
-import FavoriteButton from "./FavoriteButton";
 import CourseImage from "./CourseImage";
 import CategoryCarousel from "./CategoryCarousel";
 
@@ -119,7 +118,6 @@ export default function CourseListClient({ categories }) {
                       alt={course.title}
                       className="group-hover:scale-105 transition-transform duration-700"
                     />
-                    <FavoriteButton course={{...course, categorySlug: course.categorySlug}} />
                   </div>
                   <div className="p-4 md:p-6 flex-1 flex flex-col bg-white border-t border-gray-50">
                     <h3 className={`text-base sm:text-lg md:text-2xl text-black mb-3 md:mb-4 font-bold uppercase tracking-tight ${cinzel.className} line-clamp-2`}>

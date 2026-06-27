@@ -5,7 +5,6 @@ import Link from "next/link";
 import { Cinzel, Manrope } from "next/font/google";
 import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import CourseImage from "./CourseImage";
-import FavoriteButton from "./FavoriteButton";
 
 const cinzel = Cinzel({ subsets: ["latin"], weight: ["400", "700"] });
 const manrope = Manrope({ subsets: ["latin"], weight: ["300", "500", "700"] });
@@ -14,9 +13,6 @@ const CourseCardV15 = ({ course, categorySlug }) => (
     <Link href={`/courses/${categorySlug}/${course.slug}`} className="min-w-[42vw] w-[42vw] sm:min-w-[280px] sm:w-[280px] md:min-w-[320px] md:w-[320px] shrink-0 snap-start bg-white border border-gray-200 rounded-none overflow-hidden flex flex-col shadow-[0_4px_10px_rgba(0,0,0,0.03)] hover:shadow-lg transition-all group">
         <div className="aspect-square w-full bg-gray-50 relative overflow-hidden">
             <CourseImage src={course.image?.url || course.image} alt={course.title} className="object-cover group-hover:scale-105 transition-transform duration-700" />
-            <div className="absolute top-3 right-3 z-10">
-                <FavoriteButton course={{ ...course, categorySlug }} />
-            </div>
         </div>
         <div className="p-3 md:p-5 flex-1 flex flex-col bg-white">
             <h3 className={`text-[12px] sm:text-[14px] md:text-[16px] font-bold text-black leading-tight uppercase tracking-tight mb-2 line-clamp-2 ${cinzel.className}`}>
