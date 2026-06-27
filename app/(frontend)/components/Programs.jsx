@@ -51,7 +51,7 @@ export default function Programs() {
                 className={`text-4xl md:text-6xl text-center mb-20 text-text font-extrabold tracking-tight ${cinzel.className}`}
             >
                 CHOOSE YOUR <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-[#FF9F1C]">PATH</span>
-            </h2>
+            </motion.h2>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 {programs.map((program, index) => (

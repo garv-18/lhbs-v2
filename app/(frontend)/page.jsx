@@ -1,7 +1,6 @@
 import Hero from "./components/Hero";
 import Programs from "./components/Programs";
 import Training from "./components/Training";
-import HomeAnimations from "./components/HomeAnimations";
 import TextureBackground from "./components/TextureBackground";
 import AboutMaster from "./components/AboutMaster";
 import CategoryCarousel from "./components/CategoryCarousel";
