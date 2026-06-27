@@ -1,75 +1,87 @@
-// Next.js API route for Instamojo payment
+import crypto from 'crypto';
+
+// Next.js API route for PhonePe payment
 export async function POST(req) {
   try {
     const body = await req.json();
-    // Destructure required fields
     const { amount, mobileNumber, name, email, address, ...rest } = body;
 
-    // Debug: Log env and payload
-    const apiKey = process.env.INSTAMOJO_API_KEY;
-    const authToken = process.env.INSTAMOJO_AUTH_TOKEN;
+    const merchantId = process.env.PHONEPE_MERCHANT_ID;
+    const saltKey = process.env.PHONEPE_API_KEY;
+    const saltIndex = process.env.PHONEPE_KEY_INDEX || "1";
+    const env = process.env.PHONEPE_ENV || "PRODUCTION";
 
-    console.log('INSTAMOJO_API_KEY:', apiKey ? 'Set' : 'Missing');
-    console.log('INSTAMOJO_AUTH_TOKEN:', authToken ? 'Set' : 'Missing');
-
-    if (!apiKey || !authToken) {
+    if (!merchantId || !saltKey) {
       return Response.json({
         success: false,
-        message: "Server Error: Instamojo API keys are missing. Please restart the server if you just added them."
+        message: "Server Error: PhonePe API keys are missing. Please check .env"
       }, { status: 500 });
     }
 
-    console.log('Instamojo payload:', JSON.stringify({
-      amount,
-      buyer_name: name,
-      email,
-      phone: mobileNumber || rest.phone,
-      purpose: rest.slug || "Martial Arts Course",
-      redirect_url: `https://martialartsschool.in/payment-success?course=${encodeURIComponent(rest.slug || "Martial Arts Course")}`,
-      ...rest,
-    }, null, 2));
+    // PhonePe uses amounts in paisa (rupees * 100)
+    const amountInPaisa = Math.round(Number(amount) * 100);
+    // Generate a unique transaction ID
+    const transactionId = `TXN_${Date.now()}_${Math.random().toString(36).slice(2, 7).toUpperCase()}`;
+    const courseSlug = rest.slug || "Martial Arts Course";
+
+    // Setup Callback URL and Redirect URL
+    // We redirect to PhonePe, and after payment, PhonePe redirects back to MERCHANT_REDIRECT_URL
+    const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'https://www.martialartsschool.in';
+    const redirectUrl = `${baseUrl}/payment-success?course=${encodeURIComponent(courseSlug)}`;
+    const callbackUrl = `${baseUrl}/api/phonepe-callback`;
 
     const payload = {
-      amount,
-      buyer_name: name,
-      email,
-      phone: mobileNumber || rest.phone,
-      purpose: rest.slug || "Martial Arts Course",
-      // Always use the correct redirect URL and pass course slug for access page
-      redirect_url: `https://martialartsschool.in/payment-success?course=${encodeURIComponent(rest.slug || "Martial Arts Course")}`,
-      ...rest,
+      merchantId: merchantId,
+      merchantTransactionId: transactionId,
+      merchantUserId: `MUID_${Date.now()}`,
+      amount: amountInPaisa,
+      redirectUrl: redirectUrl,
+      redirectMode: "REDIRECT",
+      callbackUrl: callbackUrl,
+      mobileNumber: mobileNumber || rest.phone || "9999999999",
+      paymentInstrument: {
+        type: "PAY_PAGE"
+      }
     };
 
-    let responseData;
-    try {
-      const res = await fetch("https://www.instamojo.com/api/1.1/payment-requests/", {
-        method: "POST",
-        headers: {
-          "X-Api-Key": process.env.INSTAMOJO_API_KEY,
-          "X-Auth-Token": process.env.INSTAMOJO_AUTH_TOKEN,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload)
-      });
-      responseData = await res.json();
-      if (!res.ok) {
-        throw new Error(responseData.message || "Instamojo API Error");
-      }
-      console.log('Instamojo response:', JSON.stringify(responseData, null, 2));
-    } catch (apiErr) {
-      console.error('❌ Instamojo API error:', apiErr.message);
-      // Return mock success on API error for testing if requested
-      return Response.json({ success: false, message: apiErr.message || 'Instamojo API error' }, { status: 500 });
+    // 1. Base64 encode the payload
+    const jsonPayload = JSON.stringify(payload);
+    const base64Payload = Buffer.from(jsonPayload).toString("base64");
+
+    // 2. Calculate X-VERIFY checksum: SHA256(base64Payload + "/pg/v1/pay" + saltKey) + "###" + saltIndex
+    const endpoint = "/pg/v1/pay";
+    const stringToHash = base64Payload + endpoint + saltKey;
+    const sha256 = crypto.createHash('sha256').update(stringToHash).digest('hex');
+    const checksum = sha256 + "###" + saltIndex;
+
+    // 3. Make the API call to PhonePe
+    const phonePeUrl = env === "PRODUCTION" 
+      ? "https://api.phonepe.com/apis/hermes/pg/v1/pay" 
+      : "https://api-preprod.phonepe.com/apis/pg-sandbox/pg/v1/pay";
+
+    const response = await fetch(phonePeUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-VERIFY": checksum,
+      },
+      body: JSON.stringify({
+        request: base64Payload
+      })
+    });
+
+    const responseData = await response.json();
+    console.log("PhonePe Initiate Response:", responseData);
+
+    if (responseData.success && responseData.data && responseData.data.instrumentResponse && responseData.data.instrumentResponse.redirectInfo) {
+      return Response.json({ success: true, redirectUrl: responseData.data.instrumentResponse.redirectInfo.url });
+    } else {
+      console.error("PhonePe Error:", responseData);
+      return Response.json({ success: false, message: responseData.message || "Failed to initiate payment with PhonePe" }, { status: 500 });
     }
 
-    if (responseData && responseData.payment_request && responseData.payment_request.longurl) {
-      return Response.json({ success: true, redirectUrl: responseData.payment_request.longurl });
-    } else {
-      // Try to show Instamojo error message if available
-      const msg = responseData && responseData.message ? responseData.message : "Failed to create payment request.";
-      return Response.json({ success: false, message: msg }, { status: 500 });
-    }
   } catch (err) {
-    return Response.json({ success: false, message: err.message || "Payment error" }, { status: 500 });
+    console.error("Payment Exception:", err);
+    return Response.json({ success: false, message: err.message || "Payment processing error" }, { status: 500 });
   }
 }

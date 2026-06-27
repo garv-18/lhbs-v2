@@ -1,7 +1,7 @@
 "use client";
 
 import PricingCard from "./PricingCard";
-import InstamojoButton from "./InstamojoButton";
+import PaymentButton from "./PaymentButton";
 import { Cinzel } from "next/font/google";
 
 const cinzel = Cinzel({ subsets: ["latin"], weight: ["400", "700"] });
@@ -27,7 +27,7 @@ export default function CourseSidebarClient({ course, courseSlug }) {
           </div>
         </div>
         
-        <InstamojoButton
+        <PaymentButton
           amount={course.price}
           courseSlug={courseSlug}
           className="px-6 py-2.5 rounded-lg bg-primary text-white font-bold text-sm hover:bg-primary-hover transition-all duration-300 shadow-sm"

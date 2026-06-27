@@ -1,6 +1,6 @@
 "use client";
 
-import InstamojoButton from "./InstamojoButton";
+import PaymentButton from "./PaymentButton";
 import { Award, Shield, CheckCircle2 } from "lucide-react";
 import { Cinzel, Manrope } from "next/font/google";
 
@@ -49,7 +49,7 @@ export default function PricingCard({ course, courseSlug, className = "" }) {
         </div>
       </div>
 
-      <InstamojoButton
+      <PaymentButton
         amount={course.price}
         courseSlug={courseSlug}
         className="w-full py-4 rounded-xl bg-primary text-white font-bold text-base hover:bg-primary-hover hover:shadow-lg transition-all duration-300"

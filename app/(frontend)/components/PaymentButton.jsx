@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useRouter } from "next/navigation";
 import { User, Mail, Phone, CreditCard, X } from "lucide-react";
 
-export default function InstamojoButton({ amount, courseSlug, className }) {
+export default function PaymentButton({ amount, courseSlug, className }) {
     const router = useRouter();
     const [loading, setLoading] = useState(false);
     const [showModal, setShowModal] = useState(false);
@@ -151,7 +151,7 @@ export default function InstamojoButton({ amount, courseSlug, className }) {
                             )}
                         </button>
                         <p className="text-center text-xs text-gray-500 mt-3">
-                            Secured by Instamojo
+                            Secured by PhonePe
                         </p>
                     </div>
                 </form>
