@@ -1,4 +1,5 @@
 import crypto from 'crypto';
+import { regularCourses, masterCourses } from '../../(frontend)/utils/courseData';
 
 // Next.js API route for PhonePe payment
 export async function POST(req) {
@@ -18,11 +19,18 @@ export async function POST(req) {
       }, { status: 500 });
     }
 
+    const courseSlug = rest.slug || "Martial Arts Course";
+
+    // 🔒 CRED-Level Security: NEVER trust the frontend amount! 
+    // We look up the official price securely on the server.
+    const allCourses = [...regularCourses, ...masterCourses];
+    const officialCourse = allCourses.find(c => c.slug === courseSlug);
+    const officialPrice = officialCourse ? officialCourse.price : 47500; // Fallback
+
     // PhonePe uses amounts in paisa (rupees * 100)
-    const amountInPaisa = Math.round(Number(amount) * 100);
+    const amountInPaisa = Math.round(Number(officialPrice) * 100);
     // Generate a unique transaction ID
     const transactionId = `TXN_${Date.now()}_${Math.random().toString(36).slice(2, 7).toUpperCase()}`;
-    const courseSlug = rest.slug || "Martial Arts Course";
 
     // Setup Callback URL and Redirect URL
     // We redirect to PhonePe, and after payment, PhonePe redirects back to MERCHANT_REDIRECT_URL
