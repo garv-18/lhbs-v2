@@ -10,7 +10,7 @@ const cinzel = Cinzel({ subsets: ["latin"], weight: ["400", "700"] });
 const manrope = Manrope({ subsets: ["latin"], weight: ["300", "500", "700"] });
 
 const CourseCardV15 = ({ course, categorySlug }) => (
-    <Link href={`/courses/${categorySlug}/${course.slug}`} className="min-w-[42vw] w-[42vw] sm:min-w-[280px] sm:w-[280px] md:min-w-[320px] md:w-[320px] shrink-0 snap-start bg-white border border-gray-200 rounded-none overflow-hidden flex flex-col shadow-[0_4px_10px_rgba(0,0,0,0.03)] hover:shadow-lg transition-all group">
+    <Link href={`/courses/${categorySlug}/${course.slug}`} className="min-w-[44vw] w-[44vw] sm:min-w-[280px] sm:w-[280px] md:min-w-[320px] md:w-[320px] shrink-0 snap-start bg-white border border-gray-200 rounded-none overflow-hidden flex flex-col shadow-[0_4px_10px_rgba(0,0,0,0.03)] hover:shadow-lg transition-all group">
         <div className="aspect-square w-full bg-gray-50 relative overflow-hidden">
             <CourseImage src={course.image?.url || course.image} alt={course.title} className="object-cover group-hover:scale-105 transition-transform duration-700" />
             <div className="absolute top-3 right-3 w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-sm">
