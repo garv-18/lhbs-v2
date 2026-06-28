@@ -22,7 +22,7 @@ const programs = [
         title: "Master Program",
         duration: "18 Courses • 25 Days Each",
         description: "The ultimate course to become a Master. Focus on deep principles and advanced moves. Requires completion of the Expert Program.",
-        image: "https://ik.imagekit.io/lhbs/MAMP.svg?updatedAt=1751533730804",
+        image: "/images/master_program_cover.png",
         color: "from-[#F81F24] to-[#FD5D2F]",
         whatsapp: "https://api.whatsapp.com/send?phone=919713600085&text=hello%2C%0APlease%20share%20me%20details%20of%20your%20Master%20program",
         link: "/courses"
@@ -31,7 +31,7 @@ const programs = [
         title: "Business Program",
         duration: "3 Courses • 25 Days Each",
         description: "Build your own Martial Arts School. Learn the business model, technical training, and management skills to run a successful organization.",
-        image: "https://ik.imagekit.io/lhbs/business-program.png?updatedAt=1751533731419",
+        image: "/images/business_program_cover.png",
         color: "from-[#FD5D2F] to-[#FF9F1C]",
         whatsapp: "https://api.whatsapp.com/send?phone=919713600085&text=hello%2C%0APlease%20share%20me%20details%20of%20your%20Master%20program",
         link: "/courses"
