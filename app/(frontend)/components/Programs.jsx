@@ -84,7 +84,10 @@ export default function Programs({ media }) {
                                 src={program.image}
                                 alt={program.title}
                                 fill
-                                className="object-cover transition-all duration-700 transform group-hover:scale-105"
+                                priority={true}
+                                draggable={false}
+                                onContextMenu={(e) => e.preventDefault()}
+                                className="object-cover transition-all duration-700 transform group-hover:scale-105 pointer-events-none select-none"
                             />
                         </div>
 

@@ -23,8 +23,9 @@ export default function CourseImage({ src, alt, className = "" }) {
     <img
       src={src}
       alt={alt || "Course image"}
-      className={`absolute inset-0 h-full w-full object-cover ${className}`}
-      loading="lazy"
+      className={`absolute inset-0 h-full w-full object-cover pointer-events-none select-none ${className}`}
+      draggable={false}
+      onContextMenu={(e) => e.preventDefault()}
       onError={() => setHasError(true)}
     />
   );
