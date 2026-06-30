@@ -45,7 +45,7 @@ export default async function Courses() {
         slug: course.slug,
         price: course.price,
         description: course.description || null,
-        image: course.image ? { url: course.image.url || course.image } : null
+        image: course.image
       }));
 
       return { 

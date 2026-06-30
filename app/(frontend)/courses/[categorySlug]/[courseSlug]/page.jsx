@@ -165,7 +165,9 @@ export default async function CoursePage({ params }) {
                 {course.descriptionRichText ? (
                   <RichText data={course.descriptionRichText} />
                 ) : (
-                  <p>{course.description}</p>
+                  <div className="whitespace-pre-wrap font-sans text-[15px] sm:text-base leading-relaxed text-gray-700">
+                    {course.description}
+                  </div>
                 )}
               </div>
             </div>
