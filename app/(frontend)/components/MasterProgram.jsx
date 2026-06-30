@@ -84,7 +84,9 @@ export default function MasterProgram({ masterCourses = [] }) {
                             <img
                                 src={course.image?.url || course.image}
                                 alt={course.title}
-                                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 relative z-0"
+                                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 relative z-0 pointer-events-none select-none"
+                                draggable={false}
+                                onContextMenu={(e) => e.preventDefault()}
                             />
                         </div>
 

@@ -44,8 +44,10 @@ export default function CourseGallery({ photos = [], title = "Course Details" })
             src={photos[0]} 
             alt="Course main image" 
             fill
-            className="object-contain bg-gray-50 hover:scale-105 transition-transform duration-500"
+            className="object-contain bg-gray-50 hover:scale-105 transition-transform duration-500 pointer-events-none select-none"
             priority
+            draggable={false}
+            onContextMenu={(e) => e.preventDefault()}
           />
           <button 
             type="button"
@@ -64,10 +66,10 @@ export default function CourseGallery({ photos = [], title = "Course Details" })
         <div className="relative w-full h-[300px] sm:h-[400px] md:h-[500px] rounded-2xl md:rounded-3xl overflow-hidden mb-8 group">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-2 h-full">
             <div className="relative h-full cursor-pointer overflow-hidden" onClick={() => openModal(0)}>
-              <Image src={photos[0]} alt="Course main image" fill className="object-contain bg-gray-50 hover:scale-105 transition-transform duration-500" priority />
+              <Image src={photos[0]} alt="Course main image" fill className="object-contain bg-gray-50 hover:scale-105 transition-transform duration-500 pointer-events-none select-none" priority draggable={false} onContextMenu={(e) => e.preventDefault()} />
             </div>
             <div className="hidden md:block relative h-full cursor-pointer overflow-hidden" onClick={() => openModal(1)}>
-              <Image src={photos[1]} alt="Course image 2" fill className="object-contain bg-gray-50 hover:scale-105 transition-transform duration-500" />
+              <Image src={photos[1]} alt="Course image 2" fill className="object-contain bg-gray-50 hover:scale-105 transition-transform duration-500 pointer-events-none select-none" draggable={false} onContextMenu={(e) => e.preventDefault()} />
             </div>
           </div>
           <button type="button" onClick={() => openModal(0)} className="absolute bottom-4 right-4 bg-white/95 backdrop-blur-md text-text px-4 py-2 rounded-lg font-semibold text-sm flex items-center gap-2 hover:bg-gray-50 hover:scale-105 transition-all shadow-md z-10">
@@ -84,16 +86,16 @@ export default function CourseGallery({ photos = [], title = "Course Details" })
         <div className="grid grid-cols-1 md:grid-cols-2 gap-2 h-full">
           {/* Main Left Image */}
           <div className="relative h-full cursor-pointer overflow-hidden" onClick={() => openModal(0)}>
-            <Image src={photos[0]} alt="Course main image" fill className="object-contain bg-gray-50 hover:scale-105 transition-transform duration-500" priority />
+            <Image src={photos[0]} alt="Course main image" fill className="object-contain bg-gray-50 hover:scale-105 transition-transform duration-500 pointer-events-none select-none" priority draggable={false} onContextMenu={(e) => e.preventDefault()} />
           </div>
           
           {/* Right Images (Hidden on small mobile, visible on md+) */}
           <div className="hidden md:grid grid-rows-2 gap-2 h-full">
             <div className="relative h-full cursor-pointer overflow-hidden" onClick={() => openModal(1)}>
-              <Image src={photos[1]} alt="Course image 2" fill className="object-contain bg-gray-50 hover:scale-105 transition-transform duration-500" />
+              <Image src={photos[1]} alt="Course image 2" fill className="object-contain bg-gray-50 hover:scale-105 transition-transform duration-500 pointer-events-none select-none" draggable={false} onContextMenu={(e) => e.preventDefault()} />
             </div>
             <div className="relative h-full cursor-pointer overflow-hidden group/overlay" onClick={() => openModal(2)}>
-              <Image src={photos[2]} alt="Course image 3" fill className="object-contain bg-gray-50 hover:scale-105 transition-transform duration-500" />
+              <Image src={photos[2]} alt="Course image 3" fill className="object-contain bg-gray-50 hover:scale-105 transition-transform duration-500 pointer-events-none select-none" draggable={false} onContextMenu={(e) => e.preventDefault()} />
               {photos.length > 3 && (
                 <div className="absolute inset-0 bg-black/40 flex items-center justify-center transition-all duration-300">
                   <span className="text-white text-3xl font-bold tracking-wider">+{photos.length - 3}</span>
@@ -143,9 +145,11 @@ export default function CourseGallery({ photos = [], title = "Course Details" })
                   src={photos[currentIndex]}
                   alt={`Photo ${currentIndex + 1}`}
                   fill
-                  className="object-contain"
+                  className="object-contain pointer-events-none select-none"
                   priority={true}
                   unoptimized={true}
+                  draggable={false} 
+                  onContextMenu={(e) => e.preventDefault()}
                 />
                 
                 {/* Arrows */}
@@ -185,8 +189,10 @@ export default function CourseGallery({ photos = [], title = "Course Details" })
                       src={photo}
                       alt={`Thumbnail ${index + 1}`}
                       fill
-                      className="object-cover"
+                      className="object-cover pointer-events-none select-none"
                       unoptimized={true}
+                      draggable={false} 
+                      onContextMenu={(e) => e.preventDefault()}
                     />
                   </div>
                 ))}

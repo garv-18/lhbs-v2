@@ -69,7 +69,9 @@ export default function FavoritesPage() {
                                         <img
                                             src={course.image?.url || course.image}
                                             alt={course.title}
-                                            className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-700 relative z-0"
+                                            className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-700 relative z-0 pointer-events-none select-none"
+                                            draggable={false}
+                                            onContextMenu={(e) => e.preventDefault()}
                                         />
                                     )}
                                     

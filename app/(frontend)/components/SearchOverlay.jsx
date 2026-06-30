@@ -96,7 +96,7 @@ export default function SearchOverlay({ isOpen, onClose }) {
                                 >
                                     <div className="w-16 h-16 rounded-xl overflow-hidden shrink-0 bg-gray-200">
                                         {(course.image?.url || course.image) && (
-                                           <img src={course.image?.url || course.image} alt={course.title} className="w-full h-full object-cover" />
+                                           <img src={course.image?.url || course.image} alt={course.title} className="w-full h-full object-cover pointer-events-none select-none" draggable={false} onContextMenu={(e) => e.preventDefault()} />
                                         )}
                                     </div>
                                     <div className="flex flex-col justify-center flex-1 min-w-0">
