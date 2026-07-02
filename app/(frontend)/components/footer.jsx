@@ -102,6 +102,7 @@ const Footer = () => {
                         <a href="/about" className="hover:text-primary transition-colors whitespace-nowrap">About Us</a>
                         <a href="/contact" className="hover:text-primary transition-colors whitespace-nowrap">Contact Us</a>
                         <a href="/refundpolicy" className="hover:text-primary transition-colors whitespace-nowrap">Refund Policy</a>
+                        <a href="/privacypolicy" className="hover:text-primary transition-colors whitespace-nowrap">Privacy Policy</a>
                         <a href="/termsandconditions" className="hover:text-primary transition-colors whitespace-nowrap">Terms & Conditions</a>
                     </div>
                 </div>
