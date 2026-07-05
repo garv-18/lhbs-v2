@@ -1,6 +1,6 @@
 import React from 'react';
 import { getPayload } from 'payload';
-import configPromise from '@/payload.config';
+import configPromise from '../../../payload.config';
 import Link from 'next/link';
 import { Cinzel, Manrope } from "next/font/google";
 
