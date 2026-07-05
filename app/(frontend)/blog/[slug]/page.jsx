@@ -25,7 +25,7 @@ export async function generateStaticParams() {
 }
 
 export default async function BlogPost({ params }) {
-  const { slug } = params;
+  const { slug } = await params;
   
   const payload = await getPayload({ config: configPromise });
   const data = await payload.find({
