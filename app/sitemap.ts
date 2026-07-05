@@ -9,6 +9,8 @@ export default async function sitemap() {
     '',
     '/courses',
     '/joinus',
+    '/blog',
+    '/discover',
     '/refundpolicy',
     '/termsandconditions',
   ].map((route) => ({
@@ -51,5 +53,35 @@ export default async function sitemap() {
       priority: 0.9,
     }));
 
-  return [...routes, ...categoryRoutes, ...courseRoutes];
+  // Fetch all blog pages
+  const blogRes = await payload.find({
+    collection: 'pages',
+    limit: 1000,
+    select: { slug: true }
+  });
+  
+  const blogRoutes = blogRes.docs.map((post) => ({
+    url: `${baseUrl}/blog/${post.slug}`,
+    lastModified: new Date(),
+    changeFrequency: 'weekly',
+    priority: 0.8,
+  }));
+
+  // Fetch pSEO pages (Niches x Audiences)
+  const nichesRes = await payload.find({ collection: 'pseo-niches', limit: 100, select: { slug: true } });
+  const audiencesRes = await payload.find({ collection: 'pseo-audiences', limit: 100, select: { slug: true } });
+  
+  const pseoRoutes = [];
+  for (const niche of nichesRes.docs) {
+    for (const audience of audiencesRes.docs) {
+      pseoRoutes.push({
+        url: `${baseUrl}/discover/${niche.slug}/${audience.slug}`,
+        lastModified: new Date(),
+        changeFrequency: 'monthly',
+        priority: 0.7,
+      });
+    }
+  }
+
+  return [...routes, ...categoryRoutes, ...courseRoutes, ...blogRoutes, ...pseoRoutes];
 }
