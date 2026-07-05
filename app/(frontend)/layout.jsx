@@ -8,6 +8,14 @@ const inter = Inter({ subsets: ['latin'], display: 'swap', variable: '--font-int
 
 import './globals.css';
 
+export const metadata = {
+  title: 'Live Healthy and Be Safe',
+  description: 'Master your mind, body, and chi with Live Healthy and Be Safe.',
+  icons: {
+    icon: '/favicon.ico',
+  },
+};
+
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${inter.variable}`}>
