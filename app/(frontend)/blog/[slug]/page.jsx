@@ -24,6 +24,43 @@ export async function generateStaticParams() {
   }));
 }
 
+export async function generateMetadata({ params }) {
+  const { slug } = await params;
+  
+  const payload = await getPayload({ config: configPromise });
+  const data = await payload.find({
+    collection: 'pages',
+    where: { slug: { equals: slug } },
+  });
+
+  const post = data.docs[0];
+
+  if (!post) {
+    return {
+      title: 'Post Not Found | LHBS',
+      description: 'The requested blog post could not be found.',
+    };
+  }
+
+  const title = post.metaTitle || `${post.title} | LHBS Blog`;
+  const description = post.metaDescription || `Read ${post.title} on the Live Healthy and Be Safe blog.`;
+
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      type: 'article',
+      url: `https://www.martialartsschool.in/blog/${slug}`,
+      siteName: 'Live Healthy and Be Safe',
+    },
+    alternates: {
+      canonical: `https://www.martialartsschool.in/blog/${slug}`,
+    },
+  };
+}
+
 export default async function BlogPost({ params }) {
   const { slug } = await params;
   
@@ -41,6 +78,36 @@ export default async function BlogPost({ params }) {
 
   return (
     <div className={`min-h-screen pt-32 pb-20 bg-white ${manrope.className}`}>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Article",
+            "headline": post.metaTitle || post.title,
+            "description": post.metaDescription || `Read ${post.title} on the Live Healthy and Be Safe blog.`,
+            "datePublished": post.createdAt,
+            "dateModified": post.updatedAt,
+            "author": {
+              "@type": "Organization",
+              "name": "Live Healthy and Be Safe",
+              "url": "https://www.martialartsschool.in"
+            },
+            "publisher": {
+              "@type": "Organization",
+              "name": "Live Healthy and Be Safe",
+              "logo": {
+                "@type": "ImageObject",
+                "url": "https://www.martialartsschool.in/lhbs-logo.png"
+              }
+            },
+            "mainEntityOfPage": {
+              "@type": "WebPage",
+              "@id": `https://www.martialartsschool.in/blog/${slug}`
+            }
+          })
+        }}
+      />
       <div className="max-w-3xl mx-auto px-6">
         
         <Link 

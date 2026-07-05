@@ -53,12 +53,15 @@ export async function generateMetadata({ params }) {
     };
   }
 
+  const title = course.metaTitle || `${course.title} | LHBS`;
+  const description = course.metaDescription || course.description;
+
   return {
-    title: `${course.title} | LHBS`,
-    description: course.description,
+    title,
+    description,
     openGraph: {
-      title: `${course.title} | LHBS`,
-      description: course.description,
+      title,
+      description,
       images: [
         {
           url: course.image?.url || course.image,
@@ -106,8 +109,8 @@ export default async function CoursePage({ params }) {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Course",
-    "name": course.title,
-    "description": course.description,
+    "name": course.metaTitle || course.title,
+    "description": course.metaDescription || course.description,
     "provider": {
       "@type": "Organization",
       "name": "LHBS",

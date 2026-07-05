@@ -143,6 +143,22 @@ export default buildConfig({
             }
           ]
         },
+        {
+          name: 'metaTitle',
+          type: 'text',
+          admin: {
+            position: 'sidebar',
+            description: 'SEO Title (Keep under 60 characters)',
+          },
+        },
+        {
+          name: 'metaDescription',
+          type: 'textarea',
+          admin: {
+            position: 'sidebar',
+            description: 'SEO Meta Description (Keep under 160 characters)',
+          },
+        },
       ],
     },
     {
