@@ -3,6 +3,7 @@ import { MapPin, Mail, Phone, Clock, ArrowRight } from "lucide-react";
 import { getPayload } from 'payload'
 import configPromise from '../../../payload.config'
 import { RichText } from '@payloadcms/richtext-lexical/react'
+import { injectLinks, getLinkingDictionary } from '../utils/injectLinks'
 
 const cinzel = Cinzel({ subsets: ["latin"], weight: ["400", "700"] });
 const manrope = Manrope({ subsets: ["latin"], weight: ["400", "600"] });
@@ -22,6 +23,7 @@ export default async function ContactPage() {
   });
 
   const page = data.docs[0];
+  const dictionary = await getLinkingDictionary(payload);
 
   return (
     <div className="min-h-screen bg-background text-text pt-32 pb-20">
@@ -48,7 +50,10 @@ export default async function ContactPage() {
                     
                     {page?.content ? (
                         <div className="prose prose-lg prose-gray max-w-none">
-                            <RichText data={page.content} />
+                            {(() => {
+                                const linkedContent = injectLinks(page.content, dictionary);
+                                return <RichText data={linkedContent} />;
+                            })()}
                         </div>
                     ) : (
                         <>

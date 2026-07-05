@@ -1,6 +1,7 @@
 import { Cinzel, Manrope } from "next/font/google";
 import TextureBackground from "../../../components/TextureBackground";
-import { CheckCircle2, Shield, Zap, Award } from "lucide-react";
+import { Zap, Shield, CheckCircle2, Award } from "lucide-react";
+import { injectLinks, getLinkingDictionary } from '../../utils/injectLinks';
 import Image from "next/image";
 import { getPayload } from 'payload';
 import configPromise from '../../../../../payload.config';
@@ -138,6 +139,7 @@ export default async function CoursePage({ params }) {
   // categorySlug comes from params, but let's extract it if it's there
   // Actually params is available in the page scope
   const { categorySlug } = await params;
+  const dictionary = await getLinkingDictionary(payload);
 
   return (
     <div className="min-h-screen bg-background text-text">
@@ -165,9 +167,10 @@ export default async function CoursePage({ params }) {
             <div className="prose prose-lg prose-gray max-w-none">
               <h2 className={`text-2xl font-bold mb-6 text-text ${cinzel.className}`}>About This Course</h2>
               <div className="text-gray-600 leading-relaxed">
-                {course.descriptionRichText ? (
-                  <RichText data={course.descriptionRichText} />
-                ) : (
+                {course.descriptionRichText ? (() => {
+                  const linkedContent = injectLinks(course.descriptionRichText, dictionary);
+                  return <RichText data={linkedContent} />;
+                })() : (
                   <div className="whitespace-pre-wrap font-sans text-[15px] sm:text-base leading-relaxed text-gray-700">
                     {course.description}
                   </div>
