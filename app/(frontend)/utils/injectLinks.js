@@ -21,7 +21,16 @@ export async function getLinkingDictionary(payload) {
     dictionary = dictionary.concat(
       coursesData.docs
         .filter(c => c.title && c.slug && c.category?.slug)
-        .map(c => ({ keyword: c.title, url: `/courses/${c.category.slug}/${c.slug}` }))
+        .flatMap(c => {
+          const url = `/courses/${c.category.slug}/${c.slug}`;
+          const title = c.title;
+          const variants = [{ keyword: title, url }];
+          if (title.includes('-')) {
+            variants.push({ keyword: title.replace(/-/g, ' '), url });
+            variants.push({ keyword: title.replace(/-/g, ''), url });
+          }
+          return variants;
+        })
     );
   }
   
