@@ -71,6 +71,8 @@ export interface Config {
     categories: Category;
     pages: Page;
     reviews: Review;
+    'pseo-niches': PseoNich;
+    'pseo-audiences': PseoAudience;
     users: User;
     coursenames: Coursename;
     orders: Order;
@@ -86,6 +88,8 @@ export interface Config {
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     pages: PagesSelect<false> | PagesSelect<true>;
     reviews: ReviewsSelect<false> | ReviewsSelect<true>;
+    'pseo-niches': PseoNichesSelect<false> | PseoNichesSelect<true>;
+    'pseo-audiences': PseoAudiencesSelect<false> | PseoAudiencesSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     coursenames: CoursenamesSelect<false> | CoursenamesSelect<true>;
     orders: OrdersSelect<false> | OrdersSelect<true>;
@@ -199,6 +203,14 @@ export interface Page {
     };
     [k: string]: unknown;
   };
+  /**
+   * SEO Title (Keep under 60 characters)
+   */
+  metaTitle?: string | null;
+  /**
+   * SEO Meta Description (Keep under 160 characters)
+   */
+  metaDescription?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -228,28 +240,28 @@ export interface Review {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "users".
+ * via the `definition` "pseo-niches".
  */
-export interface User {
+export interface PseoNich {
   id: number;
+  /**
+   * The core topic (e.g., "Martial Arts", "Holistic Health")
+   */
+  name: string;
+  /**
+   * URL friendly slug (e.g., "martial-arts")
+   */
+  slug: string;
+  /**
+   * A 2-3 sentence overview of this niche.
+   */
+  description: string;
+  /**
+   * Select the specific courses that apply to this niche.
+   */
+  relatedCourses?: (number | Coursename)[] | null;
   updatedAt: string;
   createdAt: string;
-  email: string;
-  resetPasswordToken?: string | null;
-  resetPasswordExpiration?: string | null;
-  salt?: string | null;
-  hash?: string | null;
-  loginAttempts?: number | null;
-  lockUntil?: string | null;
-  sessions?:
-    | {
-        id: string;
-        createdAt?: string | null;
-        expiresAt: string;
-      }[]
-    | null;
-  password?: string | null;
-  collection: 'users';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -305,8 +317,66 @@ export interface Coursename {
         id?: string | null;
       }[]
     | null;
+  /**
+   * SEO Title (Keep under 60 characters)
+   */
+  metaTitle?: string | null;
+  /**
+   * SEO Meta Description (Keep under 160 characters)
+   */
+  metaDescription?: string | null;
   updatedAt: string;
   createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pseo-audiences".
+ */
+export interface PseoAudience {
+  id: number;
+  /**
+   * The target audience (e.g., "for Business Leaders", "for Beginners")
+   */
+  name: string;
+  /**
+   * URL friendly slug (e.g., "for-business-leaders")
+   */
+  slug: string;
+  /**
+   * What does this audience struggle with? (e.g., "High stress, lack of focus, sedentary lifestyle.")
+   */
+  painPoints: string;
+  /**
+   * How does our training help them? (e.g., "Builds unshakeable mental discipline and releases physical tension.")
+   */
+  benefits: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "users".
+ */
+export interface User {
+  id: number;
+  updatedAt: string;
+  createdAt: string;
+  email: string;
+  resetPasswordToken?: string | null;
+  resetPasswordExpiration?: string | null;
+  salt?: string | null;
+  hash?: string | null;
+  loginAttempts?: number | null;
+  lockUntil?: string | null;
+  sessions?:
+    | {
+        id: string;
+        createdAt?: string | null;
+        expiresAt: string;
+      }[]
+    | null;
+  password?: string | null;
+  collection: 'users';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -378,6 +448,14 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'reviews';
         value: number | Review;
+      } | null)
+    | ({
+        relationTo: 'pseo-niches';
+        value: number | PseoNich;
+      } | null)
+    | ({
+        relationTo: 'pseo-audiences';
+        value: number | PseoAudience;
       } | null)
     | ({
         relationTo: 'users';
@@ -477,6 +555,8 @@ export interface PagesSelect<T extends boolean = true> {
   title?: T;
   slug?: T;
   content?: T;
+  metaTitle?: T;
+  metaDescription?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -491,6 +571,30 @@ export interface ReviewsSelect<T extends boolean = true> {
   profilePhotoUrl?: T;
   datePosted?: T;
   googleMapsUrl?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pseo-niches_select".
+ */
+export interface PseoNichesSelect<T extends boolean = true> {
+  name?: T;
+  slug?: T;
+  description?: T;
+  relatedCourses?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pseo-audiences_select".
+ */
+export interface PseoAudiencesSelect<T extends boolean = true> {
+  name?: T;
+  slug?: T;
+  painPoints?: T;
+  benefits?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -549,6 +653,8 @@ export interface CoursenamesSelect<T extends boolean = true> {
         image?: T;
         id?: T;
       };
+  metaTitle?: T;
+  metaDescription?: T;
   updatedAt?: T;
   createdAt?: T;
 }
