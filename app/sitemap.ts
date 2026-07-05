@@ -26,12 +26,14 @@ export default async function sitemap() {
 
   const payload = await getPayload({ config: configPromise });
 
-  // Dynamically fetch all categories for category pages
-  const categoriesRes = await payload.find({
-    collection: 'categories',
-    limit: 100,
-    select: { slug: true }
-  });
+  const [categoriesRes, coursesRes, blogRes, nichesRes, audiencesRes, glossaryRes] = await Promise.all([
+    payload.find({ collection: 'categories', limit: 100, select: { slug: true } }),
+    payload.find({ collection: 'coursenames', limit: 1000, depth: 1, select: { slug: true, category: true } }),
+    payload.find({ collection: 'pages', limit: 1000, select: { slug: true } }),
+    payload.find({ collection: 'pseo-niches', limit: 100, select: { slug: true } }),
+    payload.find({ collection: 'pseo-audiences', limit: 100, select: { slug: true } }),
+    payload.find({ collection: 'glossary', limit: 1000, select: { slug: true, updatedAt: true } }),
+  ]);
   
   const categoryRoutes = categoriesRes.docs.map((category) => ({
     url: `${baseUrl}/courses/${category.slug}`,
@@ -39,14 +41,6 @@ export default async function sitemap() {
     changeFrequency: 'weekly',
     priority: 0.9,
   }));
-
-  // Fetch all courses and populate their category to build correct nested routes
-  const coursesRes = await payload.find({
-    collection: 'coursenames',
-    limit: 1000,
-    depth: 1, // Need depth 1 to get category slug
-    select: { slug: true, category: true }
-  });
   
   const courseRoutes = coursesRes.docs
     .filter(course => course.category && (course.category as any).slug)
@@ -56,13 +50,6 @@ export default async function sitemap() {
       changeFrequency: 'weekly',
       priority: 0.9,
     }));
-
-  // Fetch all blog pages
-  const blogRes = await payload.find({
-    collection: 'pages',
-    limit: 1000,
-    select: { slug: true }
-  });
   
   const blogRoutes = blogRes.docs.map((post) => ({
     url: `${baseUrl}/blog/${post.slug}`,
@@ -71,10 +58,13 @@ export default async function sitemap() {
     priority: 0.8,
   }));
 
-  // Fetch pSEO pages (Niches x Audiences)
-  const nichesRes = await payload.find({ collection: 'pseo-niches', limit: 100, select: { slug: true } });
-  const audiencesRes = await payload.find({ collection: 'pseo-audiences', limit: 100, select: { slug: true } });
-  
+  const glossaryRoutes = glossaryRes.docs.map((term) => ({
+    url: `${baseUrl}/glossary/${term.slug}`,
+    lastModified: term.updatedAt || new Date(),
+    changeFrequency: 'monthly',
+    priority: 0.6,
+  }));
+
   const pseoRoutes: any[] = [];
   for (const niche of nichesRes.docs) {
     for (const audience of audiencesRes.docs) {
@@ -87,5 +77,5 @@ export default async function sitemap() {
     }
   }
 
-  return [...routes, ...categoryRoutes, ...courseRoutes, ...blogRoutes, ...pseoRoutes];
+  return [...routes, ...categoryRoutes, ...courseRoutes, ...blogRoutes, ...pseoRoutes, ...glossaryRoutes];
 }

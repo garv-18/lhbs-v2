@@ -10,6 +10,7 @@ import { Reviews } from './app/collections/Reviews';
 import { PseoNiches } from './app/collections/PseoNiches';
 import { PseoAudiences } from './app/collections/PseoAudiences';
 import { Taxonomy } from './app/collections/Taxonomy';
+import { Glossary } from './app/collections/Glossary';
 import { HomepageMedia } from './app/globals/HomepageMedia';
 
 const filename = fileURLToPath(import.meta.url);
@@ -30,6 +31,7 @@ export default buildConfig({
     PseoNiches,
     PseoAudiences,
     Taxonomy,
+    Glossary,
     {
       slug: 'users',
       auth: true,

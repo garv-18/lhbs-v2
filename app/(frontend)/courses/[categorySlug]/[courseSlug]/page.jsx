@@ -1,7 +1,7 @@
 import { Cinzel, Manrope } from "next/font/google";
 import TextureBackground from "../../../components/TextureBackground";
 import { Zap, Shield, CheckCircle2, Award } from "lucide-react";
-import { injectLinks, getLinkingDictionary } from '../../utils/injectLinks';
+import { injectLinks, getLinkingDictionary } from '../../../utils/injectLinks';
 import Image from "next/image";
 import { getPayload } from 'payload';
 import configPromise from '../../../../../payload.config';

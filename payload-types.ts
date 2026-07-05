@@ -74,6 +74,7 @@ export interface Config {
     'pseo-niches': PseoNich;
     'pseo-audiences': PseoAudience;
     taxonomy: Taxonomy;
+    glossary: Glossary;
     users: User;
     coursenames: Coursename;
     orders: Order;
@@ -92,6 +93,7 @@ export interface Config {
     'pseo-niches': PseoNichesSelect<false> | PseoNichesSelect<true>;
     'pseo-audiences': PseoAudiencesSelect<false> | PseoAudiencesSelect<true>;
     taxonomy: TaxonomySelect<false> | TaxonomySelect<true>;
+    glossary: GlossarySelect<false> | GlossarySelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     coursenames: CoursenamesSelect<false> | CoursenamesSelect<true>;
     orders: OrdersSelect<false> | OrdersSelect<true>;
@@ -374,6 +376,49 @@ export interface Taxonomy {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "glossary".
+ */
+export interface Glossary {
+  id: number;
+  /**
+   * The martial arts or fitness term (e.g., "Horse Stance").
+   */
+  term: string;
+  /**
+   * Auto-generated URL slug (e.g., "horse-stance").
+   */
+  slug: string;
+  /**
+   * The detailed definition and explanation of the term.
+   */
+  definition: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  /**
+   * SEO Title (Keep under 60 characters)
+   */
+  metaTitle?: string | null;
+  /**
+   * SEO Meta Description (Keep under 160 characters)
+   */
+  metaDescription?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users".
  */
 export interface User {
@@ -479,6 +524,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'taxonomy';
         value: number | Taxonomy;
+      } | null)
+    | ({
+        relationTo: 'glossary';
+        value: number | Glossary;
       } | null)
     | ({
         relationTo: 'users';
@@ -628,6 +677,19 @@ export interface PseoAudiencesSelect<T extends boolean = true> {
 export interface TaxonomySelect<T extends boolean = true> {
   keyword?: T;
   url?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "glossary_select".
+ */
+export interface GlossarySelect<T extends boolean = true> {
+  term?: T;
+  slug?: T;
+  definition?: T;
+  metaTitle?: T;
+  metaDescription?: T;
   updatedAt?: T;
   createdAt?: T;
 }

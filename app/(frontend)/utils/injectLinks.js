@@ -1,11 +1,12 @@
 // Utility to inject automated contextual links into Payload Lexical AST
 
 export async function getLinkingDictionary(payload) {
-  const [coursesData, nichesData, audiencesData, taxonomyData] = await Promise.all([
+  const [coursesData, nichesData, audiencesData, taxonomyData, glossaryData] = await Promise.all([
     payload.find({ collection: 'coursenames', limit: 100, depth: 1, select: { title: true, slug: true, category: true } }),
     payload.find({ collection: 'pseo-niches', limit: 100, select: { name: true, slug: true } }),
     payload.find({ collection: 'pseo-audiences', limit: 100, select: { name: true, slug: true } }),
-    payload.find({ collection: 'taxonomy', limit: 100, select: { keyword: true, url: true } })
+    payload.find({ collection: 'taxonomy', limit: 100, select: { keyword: true, url: true } }),
+    payload.find({ collection: 'glossary', limit: 1000, select: { term: true, slug: true } })
   ]);
 
   let dictionary = [];
@@ -33,6 +34,14 @@ export async function getLinkingDictionary(payload) {
         });
       }
     }
+  }
+
+  if (glossaryData && glossaryData.docs) {
+    dictionary = dictionary.concat(
+      glossaryData.docs
+        .filter(g => g.term && g.slug)
+        .map(g => ({ keyword: g.term, url: `/glossary/${g.slug}` }))
+    );
   }
 
   return dictionary;
