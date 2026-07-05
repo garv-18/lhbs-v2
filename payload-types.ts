@@ -73,6 +73,7 @@ export interface Config {
     reviews: Review;
     'pseo-niches': PseoNich;
     'pseo-audiences': PseoAudience;
+    taxonomy: Taxonomy;
     users: User;
     coursenames: Coursename;
     orders: Order;
@@ -90,6 +91,7 @@ export interface Config {
     reviews: ReviewsSelect<false> | ReviewsSelect<true>;
     'pseo-niches': PseoNichesSelect<false> | PseoNichesSelect<true>;
     'pseo-audiences': PseoAudiencesSelect<false> | PseoAudiencesSelect<true>;
+    taxonomy: TaxonomySelect<false> | TaxonomySelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     coursenames: CoursenamesSelect<false> | CoursenamesSelect<true>;
     orders: OrdersSelect<false> | OrdersSelect<true>;
@@ -355,6 +357,23 @@ export interface PseoAudience {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "taxonomy".
+ */
+export interface Taxonomy {
+  id: number;
+  /**
+   * The exact phrase or word to link (e.g., "Chi Energy" or "Master Pramod").
+   */
+  keyword: string;
+  /**
+   * The absolute or relative URL this keyword should link to (e.g., "/about" or "/discover/martial-arts/for-beginners").
+   */
+  url: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users".
  */
 export interface User {
@@ -456,6 +475,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'pseo-audiences';
         value: number | PseoAudience;
+      } | null)
+    | ({
+        relationTo: 'taxonomy';
+        value: number | Taxonomy;
       } | null)
     | ({
         relationTo: 'users';
@@ -595,6 +618,16 @@ export interface PseoAudiencesSelect<T extends boolean = true> {
   slug?: T;
   painPoints?: T;
   benefits?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "taxonomy_select".
+ */
+export interface TaxonomySelect<T extends boolean = true> {
+  keyword?: T;
+  url?: T;
   updatedAt?: T;
   createdAt?: T;
 }

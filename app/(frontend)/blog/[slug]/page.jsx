@@ -6,6 +6,7 @@ import { RichText } from '@payloadcms/richtext-lexical/react';
 import { Cinzel, Manrope } from "next/font/google";
 import Link from 'next/link';
 import { ChevronLeft } from 'lucide-react';
+import { injectLinks } from '../../utils/injectLinks';
 
 const cinzel = Cinzel({ subsets: ["latin"], weight: ["400", "700"] });
 const manrope = Manrope({ subsets: ["latin"], weight: ["300", "500", "700"] });
@@ -76,6 +77,14 @@ export default async function BlogPost({ params }) {
     notFound();
   }
 
+  // Fetch collections to build the linking dictionary
+  const [coursesData, nichesData, audiencesData, taxonomyData] = await Promise.all([
+    payload.find({ collection: 'coursenames', limit: 100, depth: 1, select: { title: true, slug: true, category: true } }),
+    payload.find({ collection: 'pseo-niches', limit: 100, select: { name: true, slug: true } }),
+    payload.find({ collection: 'pseo-audiences', limit: 100, select: { name: true, slug: true } }),
+    payload.find({ collection: 'taxonomy', limit: 100, select: { keyword: true, url: true } })
+  ]);
+
   return (
     <div className={`min-h-screen pt-32 pb-20 bg-white ${manrope.className}`}>
       <script
@@ -134,9 +143,44 @@ export default async function BlogPost({ params }) {
         </header>
 
         <article className="prose prose-lg prose-gray max-w-none">
-          {post.content ? (
-            <RichText data={post.content} />
-          ) : (
+          {post.content ? (() => {
+            // Build the dynamic dictionary for automated internal linking
+            let dictionary = [];
+            
+            // 1. Manual Taxonomy Rules (highest priority)
+            if (taxonomyData && taxonomyData.docs) {
+              dictionary = dictionary.concat(
+                taxonomyData.docs.map(t => ({ keyword: t.keyword, url: t.url }))
+              );
+            }
+            
+            // 2. Courses
+            if (coursesData && coursesData.docs) {
+              dictionary = dictionary.concat(
+                coursesData.docs
+                  .filter(c => c.title && c.slug && c.category?.slug)
+                  .map(c => ({ keyword: c.title, url: `/courses/${c.category.slug}/${c.slug}` }))
+              );
+            }
+            
+            // 3. pSEO Pages (Niche + Audience combinations)
+            if (nichesData && audiencesData && nichesData.docs && audiencesData.docs) {
+              for (const niche of nichesData.docs) {
+                for (const audience of audiencesData.docs) {
+                  const keyword = `${niche.name} ${audience.name}`; // e.g. "Martial Arts for Beginners"
+                  dictionary.push({
+                    keyword,
+                    url: `/discover/${niche.slug}/${audience.slug}`
+                  });
+                }
+              }
+            }
+
+            // Inject the links into the Lexical AST
+            const linkedContent = injectLinks(post.content, dictionary);
+
+            return <RichText data={linkedContent} />;
+          })() : (
             <p className="text-gray-500 italic">This post has no content.</p>
           )}
         </article>

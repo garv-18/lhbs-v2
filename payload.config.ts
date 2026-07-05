@@ -9,6 +9,7 @@ import { Pages } from './app/collections/Pages';
 import { Reviews } from './app/collections/Reviews';
 import { PseoNiches } from './app/collections/PseoNiches';
 import { PseoAudiences } from './app/collections/PseoAudiences';
+import { Taxonomy } from './app/collections/Taxonomy';
 import { HomepageMedia } from './app/globals/HomepageMedia';
 
 const filename = fileURLToPath(import.meta.url);
@@ -28,6 +29,7 @@ export default buildConfig({
     Reviews,
     PseoNiches,
     PseoAudiences,
+    Taxonomy,
     {
       slug: 'users',
       auth: true,
