@@ -71,7 +71,7 @@ export default async function sitemap() {
   const nichesRes = await payload.find({ collection: 'pseo-niches', limit: 100, select: { slug: true } });
   const audiencesRes = await payload.find({ collection: 'pseo-audiences', limit: 100, select: { slug: true } });
   
-  const pseoRoutes = [];
+  const pseoRoutes: any[] = [];
   for (const niche of nichesRes.docs) {
     for (const audience of audiencesRes.docs) {
       pseoRoutes.push({
