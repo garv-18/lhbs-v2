@@ -9,6 +9,24 @@ export const Pages: CollectionConfig = {
   access: {
     read: () => true,
   },
+  hooks: {
+    afterChange: [
+      async ({ doc }) => {
+        const { revalidatePath } = await import('next/cache');
+        revalidatePath('/blog', 'page');
+        revalidatePath(`/blog/${doc.slug}`, 'page');
+        return doc;
+      }
+    ],
+    afterDelete: [
+      async ({ doc }) => {
+        const { revalidatePath } = await import('next/cache');
+        revalidatePath('/blog', 'page');
+        revalidatePath(`/blog/${doc.slug}`, 'page');
+        return doc;
+      }
+    ]
+  },
   fields: [
     {
       name: 'title',
