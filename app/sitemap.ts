@@ -7,10 +7,14 @@ export default async function sitemap() {
   // Base routes
   const routes = [
     '',
+    '/about',
+    '/contact',
     '/courses',
     '/joinus',
+    '/signup',
     '/blog',
     '/discover',
+    '/privacypolicy',
     '/refundpolicy',
     '/termsandconditions',
   ].map((route) => ({
