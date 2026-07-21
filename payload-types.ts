@@ -75,6 +75,7 @@ export interface Config {
     'pseo-audiences': PseoAudience;
     taxonomy: Taxonomy;
     glossary: Glossary;
+    posts: Post;
     users: User;
     coursenames: Coursename;
     orders: Order;
@@ -94,6 +95,7 @@ export interface Config {
     'pseo-audiences': PseoAudiencesSelect<false> | PseoAudiencesSelect<true>;
     taxonomy: TaxonomySelect<false> | TaxonomySelect<true>;
     glossary: GlossarySelect<false> | GlossarySelect<true>;
+    posts: PostsSelect<false> | PostsSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     coursenames: CoursenamesSelect<false> | CoursenamesSelect<true>;
     orders: OrdersSelect<false> | OrdersSelect<true>;
@@ -419,6 +421,44 @@ export interface Glossary {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "posts".
+ */
+export interface Post {
+  id: number;
+  title: string;
+  /**
+   * The URL path for this post (e.g., my-first-post). Do not include the leading slash.
+   */
+  slug: string;
+  coverImage?: (number | null) | Media;
+  /**
+   * External URL for the cover image (overrides uploaded coverImage if set)
+   */
+  coverImageUrl?: string | null;
+  excerpt?: string | null;
+  contentHtml?: string | null;
+  contentJson?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  /**
+   * SEO Title (Keep under 60 characters)
+   */
+  metaTitle?: string | null;
+  /**
+   * SEO Meta Description (Keep under 160 characters)
+   */
+  metaDescription?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users".
  */
 export interface User {
@@ -528,6 +568,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'glossary';
         value: number | Glossary;
+      } | null)
+    | ({
+        relationTo: 'posts';
+        value: number | Post;
       } | null)
     | ({
         relationTo: 'users';
@@ -688,6 +732,23 @@ export interface GlossarySelect<T extends boolean = true> {
   term?: T;
   slug?: T;
   definition?: T;
+  metaTitle?: T;
+  metaDescription?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "posts_select".
+ */
+export interface PostsSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  coverImage?: T;
+  coverImageUrl?: T;
+  excerpt?: T;
+  contentHtml?: T;
+  contentJson?: T;
   metaTitle?: T;
   metaDescription?: T;
   updatedAt?: T;

@@ -85,13 +85,11 @@ export default async function BlogPost({ params }) {
     <div className={`min-h-screen pt-32 pb-20 bg-white ${manrope.className}`}>
       <div className="max-w-3xl mx-auto px-6">
         
-        <Link 
-          href="/posts" 
-          className="inline-flex items-center gap-2 text-sm font-bold text-gray-500 hover:text-primary transition-colors mb-10"
-        >
-          <ChevronLeft size={16} />
-          Back to Blog
-        </Link>
+        {post.coverImageUrl && (
+          <div className="mb-12 w-full h-auto max-h-[500px] rounded-3xl overflow-hidden shadow-lg border border-gray-100">
+            <img src={post.coverImageUrl} alt={post.title} className="w-full h-full object-cover" />
+          </div>
+        )}
 
         <header className="mb-12 border-b border-gray-100 pb-10">
           <h1 className={`text-4xl md:text-6xl font-bold text-text leading-tight mb-6 ${cinzel.className}`}>
@@ -104,7 +102,7 @@ export default async function BlogPost({ params }) {
           </div>
         </header>
 
-        <article className="prose prose-lg prose-gray max-w-none prose-headings:font-bold prose-a:text-primary">
+        <article className="prose prose-lg prose-gray max-w-none prose-headings:font-bold prose-a:text-primary prose-img:rounded-2xl prose-img:shadow-sm">
           {post.contentHtml ? parse(post.contentHtml) : (
             <p className="text-gray-500 italic">This post has no content.</p>
           )}
