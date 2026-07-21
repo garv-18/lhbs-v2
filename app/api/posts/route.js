@@ -19,21 +19,48 @@ export async function POST(req) {
       return NextResponse.json({ error: 'Title and Slug are required' }, { status: 400 });
     }
 
-    const newPost = await payload.create({
+    // Check if post already exists
+    const existingPosts = await payload.find({
       collection: 'posts',
-      data: {
-        title,
-        slug,
-        contentHtml,
-        contentJson,
-        coverImageUrl: coverImage, // The frontend passes the URL as coverImage
-        excerpt,
-        metaTitle: title,
-        metaDescription: excerpt,
-      },
+      where: { slug: { equals: slug } },
+      limit: 1,
     });
 
-    return NextResponse.json({ success: true, post: newPost });
+    let savedPost;
+
+    if (existingPosts.docs.length > 0) {
+      savedPost = await payload.update({
+        collection: 'posts',
+        id: existingPosts.docs[0].id,
+        overrideAccess: true,
+        data: {
+          title,
+          contentHtml,
+          contentJson,
+          coverImageUrl: coverImage,
+          excerpt,
+          metaTitle: title,
+          metaDescription: excerpt,
+        },
+      });
+    } else {
+      savedPost = await payload.create({
+        collection: 'posts',
+        overrideAccess: true, // Bypass Payload's internal access control since we manually verified the admin cookie
+        data: {
+          title,
+          slug,
+          contentHtml,
+          contentJson,
+          coverImageUrl: coverImage, // The frontend passes the URL as coverImage
+          excerpt,
+          metaTitle: title,
+          metaDescription: excerpt,
+        },
+      });
+    }
+
+    return NextResponse.json({ success: true, post: savedPost });
   } catch (error) {
     console.error('Error saving post:', error);
     return NextResponse.json({ error: error.message }, { status: 500 });
