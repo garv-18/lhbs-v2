@@ -17,13 +17,18 @@ export const metadata = {
 
 export default async function PostsIndex() {
   const payload = await getPayload({ config: configPromise });
-  const data = await payload.find({
-    collection: 'posts',
-    limit: 100,
-    sort: '-createdAt', // newest first
-  });
-
-  const posts = data.docs;
+  let posts = [];
+  
+  try {
+    const data = await payload.find({
+      collection: 'posts',
+      limit: 100,
+      sort: '-createdAt', // newest first
+    });
+    posts = data.docs;
+  } catch (error) {
+    console.warn("Could not fetch posts, table might not exist yet:", error.message);
+  }
 
   return (
     <div className={`min-h-screen bg-gray-50 text-text ${manrope.className}`}>

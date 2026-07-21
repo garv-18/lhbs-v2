@@ -14,27 +14,37 @@ const manrope = Manrope({ subsets: ["latin"], weight: ["300", "500", "700"] });
 export const revalidate = 60;
 
 export async function generateStaticParams() {
-  const payload = await getPayload({ config: configPromise });
-  const pages = await payload.find({
-    collection: 'posts',
-    limit: 1000,
-  });
+  try {
+    const payload = await getPayload({ config: configPromise });
+    const pages = await payload.find({
+      collection: 'posts',
+      limit: 1000,
+    });
 
-  return pages.docs.map((page) => ({
-    slug: page.slug,
-  }));
+    return pages.docs.map((page) => ({
+      slug: page.slug,
+    }));
+  } catch (error) {
+    console.warn("Could not generate static params for posts, table might not exist yet:", error.message);
+    return [];
+  }
 }
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
   
   const payload = await getPayload({ config: configPromise });
-  const data = await payload.find({
-    collection: 'posts',
-    where: { slug: { equals: slug } },
-  });
+  let post = null;
 
-  const post = data.docs[0];
+  try {
+    const data = await payload.find({
+      collection: 'posts',
+      where: { slug: { equals: slug } },
+    });
+    post = data.docs[0];
+  } catch (error) {
+    console.warn("Could not fetch metadata for post, table might not exist yet:", error.message);
+  }
 
   if (!post) {
     return {
@@ -55,12 +65,17 @@ export default async function BlogPost({ params }) {
   const { slug } = await params;
   
   const payload = await getPayload({ config: configPromise });
-  const data = await payload.find({
-    collection: 'posts',
-    where: { slug: { equals: slug } },
-  });
-
-  const post = data.docs[0];
+  let post = null;
+  
+  try {
+    const data = await payload.find({
+      collection: 'posts',
+      where: { slug: { equals: slug } },
+    });
+    post = data.docs[0];
+  } catch (error) {
+    console.warn("Could not fetch post content, table might not exist yet:", error.message);
+  }
 
   if (!post) {
     notFound();
