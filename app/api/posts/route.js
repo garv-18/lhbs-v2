@@ -1,25 +1,15 @@
 import { NextResponse } from 'next/server';
 import { getPayload } from 'payload';
 import configPromise from '../../../payload.config';
-import { getServerSession } from "next-auth";
-import { authOptions } from "../../../lib/authOptions";
+import { cookies } from "next/headers";
 
 export async function POST(req) {
   try {
-    const session = await getServerSession(authOptions);
-    if (!session || !session.user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
-
-    // Strict admin email checking
-    const adminEmails = [
-      'pramod@martialartsschool.in', 
-      'garv@martialartsschool.in',
-      'theestatecompany11@gmail.com'
-    ];
+    const cookieStore = await cookies();
+    const hasAccess = cookieStore.get("admin_write_access")?.value === "true";
     
-    if (!adminEmails.includes(session.user.email)) {
-      return NextResponse.json({ error: 'Unauthorized: Not an admin' }, { status: 401 });
+    if (!hasAccess) {
+      return NextResponse.json({ error: 'Unauthorized: Not logged in as admin' }, { status: 401 });
     }
 
     const payload = await getPayload({ config: configPromise });
