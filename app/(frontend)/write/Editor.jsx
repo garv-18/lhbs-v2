@@ -87,6 +87,7 @@ export default function NovelEditor({ initialTitle = "", initialContent = null }
       <div className="border border-gray-100 rounded-xl overflow-hidden shadow-sm bg-white min-h-[500px]">
         <EditorRoot>
           <EditorContent
+            immediatelyRender={false}
             initialContent={contentJson}
             onUpdate={({ editor }) => handleUpdate(editor)}
             extensions={[]} 
