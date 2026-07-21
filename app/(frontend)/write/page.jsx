@@ -28,9 +28,22 @@ export default async function WritePage() {
     );
   }
 
-  // To make it fully secure, you could restrict by email:
-  // const allowedEmails = ['pramod@martialartsschool.in', 'garv@martialartsschool.in'];
-  // if (!allowedEmails.includes(session.user.email)) return <div>Unauthorized</div>;
+  const allowedAdminEmails = [
+    'pramod@martialartsschool.in',
+    'garv@martialartsschool.in',
+    'theestatecompany11@gmail.com' // You can tell me to add yours here
+  ];
+
+  if (!allowedAdminEmails.includes(session.user.email)) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold mb-4 text-red-600">Access Denied</h1>
+          <p className="text-gray-500 mb-6">Your email ({session.user.email}) is not authorized as an admin.</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className={`min-h-screen bg-gray-50 pt-20 ${manrope.className}`}>

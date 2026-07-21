@@ -11,11 +11,16 @@ export async function POST(req) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    // Optional: Add strict admin email checking
-    const adminEmails = ['pramod@martialartsschool.in', 'garv@martialartsschool.in'];
-    // We will bypass for now or rely on the front-end, but let's be secure.
-    // If you want strict access, uncomment:
-    // if (!adminEmails.includes(session.user.email)) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    // Strict admin email checking
+    const adminEmails = [
+      'pramod@martialartsschool.in', 
+      'garv@martialartsschool.in',
+      'theestatecompany11@gmail.com'
+    ];
+    
+    if (!adminEmails.includes(session.user.email)) {
+      return NextResponse.json({ error: 'Unauthorized: Not an admin' }, { status: 401 });
+    }
 
     const payload = await getPayload({ config: configPromise });
     const { title, slug, contentHtml, contentJson } = await req.json();
