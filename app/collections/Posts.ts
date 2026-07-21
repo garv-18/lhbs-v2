@@ -58,6 +58,19 @@ export const Posts: CollectionConfig = {
       required: false,
     },
     {
+      name: 'coverImageUrl',
+      type: 'text',
+      required: false,
+      admin: {
+        description: 'External URL for the cover image (overrides uploaded coverImage if set)',
+      }
+    },
+    {
+      name: 'excerpt',
+      type: 'textarea',
+      required: false,
+    },
+    {
       name: 'contentHtml',
       type: 'textarea', // We store raw HTML from Novel.sh here
       required: false,

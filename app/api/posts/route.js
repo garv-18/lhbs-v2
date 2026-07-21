@@ -13,7 +13,7 @@ export async function POST(req) {
     }
 
     const payload = await getPayload({ config: configPromise });
-    const { title, slug, contentHtml, contentJson } = await req.json();
+    const { title, slug, contentHtml, contentJson, coverImage, excerpt } = await req.json();
 
     if (!title || !slug) {
       return NextResponse.json({ error: 'Title and Slug are required' }, { status: 400 });
@@ -26,7 +26,10 @@ export async function POST(req) {
         slug,
         contentHtml,
         contentJson,
+        coverImageUrl: coverImage, // The frontend passes the URL as coverImage
+        excerpt,
         metaTitle: title,
+        metaDescription: excerpt,
       },
     });
 
