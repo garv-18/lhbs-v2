@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { EditorRoot, EditorContent } from "novel";
+import StarterKit from "@tiptap/starter-kit";
 
 export default function NovelEditor({ initialTitle = "", initialContent = null }) {
   const [title, setTitle] = useState(initialTitle);
@@ -90,7 +91,7 @@ export default function NovelEditor({ initialTitle = "", initialContent = null }
             immediatelyRender={false}
             initialContent={contentJson}
             onUpdate={({ editor }) => handleUpdate(editor)}
-            extensions={[]} 
+            extensions={[StarterKit]} 
             className="prose prose-lg p-6 max-w-none"
           />
         </EditorRoot>
