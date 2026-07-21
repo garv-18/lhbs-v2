@@ -1,9 +1,6 @@
-import React from 'react';
-import dynamic from 'next/dynamic';
 import { cookies } from "next/headers";
 import LoginForm from './LoginForm';
-
-const NovelEditor = dynamic(() => import('./Editor'), { ssr: false });
+import EditorWrapper from './EditorWrapper';
 import { Manrope } from "next/font/google";
 
 const manrope = Manrope({ subsets: ["latin"], weight: ["300", "500", "700"] });
@@ -22,7 +19,7 @@ export default async function WritePage() {
 
   return (
     <div className={`min-h-screen bg-gray-50 pt-20 ${manrope.className}`}>
-      <NovelEditor />
+      <EditorWrapper />
     </div>
   );
 }
