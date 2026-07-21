@@ -26,9 +26,23 @@ export default function PinnacleEditor({ initialTitle = "", initialContent = nul
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [showCoverInput, setShowCoverInput] = useState(false);
 
+  // Helper to upload images to ImageKit
+  const uploadToImageKit = async (file) => {
+    const formData = new FormData();
+    formData.append('file', file);
+    const res = await fetch('/api/upload', {
+      method: 'POST',
+      body: formData,
+    });
+    if (!res.ok) throw new Error("Upload failed");
+    const data = await res.json();
+    return data.url;
+  };
+
   // Initialize the BlockNote editor
   const editor = useCreateBlockNote({
-    initialContent: initialContent && initialContent.length > 0 ? initialContent : undefined
+    initialContent: initialContent && initialContent.length > 0 ? initialContent : undefined,
+    uploadFile: uploadToImageKit, // All drag-and-drop inline images go to ImageKit /blogs folder!
   });
 
   // Track content changes
@@ -141,17 +155,30 @@ export default function PinnacleEditor({ initialTitle = "", initialContent = nul
 
           {!coverImageUrl && showCoverInput && (
             <div className="mb-10 flex space-x-2">
-              <input 
-                type="text"
-                placeholder="Paste an image URL..."
-                className="flex-1 bg-gray-50 border border-gray-200 rounded-xl px-4 py-2 outline-none focus:border-black text-sm"
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter') {
-                    setCoverImageUrl(e.target.value);
-                    setShowCoverInput(false);
-                  }
-                }}
-              />
+              <label className="flex-1 cursor-pointer">
+                <div className="bg-gray-50 border border-dashed border-gray-300 rounded-xl px-4 py-4 hover:border-black transition-colors flex items-center justify-center text-sm text-gray-500">
+                  Click to upload a cover image
+                </div>
+                <input 
+                  type="file"
+                  accept="image/*"
+                  className="hidden"
+                  onChange={async (e) => {
+                    const file = e.target.files?.[0];
+                    if (file) {
+                      setShowCoverInput(false); // hide input
+                      // Could add a loading state here if desired
+                      try {
+                        const url = await uploadToImageKit(file);
+                        setCoverImageUrl(url);
+                      } catch (err) {
+                        alert("Failed to upload cover image.");
+                        setShowCoverInput(true);
+                      }
+                    }
+                  }}
+                />
+              </label>
               <button onClick={() => setShowCoverInput(false)} className="px-4 text-sm text-gray-500 hover:text-black">Cancel</button>
             </div>
           )}
