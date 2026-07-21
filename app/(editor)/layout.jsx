@@ -1,4 +1,5 @@
 import React from 'react';
+import '../(frontend)/globals.css';
 
 // Zen Mode Editor Layout - No Navigation, No Footer
 export default function EditorLayout({ children }) {
